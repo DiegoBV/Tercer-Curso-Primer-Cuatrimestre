@@ -1,0 +1,4 @@
+﻿  Source.cpp
+c:\users\usuario\desktop\3º videojuegos\tercer-curso-primer-cuatrimestre\física\vector3_particulas\vector3_particulas\particle.h(20): warning C4305: 'inicializando': truncamiento de 'double' a 'float'
+c:\users\usuario\desktop\3º videojuegos\tercer-curso-primer-cuatrimestre\física\vector3_particulas\vector3_particulas\source.cpp(12): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+  Vector3_Particulas.vcxproj -> C:\Users\Usuario\Desktop\3º Videojuegos\Tercer-Curso-Primer-Cuatrimestre\Física\Vector3_Particulas\Debug\Vector3_Particulas.exe
