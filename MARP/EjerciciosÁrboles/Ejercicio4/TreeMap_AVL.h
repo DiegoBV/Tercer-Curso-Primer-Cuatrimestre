@@ -44,7 +44,6 @@ protected:
       clave_valor cv;
       Link iz, dr;
       int altura;
-	  int tam_i = 1; //almacena numero de nodos del hijo izquierdo + 1 
       TreeNode(clave_valor const& e, Link i = nullptr, Link d = nullptr,
                int alt = 1) : cv(e), iz(i), dr(d), altura(alt) {}
    };
