@@ -237,7 +237,7 @@ protected:
 
 	static void actualizaTam_I(Link& node) {
 		if (node != nullptr && node->iz != nullptr)
-			node->tam_i = (node->iz)->tam_i + 1;
+			node->tam_i = altura(node->iz) + 1;
 		else if (node != nullptr) {
 			node->tam_i = 1;
 		}
