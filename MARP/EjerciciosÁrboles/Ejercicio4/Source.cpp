@@ -132,12 +132,12 @@ protected:
 	struct TreeNode;
 	using Link = TreeNode * ;
 	struct TreeNode {
-		int tam_i = 1; //almacena numero de nodos del hijo izquierdo + 1 
+		int tam_i; //almacena numero de nodos del hijo izquierdo + 1 
 		clave_valor cv;
 		Link iz, dr;
 		int altura;
 		TreeNode(clave_valor const& e, Link i = nullptr, Link d = nullptr,
-			int alt = 1) : cv(e), iz(i), dr(d), altura(alt) {}
+			int alt = 1) : cv(e), iz(i), dr(d), altura(alt), tam_i(1) {}
 	};
 
 	// puntero a la raíz de la estructura jerárquica de nodos
@@ -287,7 +287,9 @@ protected:
 		}
 		else if (menor(cv.clave, a->cv.clave)) {
 			crece = inserta(cv, a->iz);
-			if (crece) reequilibraDer(a);
+			if (crece) { reequilibraDer(a); 
+			updateTam(a);
+			}
 		}
 		else if (menor(a->cv.clave, cv.clave)) {
 			crece = inserta(cv, a->dr);
@@ -295,10 +297,6 @@ protected:
 		}
 		else { // la clave ya estaba
 			crece = false;
-		}
-
-		if (crece) {
-			actualizaTam_I(a);
 		}
 
 		return crece;
@@ -331,15 +329,24 @@ protected:
 		else return a->altura;
 	}
 
+	static void updateTam(Link& node) {
+		if (node->iz == nullptr) {
+			node->tam_i = 1;
+		}
+		else {
+			node->tam_i = node->iz->tam_i + 1;
+		}
+	}
+
 	static void rotaDer(Link & k2) {
 		Link k1 = k2->iz;
 		k2->iz = k1->dr;
 		k1->dr = k2;
 		k2->altura = std::max(altura(k2->iz), altura(k2->dr)) + 1;
 		k1->altura = std::max(altura(k1->iz), altura(k1->dr)) + 1;
+		updateTam(k2);
 		k2 = k1;
-		actualizaTam_I(k1);
-		actualizaTam_I(k2);
+		updateTam(k2);
 	}
 
 	static void rotaIzq(Link & k1) {
@@ -348,9 +355,9 @@ protected:
 		k2->iz = k1;
 		k1->altura = std::max(altura(k1->iz), altura(k1->dr)) + 1;
 		k2->altura = std::max(altura(k2->iz), altura(k2->dr)) + 1;
+		updateTam(k1);
 		k1 = k2;
-		actualizaTam_I(k1);
-		actualizaTam_I(k2);
+		updateTam(k1);
 	}
 
 	static void rotaIzqDer(Link & k3) {
