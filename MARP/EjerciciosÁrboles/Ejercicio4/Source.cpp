@@ -1,93 +1,8 @@
+//Diego Baratto Valdivia
 #include <iostream>
 #include <string>
 #include <vector>
 #include <queue>
-
-/*#pragma once
-class mapExt :
-	public map<int, int>
-{
-private:
-	struct TreeNodeExt: public TreeNode
-	{
-		int tam_i = 1; //almacena numero de nodos del hijo izquierdo + 1 
-		TreeNodeExt(clave_valor const& e, Link i = nullptr, Link d = nullptr,
-			int alt = 1) : TreeNode(e, i, d, alt){}
-	};
-protected:
-
-	static void actualizaTam_I(TreeNodeExt* node) {
-		if(node != nullptr && node->iz != nullptr)
-			node->tam_i = static_cast<TreeNodeExt*>(node->iz)->tam_i + 1;
-		else if(node != nullptr){
-			node->tam_i = 1;
-		}
-	}
-
-	void actualizaArbol(TreeNodeExt* node) {
-		if (node == nullptr) {
-			return;
-		}
-
-		actualizaTam_I(node);
-
-		actualizaArbol(static_cast<TreeNodeExt*>(node->iz));
-		actualizaArbol(static_cast<TreeNodeExt*>(node->dr));
-		
-	}
-	
-	virtual bool inserta(clave_valor const& cv, Link & a) {
-		bool crece = map<int, int>::inserta(cv, a);
-		if (crece) {
-			actualizaArbol(static_cast<TreeNodeExt*>(raiz));
-		}
-		return crece;
-	}
-
-	void inorder(std::vector<int>& v, Link& a) {
-		if (a != nullptr) { //si a == nullptr --> caso base de la recursion
-			inorder(v, a->iz);
-			v.push_back(a->cv.clave);
-			inorder(v, a->dr);
-		}
-	}
-
-	int k_Element(int k, TreeNodeExt* node) {
-		if (node == nullptr) {
-			return NULL;
-		}
-
-		if (k == node->tam_i) {
-			return node->cv.clave;
-		}
-
-		if (k > node->tam_i) {
-			return k_Element(k - node->tam_i, static_cast<TreeNodeExt*>(node->dr));
-		}
-		else if (k < node->tam_i) {
-			return k_Element(k, static_cast<TreeNodeExt*>(node->iz));
-		}
-	}
-
-public:
-	//depuracion
-	int getTamI(int const& c) {
-		return static_cast<TreeNodeExt*>(busca(c, raiz))->tam_i;
-	}
-
-	virtual bool insert(clave_valor const& cv) {
-		return this->inserta(cv, raiz);
-	}
-
-	void recorridoInorder(std::vector<int>& v) {
-		inorder(v,raiz);
-	}
-
-	int getKelement(int k) {
-		return k_Element(k, static_cast<TreeNodeExt*>(raiz));
-	}
-};
-*/
 
 //
 //  TreeMap_AVL.h
@@ -287,9 +202,7 @@ protected:
 		}
 		else if (menor(cv.clave, a->cv.clave)) {
 			crece = inserta(cv, a->iz);
-			if (crece) { reequilibraDer(a); 
-			updateTam(a);
-			}
+			if (crece) { a->tam_i++; reequilibraDer(a); }
 		}
 		else if (menor(a->cv.clave, cv.clave)) {
 			crece = inserta(cv, a->dr);
@@ -344,9 +257,8 @@ protected:
 		k1->dr = k2;
 		k2->altura = std::max(altura(k2->iz), altura(k2->dr)) + 1;
 		k1->altura = std::max(altura(k1->iz), altura(k1->dr)) + 1;
-		updateTam(k2);
+		k2->tam_i = k2->tam_i - k1->tam_i;
 		k2 = k1;
-		updateTam(k2);
 	}
 
 	static void rotaIzq(Link & k1) {
@@ -355,9 +267,8 @@ protected:
 		k2->iz = k1;
 		k1->altura = std::max(altura(k1->iz), altura(k1->dr)) + 1;
 		k2->altura = std::max(altura(k2->iz), altura(k2->dr)) + 1;
-		updateTam(k1);
+		k2->tam_i = k2->tam_i + k1->tam_i;
 		k1 = k2;
-		updateTam(k1);
 	}
 
 	static void rotaIzqDer(Link & k3) {
@@ -386,7 +297,6 @@ protected:
 			else rotaDer(a);
 		}
 		else a->altura = std::max(altura(a->iz), altura(a->dr)) + 1;
-
 	}
 
 	bool borra(Clave const& c, Link & a) {
