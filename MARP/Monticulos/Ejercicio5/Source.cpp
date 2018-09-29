@@ -6,32 +6,40 @@
 #include <vector>
 
 using namespace std;
-
-void resuelve(PriorityQueue<int> pQueue, vector<int>& solucion) { //necesito una copia...
-
-	vector<int> v;
-
-	//coste O(n) siendo n el numero de elementos del montículo
-	while (!pQueue.empty()) {
-		v.push_back(pQueue.top());
-		pQueue.pop();
+//operador comparador
+struct Comp
+{
+	bool operator()(const int& k1, const int& k2) const
+	{
+		return k1 > k2;
 	}
+};
 
-	if (v.size() % 2 == 0) {
-		int n1, n2;
-		n1 = v.size() / 2;
-		n2 = v.size() / 2 + 1;
 
-		int mediana = (v[n1 - 1] + v[n2 - 1]); // /2
+//Coste O(1)
+void resuelve(PriorityQueue<int>& minHeap, PriorityQueue<int, Comp>& maxHeap, int& current_Median) {
 
-		solucion.push_back(mediana);
+	//equilibra ambos monticulos para que su diferencia de tamaños sea, como minimo, 1
+	if(abs(minHeap.size() - maxHeap.size()) > 1){
+		if (minHeap.size() > maxHeap.size()) {
+			maxHeap.push(minHeap.top());
+			minHeap.pop();
+		}
+		else {
+			minHeap.push(maxHeap.top());
+			maxHeap.pop();
+		}
 	}
-	else {
-		int n1 = (v.size() + 1) / 2;
-
-		int mediana = v[n1 - 1];
-
-		solucion.push_back(mediana * 2);
+	
+	//equilibrados
+	if (minHeap.size() > maxHeap.size()){ //si el min tiene un elemento mas que el max, la mediana esta en el min
+		current_Median = minHeap.top() * 2;
+	}
+	else if (maxHeap.size() > minHeap.size()) { //viceversa
+		current_Median = maxHeap.top() * 2;
+	}
+	else { //son iguales, la media de ambos
+		current_Median = (maxHeap.top() + minHeap.top()); // /2
 	}
 }
 
@@ -40,18 +48,36 @@ void entrada() {
 	cin >> n;
 
 	while (n != 0) {
-		PriorityQueue<int> pQueue;
-		vector<int> solucion;
+		PriorityQueue<int> minHeap;
+		PriorityQueue<int, Comp> maxHeap;
 
-		for (int i = 0; i < n; i++) {
+		vector<int> solucion;
+		int current_Median;
+
+		int elem;
+		cin >> elem;
+
+		maxHeap.push(elem);
+		resuelve(minHeap, maxHeap, current_Median);
+		solucion.push_back(current_Median);
+
+		for (int i = 1; i < n; i++) {
+			
 			int elem;
 			cin >> elem;
 
-			pQueue.push(elem);
+			if (elem > current_Median/2) {
+				minHeap.push(elem);
+			}
+			else {
+				maxHeap.push(elem);
+			}
 
-			resuelve(pQueue, solucion);
+			resuelve(minHeap, maxHeap, current_Median);
+			solucion.push_back(current_Median);
 		}
 
+		//Mostrar solucion
 		for (int i : solucion) {
 			cout << i << " ";
 		}
