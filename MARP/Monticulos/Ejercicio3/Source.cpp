@@ -32,6 +32,7 @@ struct Comp
 	}
 };
 
+//Coste O(n), siendo n el numero de elementos del vector
 void resuelve(vector<Paciente>& pacientesAtendidos) {
 	for (Paciente p : pacientesAtendidos) {
 		cout << p.nombre_ << endl;
@@ -61,7 +62,7 @@ void entrada() {
 				pQueue.push(Paciente(name, gravedad, i));
 			}
 			else if (event_type == 'A') {
-				pacientesAtendidos.push_back(pQueue.top());
+				pacientesAtendidos.push_back(pQueue.top()); //saber el paciente que necesita ser atendido tiene un coste 0(1)
 				pQueue.pop();
 			}
 		}

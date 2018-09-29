@@ -34,6 +34,8 @@ void Particula::move_Constant_Velocity(float t)
 {
 	//e = e + v*t
 	p += v*t;
+	//physx::PxVec3 v(p);
+	//transform->p = transform->p + v;
 	const physx::PxTransform* temp = transform; //???
 	transform = new physx::PxTransform(p); //???
 	delete temp; //???
