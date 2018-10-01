@@ -42,7 +42,7 @@ public:
 
 	//BOX --> ALTURA ANCHURA PROFUNDIDAD/ CAPSULE --> RADIO MAYOR RADIO MENOR/ SPHERE --> RADIO
 	Particula(Shape shp, Medidas size, const physx::PxTransform* _trans, Vector3 _color, float inverse_mass = 1.0) : RenderItem(createShape(shp, size), _trans, _color),
-		p(_trans->p.x, _trans->p.y, _trans->p.z), v(0, 0, 0), a(0, 0, 0), newPos(*_trans), inverse_mass(inverse_mass), damping(0.95) {};
+		p(_trans->p), v(0, 0, 0), a(0, 0, 0), newPos(*_trans), inverse_mass(inverse_mass), damping(0.95) {};
 
 	Particula(Shape shp, Medidas size, Vector3 _color, float inverse_mass = 1.0) : RenderItem(createShape(shp, size), _color), p(0, 0, 0), v(0, 0, 0), 
 		a(0, 0, 0), inverse_mass(inverse_mass), damping(0.95) {};
