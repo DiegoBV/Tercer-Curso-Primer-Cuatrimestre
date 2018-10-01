@@ -49,7 +49,7 @@ public:
 
 	Particula() : RenderItem() {};
 
-	void update(float time) { integrate(time);  setTransform(); };
+	void update(float time) { integrate(time); setTransform(); };
 
 	//setDamping
 	inline void setDamping(const float newDamping) { if (newDamping >= 0 && newDamping <= 1) damping = newDamping; } //else ---> avisar, lanzar una excepcion...?
