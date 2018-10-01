@@ -23,24 +23,17 @@ physx::PxShape* Particula::createShape(Shape tipo, Medidas size)
 	return shape_;
 }
 
-void Particula::changeDamping(const float newDamping)
+void Particula::integrate(float t)
 {
-	if (newDamping >= 0 && newDamping <= 1) //comprobacion de si la nueva fuerza tiene un valor correcto
-		damping = newDamping;
-	//else ---> avisar, lanzar una excepcion...?	
-}
+	//Si la masa es infinita, la particula no cambia su posicion (paredes, suelos)
+	if (inverse_mass <= 0.0f) return;
 
-void Particula::move_Constant_Velocity(float t)
-{
-	//e = e + v*t
-	p += v*t;
+	//update de la posicion (e = e + v*t)
+	p += v * t;
 
-	newPos.p = p;
+	//update de la velocidad
+	v += a * t;
 
-	transform = &newPos;
-}
-
-void Particula::changeInverseMass(const float newMass)
-{
-	inverse_mass = newMass;
+	//aplicamos la fuerza de rozamiento --> v = v * d^t
+	v *= powf(damping, t);
 }
