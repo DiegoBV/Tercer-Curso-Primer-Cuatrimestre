@@ -36,7 +36,7 @@ bool resuelveCaso(PriorityQueue<Tarea, Comp>& pQueue, const int& t) {
 		if (tareaActual.tiempo_comienzo >= t) { //si la tarea siguiente esta fuera de rango ya no se comprueba [0, t)
 			tiempo_acabado = true;
 		}
-		else if (tareaAnterior.tiempo_comienzo < tareaActual.tiempo_comienzo &&  tareaActual.tiempo_comienzo < tareaAnterior.tiempo_finalizacion) { //esto significa que la tarea siguiente esta en medio del intervalo de la tarea anterior
+		else if (tareaAnterior.tiempo_comienzo <= tareaActual.tiempo_comienzo &&  tareaActual.tiempo_comienzo < tareaAnterior.tiempo_finalizacion) { //esto significa que la tarea siguiente esta en medio del intervalo de la tarea anterior
 			hay_conflicto = true;
 		}
 		else if(tareaActual.periodo_ != -1){ //si no hay conflicto, se comprueba si la tarea es periodica, si lo es, se vuelve a añadir con sus tiempos correspondientes, si no, no hace nada
