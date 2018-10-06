@@ -39,7 +39,7 @@ void initPhysics(bool interactive)
 
 	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
 
-	Particula* p = new Particula(Particula::Capsule, {10, 10}, new PxTransform(0, 30, 0), Vector3(100, 0, 100)); //creamos la particula
+	Particula* p = new Particula(Particula::Capsule, {10, 10}, new PxTransform(-40, 30, 0), Vector3(100, 0, 100)); //creamos la particula
 	p->setVelocity(Vector3(10, 0, 0));
 
 	particles.push_back(p); //la almacenamos en el vector

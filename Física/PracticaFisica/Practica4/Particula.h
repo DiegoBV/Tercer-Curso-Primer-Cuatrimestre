@@ -15,9 +15,6 @@ private:
 	//active
 	bool active = true;
 
-	//Direction
-	Vector3 d;
-
 	//struct medidas del shape
 	struct Medidas { 
 		float x_;
@@ -79,8 +76,6 @@ public:
 	inline void setActive(bool nAct) { active = nAct; };
 	//regisRender
 	inline void regRender() { RegisterRenderItem(this); };
-	//setDirection
-	inline void setDir(Vector3 newDir) { d = newDir; d.normalize(); };
 	//distancia recorrida desde el inicio
 	inline const unsigned int getDistanceTraveled() { return p.magnitude(); };
 
@@ -89,8 +84,5 @@ protected:
 	physx::PxShape* createShape(Shape tipo, Medidas size);
 	//iguala el elemento p del Px auxiliar e iguala el transform de la particula a dicho Px
 	inline void setTransform() { newPos.p = p; transform = &newPos; };
-	//actualizar vel por direccion
-	inline void updateVel() { v.x *= d.x; v.y *= d.y; v.z *= d.z; };
-
 };
 
