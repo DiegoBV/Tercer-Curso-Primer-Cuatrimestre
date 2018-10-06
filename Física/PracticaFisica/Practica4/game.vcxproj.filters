@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Render\Camera.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\Render.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderUtils.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Particula.cpp">
+      <Filter>Particulas</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="core.hpp" />
+    <ClInclude Include="Render\Camera.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Render.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderUtils.hpp" />
+    <ClInclude Include="Particula.h">
+      <Filter>Particulas</Filter>
+    </ClInclude>
+    <ClInclude Include="TemplatePool.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Render">
+      <UniqueIdentifier>{d04b4f9f-5a69-465e-8070-25c6d0bcd3c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particulas">
+      <UniqueIdentifier>{10f36aaf-f94b-48e4-aae8-e56e970f48bb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
