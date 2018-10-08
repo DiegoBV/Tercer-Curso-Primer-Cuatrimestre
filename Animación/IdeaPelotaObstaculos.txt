@@ -1,0 +1,66 @@
+Fotograma 0 --> pelota en el inicio del plano
+Fotograma 25 --> final del plano
+fotograma 35 --> cae al siguiente plano
+Fotograma 45 --> da un botecillo hacia atrás
+Fotograma 65-->final segundo plano
+Fotograma 75 --> empezar parabola caida (2 botes)
+Fotograma 81--> bote 1
+Fotograma 85 --> bote 2
+y rodaer hasta el 100
+
+
+-----------------------------------------------------Solucionar tangentes---------------------------------------------
+
+Tirar de las tangentes  (acortarlas para ajustar el movimiento)
+
+En el primer plano, acortar las tangentes de ambas mitades de la curva (curva de las z).
+Curva de las x --> acortar la tangente en el primer tramo de la curva; en el segundro tramo también
+
+Tramo caida --> z es acelerando; x es constante
+
+Tramo botecillo en el segundo plano ---> lineal y decelerando; llega al suelo acelerandose (en las z)
+
+Trammo bajada despues del botecillo ---> en las Z la curva empieza en horizontal ya que empieza en velocidad 0. Luego acelera.	
+Hacemos lo mismo de antes (dividimos el tramo en dos mitades para saber la longitud de las tangentes). Basicamente acortamos
+ambas tangentes (siempre lo dejamos un poco por encima ya que hay que ajustar las x aun)
+
+Curva de las X -->> dividimos el tramo en dos mitades (para entenderlo mejor, en blender no hay q hacer nah) y acortamos tangentes	
+
+
+
+
+Caida ---> acelerar la pelotita al caer, en los botes desacelerar y acelerar en la parabola, etc, ect. (ELIMINAR VERTICES INNECESARIOS)
+Ajustar la x para que desacelere, eliminando vertices innecesarios.
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------Rotaciones-------------------------------------------------------
+
+Bajada primer plano rueda 360º
+Caida otros 360º
+
+Botecillo 93º
+
+Bajada, rota en sentido contrario 360º
+Caida otra ves de 360
+
+Bote 1 -> 93º
+Bote 2 -> 45º
+
+Rodar -> 270º
+
+Borrar todos los puntos intermedios una vez trazado el movimiento
+
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------Ejercicio------------------------------------------------
+
+Plantear escenario con obstáculos, caida de pelota por gravedad. Dos pelotas de diferente masa.
+La mas pesada tarda e ponerse en movimiento, coge más velocidad en caida, no bota, cuesta poco que se detenga.
+La de menos masa tarda menos en ponerse en movimiento, bota mucho, coge menos velocidad en caida, cuesta mucho que se detenga.
+
+Mter minimo una rampa y otro obstáculo.
+
+Rampa inclinada (pelota de bolos bajando) --> llega a tramo recto con dos pelotas de baloncesto y una de bolos. Las de baloncesto rotan y se mueven un poco, la de bolos se mueve y se cae. Rueda super poco,
+entra en un hueco que sirve de trigger pa que algio empuje la pelota de nivea hacia arriba
