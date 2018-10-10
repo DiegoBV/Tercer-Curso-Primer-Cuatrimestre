@@ -33,7 +33,7 @@ const unsigned int DEF_SIZE = { 10 };
 const Vector3 DEF_COLOR = {100, 0, 100};
 const unsigned int DEF_VEL = 1000;
 const unsigned int DEF_ACC = 30;
-const unsigned int DEF_DIST_TRAV = 3000;
+const unsigned int DEF_DIST_TRAV = 2000;
 //---------------------------------------------------------------------------------------------------------------------------
 
 // Initialize physics engine
@@ -78,7 +78,6 @@ void stepPhysics(bool interactive, double t)
 	for (vector<Particula*>::iterator it = particles.begin(); it != particles.end();) {
 
 		(*it)->update(t);
-
 		if (!checkBullet(it)) { it++; } //si ninguna bala ha desaparecido se aumenta el iterador, si desaparece el iterador aumenta al borrar el contenido
 	}
 	// Add custom application code
@@ -106,6 +105,7 @@ void cleanupPhysics(bool interactive)
 void shoot() {
 
 	Particula* p = pool.getObject(); //se busca una particula inactiva en la pool (y se activa). Si no existe, se crea una nueva
+
 	p->setShape(DEF_SHAPE, DEF_SIZE); //set de la forma, color, velocidad, aceleracion...
 
 	p->setTransform(&PxTransform(GetCamera()->getEye()));

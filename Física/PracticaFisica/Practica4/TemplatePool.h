@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "RenderUtils.hpp"
 using namespace std;
 template <typename T>
 class TemplatePool
@@ -9,8 +10,8 @@ private:
 protected:
 	vector<T*> v;
 public:
-	TemplatePool() { for (int i = 0; i < DEFAULT_NUMB; i++) { T* aux = new T(); v.push_back(aux); aux->setActive(false); } }; //crea un numero inicial por defecto
-	TemplatePool(const unsigned int numInicial) { for (int i = 0; i < numInicial; i++) { T* aux = new T(); v.push_back(aux); aux->setActive(false); } }; //crea un numero proporcionado 
+	TemplatePool() { for (int i = 0; i < DEFAULT_NUMB; i++) { T* aux = new T(new RenderItem()); v.push_back(aux); aux->setActive(false); } }; //crea un numero inicial por defecto
+	TemplatePool(const unsigned int numInicial) { for (int i = 0; i < numInicial; i++) { T* aux = new T(new RenderItem()); v.push_back(aux); aux->setActive(false); } }; //crea un numero proporcionado 
 
 	virtual ~TemplatePool() { for (T* it : v) { delete it; it = nullptr; } }; //destruye todos los elementos del vector
 
@@ -33,7 +34,7 @@ public:
 		}	
 
 		if (!found) { //si no ha encontrado ninguno, crea uno nuevo y lo activa
-			aux = new T();
+			aux = new T(new RenderItem());
 			v.push_back(aux);
 			aux->setActive();
 		}
