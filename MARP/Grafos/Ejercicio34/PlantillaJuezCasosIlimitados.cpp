@@ -18,9 +18,6 @@ private:
 	void dps(const Grafo& g, const int V, int& nuevoTam) {
 		marcados[V] = true;
 		nuevoTam++;
-		if (V == 47) {
-			int j = 0;
-		}
 		for (int i : g.ady(V)) {
 			if (!marcados[i]) {
 				dps(g, i, nuevoTam);
@@ -28,9 +25,9 @@ private:
 		}
 	}
 public:
-	calcula_mancha(const Grafo& g, const vector<bool>& b): tam_(0), marcados(g.V(), false) {
+	calcula_mancha(const Grafo& g): tam_(0), marcados(g.V(), false) {
 		for (int i = 0; i < g.V(); i++) {
-			if (!marcados[i] && b[i]) { //nueva mancha
+			if (!marcados[i]) { //nueva mancha
 				int nTam = 0;
 				dps(g, i, nTam);
 				tam_ = max(tam_, nTam);
@@ -58,7 +55,7 @@ void adyacencia(Grafo& g, const vector<vector<char>>& v, const vector<vector<int
 		nI = pi - dir[i].first;
 		nJ = pj - dir[i].second;
 
-		if (nI >= 0 && nI < v.size() && nJ >= 0 && nJ < v[i].size()) {
+		if (nI >= 0 && nI < v.size() && nJ >= 0 && nJ < v[0].size()) {
 			if (v[nI][nJ] == c) { //hay adyacencia
 				g.ponArista(V, indices[nI][nJ]);
 			}
@@ -66,8 +63,8 @@ void adyacencia(Grafo& g, const vector<vector<char>>& v, const vector<vector<int
 	}
 };
 
-void representa_sol(const Grafo& g, const vector<bool>& b) {
-	calcula_mancha calc(g, b);
+void representa_sol(const Grafo& g) {
+	calcula_mancha calc(g);
 	// escribir sol
 	cout << calc.getTam() << " ";
 }
@@ -85,21 +82,17 @@ bool resuelveCaso() {
 	Grafo g(F*C);
 	vector<vector<char>> v;
 	vector<vector<int>> indices;
-	vector<bool> b;
-	b.resize(F*C);
-	v.resize(F);
-	indices.resize(F);
 
 	int index = 0;
+	//lectura del archivo de datos
 	for (int i = 0; i < F; i++) {
-		v[i].resize(C);
-		indices[i].resize(C);
+		v.push_back(vector<char>());
+		indices.push_back(vector<int>());
 		for (int j = 0; j < C; j++) {
-			char nChar;
-			cin >> nChar;
-
-			v[i][j] = nChar;
-			indices[i][j] = index;
+			char nElem;
+			cin >> nElem;
+			v[i].push_back(nElem);
+			indices[i].push_back(index); //numero del vertice
 			index++;
 		}
 	}
@@ -109,14 +102,13 @@ bool resuelveCaso() {
 			int p = i * C + j;
 			if (v[i][j] == '#') {
 				adyacencia(g, v, indices, indices[i][j], v[i][j], i, j);
-				b[p] = true;
 			}
 		}
 	}
 	
 	//representa_manchas(v);
 
-	representa_sol(g, b);
+	representa_sol(g);
 	int N;
 	cin >> N; //numero de nuevas fotos
 
@@ -125,9 +117,7 @@ bool resuelveCaso() {
 		cin >> nF >> nC; //mancha nueva
 		v[nF-1][nC-1] = '#';
 		adyacencia(g, v, indices, indices[nF - 1][nC - 1], v[nF - 1][nC - 1], nF - 1, nC - 1);
-		int p = (nC-1) * C + (nF-1);
-		b[p] = true;
-		representa_sol(g, b);
+		representa_sol(g);
 		//representa_manchas(v);
 	}
 
