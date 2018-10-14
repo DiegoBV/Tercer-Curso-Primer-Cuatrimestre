@@ -9,7 +9,9 @@
 #include <algorithm>
 
 using namespace std;
+
 vector<pair<int, int>> dir;
+int filas, columnas;
 
 class calcula_mancha {
 private:
@@ -55,7 +57,7 @@ void adyacencia(Grafo& g, const vector<vector<char>>& v, const vector<vector<int
 		nI = pi - dir[i].first;
 		nJ = pj - dir[i].second;
 
-		if (nI >= 0 && nI < v.size() && nJ >= 0 && nJ < v[0].size()) {
+		if (nI >= 0 && nI < filas && nJ >= 0 && nJ < columnas) {
 			if (v[nI][nJ] == c) { //hay adyacencia
 				g.ponArista(V, indices[nI][nJ]);
 			}
@@ -76,6 +78,9 @@ bool resuelveCaso() {
 	int F, C;
 	cin >> F >> C; //filas y columnas
 
+	filas = F;
+	columnas = C;
+
     if (! std::cin)
         return false;
 
@@ -85,10 +90,10 @@ bool resuelveCaso() {
 
 	int index = 0;
 	//lectura del archivo de datos
-	for (int i = 0; i < F; i++) {
+	for (int i = 0; i < filas; i++) {
 		v.push_back(vector<char>());
 		indices.push_back(vector<int>());
-		for (int j = 0; j < C; j++) {
+		for (int j = 0; j < columnas; j++) {
 			char nElem;
 			cin >> nElem;
 			v[i].push_back(nElem);
@@ -97,16 +102,14 @@ bool resuelveCaso() {
 		}
 	}
 
-	for (int i = 0; i < v.size(); i++) {
-		for (int j = 0; j < v[i].size(); j++) {
+	for (int i = 0; i < filas; i++) {
+		for (int j = 0; j < columnas; j++) {
 			int p = i * C + j;
 			if (v[i][j] == '#') {
 				adyacencia(g, v, indices, indices[i][j], v[i][j], i, j);
 			}
 		}
 	}
-	
-	//representa_manchas(v);
 
 	representa_sol(g);
 	int N;
@@ -115,10 +118,10 @@ bool resuelveCaso() {
 	for (int i = 0; i < N; i++) {
 		int nF, nC;
 		cin >> nF >> nC; //mancha nueva
+
 		v[nF-1][nC-1] = '#';
 		adyacencia(g, v, indices, indices[nF - 1][nC - 1], v[nF - 1][nC - 1], nF - 1, nC - 1);
 		representa_sol(g);
-		//representa_manchas(v);
 	}
 
 	cout << endl;
@@ -145,6 +148,7 @@ int main() {
 	dir[5] = p5;
 	dir[6] = p6;
 	dir[7] = p7;
+
     // Para la entrada por fichero.
     // Comentar para acepta el reto
     #ifndef DOMJUDGE
