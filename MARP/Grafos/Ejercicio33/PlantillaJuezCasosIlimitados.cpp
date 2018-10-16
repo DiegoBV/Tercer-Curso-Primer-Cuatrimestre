@@ -15,25 +15,38 @@ vector<pair<int, int>> dirs;
 
 class cuentaConexas {
 private:
-	vector<bool> marcados;
+	vector<vector<bool>> marcados;
 	int numConexas_;
 
-	void deep_search(const Grafo& g, const int v) {
-		marcados[v] = true;
-		for (int i : g.ady(v)) {
-			if (!marcados[i]) {
-				deep_search(g, i);
+	bool correcta(const int ni, const int nj) {
+		return ni >= 0 && ni < marcados.size() && nj >= 0 && nj < marcados[0].size();
+	};
+
+	void deep_search(const vector<string>& g, const int i, const int j) {
+		marcados[i][j] = true;
+
+		for (pair<int, int> d : dirs) { 
+			int ni, nj;
+			ni = i + d.first;
+			nj = j + d.second;
+
+			if (correcta(ni, nj) && !marcados[ni][nj] && g[ni][nj] == '.') {
+				deep_search(g, ni, nj); //O(v) siendo v el numero de adyacencias
 			}
 		}
+
 	};
 
 public:
 	cuentaConexas() {};
-	cuentaConexas(const Grafo& g, const vector<bool>& b): marcados(g.V(), false), numConexas_(0) {
-		for (int i = 0; i < g.V(); i++) {
-			if (!marcados[i] && b[i]) { //si encuentra algun vertice sin marcar, es otra componente conexa
-				numConexas_++;
-				deep_search(g, i);
+	//coste O(i*j)
+	cuentaConexas(const vector<string>& g): marcados(g.size(), vector<bool>(g[0].size(), false)), numConexas_(0) {
+		for (int i = 0; i < g.size(); i++) {
+			for (int j = 0; j < g[i].size(); j++) {
+				if (g[i][j] == '.' && !marcados[i][j]) {
+					numConexas_++;
+					deep_search(g, i, j);
+				}
 			}
 		}
 
@@ -42,7 +55,7 @@ public:
 	int getNumConexas() const { return numConexas_; };
 };
 
-void comprueba_adyacencia(const vector<vector<char>>& v, const vector<vector<int>>& v_aux, const char& c, Grafo& g, int pi, int pj, const vector<bool>& b) {
+void comprueba_adyacencia(const vector<string>& v, const vector<vector<int>>& v_aux, const char& c, Grafo& g, int pi, int pj, const vector<bool>& b) {
 	for (int i = 0; i < dirs.size(); i++) {
 		int ni, nj;
 		ni = pi + dirs[i].first;
@@ -54,13 +67,15 @@ void comprueba_adyacencia(const vector<vector<char>>& v, const vector<vector<int
 			}
 		}
 	}
-}
+};
 
-// función que resuelve el problema
-/*TipoSolucion resolver(TipoDatos datos) {
-    
-    
-}*/
+void representa(const vector<string>& v) {
+	for (int i = 0; i < v.size(); i++) {
+		cout << v[i] << endl;
+	}
+	
+	cout << endl;
+};
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
@@ -73,46 +88,25 @@ bool resuelveCaso() {
 	if (!std::cin)
 		return false;
 
-	Grafo g(w*h);
-	vector<vector<char>> v; //vector para la matriz de la foto
-	vector<vector<int>> v_aux; //vector de vertices del grafo
-	vector<bool> b; //vector de bool, indica si un vertice es blanco o no
-	b.resize(w*h);
+	vector<string> v; //vector para la matriz de la foto
 
 	int index = 0;
 
 	//lectura del archivo de datos
 	for (int i = 0; i < h; i++) {
-		v.push_back(vector<char>());
-		v_aux.push_back(vector<int>());
+		v.push_back(string());
 		for (int j = 0; j < w; j++) {
 			char nElem;
 			cin >> nElem;
 			v[i].push_back(nElem);
-			v_aux[i].push_back(index); //numero del vertice
-			index++;
 		}
 	}
 
-	//coste O(v) siendo v el numero de vertices
-	for (int i = 0; i < v.size(); i++) {
-		for (int j = 0; j < v[i].size(); j++) {	
-			int p = i * w + j;
-
-			comprueba_adyacencia(v, v_aux, v[i][j], g, i, j, b); //comprueba la adyacencia, es decir, añade las aristas correspondientes --> problema, pone aristas innecesarias ? igual da tl
-
-			if (v[i][j] == '.') { //si el vertice es blanco, lo marca para su futura exploracion
-				b[p] = true;
-			}
-		}
-	}
-
-	//g.print(cout);
-
+	//representa(v);
 
     // escribir sol
 
-	cuentaConexas c(g, b);
+	cuentaConexas c(v);
 
 	cout << c.getNumConexas() - 1 << endl;
     
