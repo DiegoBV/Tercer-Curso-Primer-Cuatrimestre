@@ -11,6 +11,12 @@
 
 using namespace std;
 
+/*struct Predecesor{
+	int papi = -1;
+	Predecesor() {};
+	Predecesor(int k) : papi(k) {};
+};*/
+
 /*class camino_mas_corto {
 private:
 	vector<bool> marcados;
@@ -73,6 +79,7 @@ class numero_tiradas {
 private:
 	vector<int> niveles;
 	vector<bool> marcados;
+	//vector<Predecesor> arg;
 
 	void bfs(const vector<casilla>& tablero, int vertice) {
 		queue<casilla> q;
@@ -91,10 +98,13 @@ private:
 					q.push(tablero[i]);
 					niveles[i] = niveles[cas_a_explorar.num] + 1;
 
+					//arg[i] = Predecesor(cas_a_explorar.num);
+
 					if (tablero[i].saltoAl != -1 && !marcados[tablero[i].saltoAl]) {
 						marcados[tablero[i].saltoAl] = true;
 						q.push(tablero[tablero[i].saltoAl]);
 						niveles[tablero[i].saltoAl] = niveles[cas_a_explorar.num] + 1;
+						//arg[tablero[i].saltoAl] = Predecesor(cas_a_explorar.num);
 					}
 				}
 			}
@@ -103,13 +113,17 @@ private:
 
 public:
 	numero_tiradas() {};
-	numero_tiradas(const vector<casilla>& tablero, int vertice): marcados(tablero.size(), false), niveles(tablero.size(), 0) {
+	numero_tiradas(const vector<casilla>& tablero, int vertice): marcados(tablero.size(), false), niveles(tablero.size(), 0)/*, arg(tablero.size())*/ {
 		bfs(tablero, vertice);
 	};
 
 	const int getTiradas() {
 		return niveles[niveles.size() - 1];
 	}
+
+	/*const vector<Predecesor> ggg() {
+		return arg;
+	}*/
 };
 
 
@@ -147,6 +161,14 @@ bool resuelveCaso() {
 	//cout << ceil((float)sol.distancia_final_origen() / (float)K) << endl;
 	numero_tiradas sol(tablero, 0);
 	cout << sol.getTiradas() << endl;
+
+	//Predecesor p;
+	//p = sol.ggg()[(N*N) - 1];
+
+	/*while (p.papi != -1) {
+		cout << p.papi + 1 << "-->";
+		p = sol.ggg()[p.papi];
+	}*/
 
 	return true;
 
