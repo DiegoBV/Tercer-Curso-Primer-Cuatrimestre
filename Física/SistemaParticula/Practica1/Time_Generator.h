@@ -24,6 +24,7 @@ class Time_Generator
 public:
 	virtual ~Time_Generator();
 	Time_Generator(Particula::Shape shp, float t, Vector3 pos = {10, 30, 0}) : shape_(shp), time_inter(t), pos(pos) { srand(time(NULL)); };
+	Time_Generator() {};
 	void update(float time);
 };
 

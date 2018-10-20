@@ -10,7 +10,7 @@ Vector3 Time_Generator::generateRandomVel()
 
 Vector3 Time_Generator::generateRandomColor()
 {
-	Vector3 nCol = { (float)(rand() % (255)), (float)(rand() % (255)) , (float)(rand() % (255)) };
+	Vector3 nCol = { (float)(rand() % (11))/10, (float)(rand() % (11))/10 , (float)(rand() % (11))/10 };
 	return nCol;
 }
 
@@ -19,7 +19,7 @@ void Time_Generator::generateNewParticle(float time)
 	tiempo_transcurrido += time;
 	if (tiempo_transcurrido > next_period) {
 		Particula* p = pool.generateObject(pos, generateRandomVel(), { 0, G_, 0 }, generateRandomColor());
-		p->setShape(shape_, { 1 });
+		p->setSphereShape(1);
 		next_period = tiempo_transcurrido + time_inter;
 		particles.push_back(p);
 	}

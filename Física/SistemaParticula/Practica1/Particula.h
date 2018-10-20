@@ -33,9 +33,9 @@ public:
 		};
 
 		//constructores
-		Medidas(int x) : x_(x) {};
-		Medidas(int x, int y) : x_(x), y_(y) {};
-		Medidas(int x, int y, int z) : x_(x), y_(y), z_(z) {};
+		Medidas(float x) : x_(x) {};
+		Medidas(float x, float y) : x_(x), y_(y) {};
+		Medidas(float x, float y, float z) : x_(x), y_(y), z_(z) {};
 	};
 
 	//Posicion en el mundo
@@ -64,8 +64,14 @@ public:
 	void integrate(float t);
 	//set inerse_mass
 	inline void setInverseMass(const float newMass) { inverse_mass = newMass; };
-	//set shape
-	inline void setShape(Shape shp, Medidas size) { renderItem->shape = createShape(shp, size); };
+	//set shape si no tiene forma
+	inline void setShape(Shape shp, Medidas size) { if(renderItem->shape == nullptr) renderItem->shape = createShape(shp, size);};
+	//setSphereShape
+	inline void setSphereShape(float r) { renderItem->shape = createShape(Sphere, r); };
+	//setCapsuleShape
+	inline void setCapsuleShape(float r, float R) { renderItem->shape = createShape(Capsule, { r, R }); };
+	//setBoxShape
+	inline void setBoxShape(float x, float y, float z) { renderItem->shape = createShape(Box, { x, y, z }); };
 	//set color
 	inline void setColor(Vector3 color_) { renderItem->color = color_; };
 	//set transform
