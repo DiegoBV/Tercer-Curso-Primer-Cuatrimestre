@@ -63,7 +63,7 @@ void initPhysics(bool interactive)
 	// Add custom application code
 	f->setType(3);
 	f->setActive();
-	f->setAge(5);
+	f->setAge(2);
 	f->setPosition({ 10, 0, 0 });
 	f->setColor({ 100, 200, 100 });
 	// ...
