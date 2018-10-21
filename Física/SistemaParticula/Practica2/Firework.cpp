@@ -64,6 +64,7 @@ void Firework::FireworksUpdate(float t)
 				FireworkRule* rule = GetRuleFromType(firework->type_);
 				firework->setInactive();
 				//todo va mal, no se borran del vector, no hacen lo que tienen que hacer en general, esto de las reglas es incomprensible lul
+				//CREO QUE SE REFIERE A QUE HAGAMOS UN MANAGER DE FIREWORKS, QUE TENGA LAS REGLAS Y TAL---> TIENE MAS SENTIDO
 				for (auto itPlayload = rule->payloads.begin(); itPlayload != rule->payloads.end(); ++itPlayload)
 				{
 					FireworkRule::Payload payload = *itPlayload;
