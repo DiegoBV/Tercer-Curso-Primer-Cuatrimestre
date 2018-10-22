@@ -9,7 +9,7 @@ class Time_Generator
 	float time_inter = 0;
 	float next_period = 0;
 	float tiempo_transcurrido = 0;
-	TemplatePool<Particula> pool;
+	TemplatePool<Particula>* pool = nullptr;
 	vector<Particula*> particles;
 	Vector3 pos;
 	const int VEL_MAX_ = 50;
@@ -23,7 +23,7 @@ class Time_Generator
 
 public:
 	virtual ~Time_Generator();
-	Time_Generator(Particula::Shape shp, float t, Vector3 pos = {10, 30, 0}) : shape_(shp), time_inter(t), pos(pos) { srand(time(NULL)); };
+	Time_Generator(Particula::Shape shp, float t, TemplatePool<Particula>* pool, Vector3 pos = { 10, 30, 0 }) : shape_(shp), time_inter(t), pool(pool), pos(pos) { srand(time(NULL)); };
 	Time_Generator() {};
 	void update(float time);
 };

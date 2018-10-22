@@ -12,7 +12,7 @@
 
 #include "Time_Generator.h"
 
-#include "Firework.h"
+#include "FireworkManager.h"
 
 
 using namespace physx;
@@ -31,9 +31,9 @@ std::vector<Particula*> particles; //vector para manejar las particulas
 
 TemplatePool<Particula> pool; //pool de particulas creadas para disparar, por defecto se crean 30 al principio y se van reusando
 
-Time_Generator t_gen(Particula::Sphere, 0.01);
+Time_Generator t_gen(Particula::Sphere, 0.01, &pool);
 
-Firework* f = new Firework(new RenderItem());
+FireworkManager fManager_ = FireworkManager();
 
 //------------------------------------------------ Constantes del disparo ---------------------------------------------------
 const Particula::Shape DEF_SHAPE = Particula::Sphere;
@@ -61,11 +61,6 @@ void initPhysics(bool interactive)
 	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
 
 	// Add custom application code
-	f->setType(3);
-	f->setActive();
-	f->setAge(2);
-	f->setPosition({ 10, 0, 0 });
-	f->setColor({ 100, 200, 100 });
 	// ...
 }
 
@@ -95,7 +90,7 @@ void stepPhysics(bool interactive, double t)
 	}
 
 	t_gen.update(t);
-	f->update(t);
+	fManager_.FireworksUpdate(t);
 	// Add custom application code
 	// ...
 }
@@ -140,7 +135,8 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	PX_UNUSED(camera);
 	switch(toupper(key))
 	{
-	case 'B':
+	case 'F':
+		fManager_.FireworkCreate(0);
 		break;
 	case ' ':
 		break;

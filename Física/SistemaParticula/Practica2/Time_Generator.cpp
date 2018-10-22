@@ -18,7 +18,7 @@ void Time_Generator::generateNewParticle(float time)
 {
 	tiempo_transcurrido += time;
 	if (tiempo_transcurrido > next_period) {
-		Particula* p = pool.generateObject(pos, generateRandomVel(), { 0, G_, 0 }, generateRandomColor());
+		Particula* p = pool->generateObject(pos, generateRandomVel(), { 0, G_, 0 }, generateRandomColor());
 		p->setShape(shape_, {1});
 		next_period = tiempo_transcurrido + time_inter;
 		particles.push_back(p);

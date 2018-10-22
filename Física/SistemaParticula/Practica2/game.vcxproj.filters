@@ -18,6 +18,7 @@
     <ClCompile Include="Firework.cpp">
       <Filter>Sistemas_Particulas</Filter>
     </ClCompile>
+    <ClCompile Include="FireworkManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -40,6 +41,7 @@
     <ClInclude Include="TemplatePool.h">
       <Filter>Particulas</Filter>
     </ClInclude>
+    <ClInclude Include="FireworkManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

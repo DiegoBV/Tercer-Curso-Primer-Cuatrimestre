@@ -7,7 +7,7 @@ template <typename T>
 class TemplatePool
 {
 private:
-	const unsigned int DEFAULT_NUMB = 30;
+	const unsigned int DEFAULT_NUMB = 300;
 protected:
 	vector<T*> v;
 public:
