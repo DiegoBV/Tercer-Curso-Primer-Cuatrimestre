@@ -1,0 +1,53 @@
+//Ejercicio del Oscar
+
+del 1 al 5 encaramos la pistola
+del 5 al 10 el pulgar se mueve para soltar el cargador
+del 10 al 15 cae el cargador
+tiempo de espera del 15 al 25
+del 25 al 35 volvemos a cargar
+del 35 al 45 pasamos e recargar a amartillar
+del 45 al 55 amarillamos
+del 55 al 65 apuntamos al frente
+del 65 al 70 dispara
+
+---------------------------------------------Start-------------------------------------------
+Dope Sheet
+Activas el autokey (?)
+Los brazos tienen varios controles en las muñecas y los codos. Tambien en los dedos.
+Mayus + D, duplicas todos los canales de la animacion
+
+En el 0 pones el frame base, en el 1 empiezas a animar...
+
+Tiene que agarrar la pistola con los dedillos (mantener el frame base siempre con el ctrl+d)
+La otra mano tiene sujetar la pistola por abajo.
+
+Fotograma 5--> mostramos la pistola (se la acerca)
+La otra mano fuera de encuadre.
+
+Fotograma 10 --> bajar el dedo pulgar. Hay que tener cuidado con el pulgar, si no haces nadas la transicion empieza desde el principio de la animacion.
+En el fotograma 5 hay que crear un keyframe en el dedo.
+
+Fotograma 15 --> hacer caer el cargador. Pasa lo mismo que con el pulgar asi que hay que ir al fotograma 10 y ponerle el keyframe del cargador.
+Preparas la otra mano para recepcionar el cargador
+
+Del 15 al 25--> duplicamos hasta el 25.
+
+Del 25 al 35--> recargamos. Subimos el cargador y subimos la mano (colocamos los dedos y toa la pesca). Posicion y rotacion de la pistola hacer keyframes
+
+Del 35 al 45 --> giramos la pistola y ponemos la otra mano encima de la pistola para amartillar. La mano se desplaza cpor el camino más corto, meter algun keyframe intermedio para solucionar esto.ç
+
+Del 45 al 55 --> echar el cañon para atrás. Meter en el 45 el keyframe del cañon.
+
+Del 55 al 65 --> apuntar. Crear los keyframes de rotacion si no los tiene en amarillo. La mano vuelve a pasar por el medio. Keyframes intermedios.
+
+Del 65 al 70 --> keyframe en el 65 de la bala.
+
+En el 67/68 --> retroceso. Echamos ambas manos un poco hacia atrás. En el 70 la bala tiene que haber caido...
+
+En el 71 la bala vuelve a su sitio original--> clonar el 65 al 71. Duplicar los frames de disparo again.
+
+(modificar los fotogramas y el timing para dejarlo mejor, solapar acciones y tal...)
+
+------------------------------------------------------------------------------Sonidos-----------------------------------------------
+
+Video sequence editor.  Colocar el sonido de cargador out, cargador in, amartillado, disparo
