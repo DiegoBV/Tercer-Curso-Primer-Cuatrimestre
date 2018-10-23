@@ -2,12 +2,14 @@
 #include "Firework.h"
 #include "TemplatePool.h"
 #include <time.h>
+#include <map>
 #include <queue>
 
 class FireworkManager
 {
 
 private:
+	const unsigned int MAX_FIREWORKS = 5; //numero maximo de cohetes que se pueden disparar a la vez
 
 	std::queue<Firework*> fireworks_to_introduce;
 
@@ -80,7 +82,6 @@ private:
 			firework->a = { RandomFloat(minVel.x, maxVel.x), GRAVITY_, RandomFloat(minVel.x, maxVel.x) };
 			firework->resetLifeTime();
 
-			//tamaños random tambien igual mola
 			switch (t)
 			{
 			case 0:
@@ -100,9 +101,9 @@ private:
 		FireworkRule() {};
 	};
 
-	TemplatePool<Firework> pool;
+	TemplatePool<Firework> pool; //podria usar la misma pool que existe pero habria que hacer casteos...
 
-	std::vector<FireworkRule> rules;
+	std::map<unsigned, FireworkRule> rules;
 	std::vector<Firework*> fireworks;
 
 	void initFireworkRules();
