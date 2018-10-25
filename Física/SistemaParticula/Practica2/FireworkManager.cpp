@@ -7,7 +7,6 @@ FireworkManager::FireworkManager()
 	initFireworkRules();
 }
 
-
 FireworkManager::~FireworkManager()
 {
 }

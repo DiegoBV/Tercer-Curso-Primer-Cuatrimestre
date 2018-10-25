@@ -254,7 +254,6 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Firework.cpp" />
     <ClCompile Include="FireworkManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Particula.cpp" />

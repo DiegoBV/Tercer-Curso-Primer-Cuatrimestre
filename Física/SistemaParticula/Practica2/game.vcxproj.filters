@@ -15,10 +15,9 @@
     <ClCompile Include="Time_Generator.cpp">
       <Filter>Sistemas_Particulas</Filter>
     </ClCompile>
-    <ClCompile Include="Firework.cpp">
+    <ClCompile Include="FireworkManager.cpp">
       <Filter>Sistemas_Particulas</Filter>
     </ClCompile>
-    <ClCompile Include="FireworkManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -35,13 +34,15 @@
     <ClInclude Include="Time_Generator.h">
       <Filter>Sistemas_Particulas</Filter>
     </ClInclude>
-    <ClInclude Include="Firework.h">
-      <Filter>Sistemas_Particulas</Filter>
-    </ClInclude>
     <ClInclude Include="TemplatePool.h">
       <Filter>Particulas</Filter>
     </ClInclude>
-    <ClInclude Include="FireworkManager.h" />
+    <ClInclude Include="Firework.h">
+      <Filter>Particulas</Filter>
+    </ClInclude>
+    <ClInclude Include="FireworkManager.h">
+      <Filter>Sistemas_Particulas</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

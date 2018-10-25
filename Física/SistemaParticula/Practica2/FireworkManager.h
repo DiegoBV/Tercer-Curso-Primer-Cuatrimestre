@@ -117,12 +117,10 @@ private:
 	static float RandomFloat(float a, float b);
 
 	void pushFireworks();
-
 public:
 	FireworkManager();
 	virtual ~FireworkManager();
 	void FireworkCreate(unsigned type, const Firework* parent = NULL);
 	void FireworksUpdate(float t);
-
 };
 
