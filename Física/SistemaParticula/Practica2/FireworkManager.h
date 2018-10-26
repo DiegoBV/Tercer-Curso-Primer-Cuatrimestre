@@ -60,7 +60,7 @@ private:
 		{
 			firework->setType(t);
 			firework->setAge(RandomFloat(minAge, maxAge));
-			Vector3 vel;
+			Vector3 vel = {0, 0, 0};
 
 			if (parent)
 			{ // inherit velocity from parent
@@ -69,7 +69,7 @@ private:
 			}
 			else
 			{
-				Vector3 start;
+				Vector3 start = {0, 0, 0};
 				int x = rand() % 3 - 1;
 				start.x = 5.0f * x;
 				firework->setPosition(start);
