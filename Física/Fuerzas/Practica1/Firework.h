@@ -9,7 +9,7 @@ private:
 	unsigned type_;
 
 	//tiempo en explotar
-	double age_;
+	float age_;
 
 public:
 	Firework() {};

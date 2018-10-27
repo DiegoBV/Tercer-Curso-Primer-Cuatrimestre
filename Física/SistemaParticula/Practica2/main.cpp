@@ -136,9 +136,10 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	switch(toupper(key))
 	{
 	case 'F':
-		fManager_.FireworkCreate(0);
+		fManager_.Input_FireworkCreate();
 		break;
-	case ' ':
+	case ' ': 
+		fManager_.switch_activate();
 		break;
 	case 'X': 
 	{

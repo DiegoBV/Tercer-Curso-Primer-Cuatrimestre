@@ -2,7 +2,7 @@
 
 
 
-FireworkManager::FireworkManager()
+FireworkManager::FireworkManager(): autoWork_(true)
 {
 	initFireworkRules();
 }
@@ -39,9 +39,9 @@ void FireworkManager::create(unsigned type, unsigned count, FireworkRule * rule,
 	}
 }
 
-void FireworkManager::FireworkCreate(unsigned type, const Firework * parent)
+void FireworkManager::Input_FireworkCreate(unsigned type, const Firework * parent)
 {
-	if (fireworks.size() < MAX_FIREWORKS) {
+	if (fireworks.size() < MAX_FIREWORKS && !autoWork_) {
 		FireworkRule* rule = GetRuleFromType(type);
 		if (rule != nullptr) { Firework* newFirework = AllocNewFirework(); rule->create(newFirework, type, parent); }
 	}
@@ -82,8 +82,21 @@ void FireworkManager::pushFireworks()
 	}
 }
 
+void FireworkManager::autoCreateFireworks(double t)
+{
+	current_time += t;
+	if (current_time > TIME) {
+		current_time = 0;
+		if (autoWork_) {
+			FireworkRule* rule = GetRuleFromType(0);
+			if (rule != nullptr) { Firework* newFirework = AllocNewFirework(); rule->create(newFirework, 0, NULL); }
+		}
+	}
+}
+
 void FireworkManager::FireworksUpdate(double t)
 {
+	autoCreateFireworks(t);
 	for (vector<Firework*>::iterator it = fireworks.begin(); it != fireworks.end();)
 	{
 		Firework* firework = (*it);
@@ -106,4 +119,9 @@ void FireworkManager::FireworksUpdate(double t)
 		}
 	}
 	pushFireworks(); //si se han creado fireworks --> se pushean
+}
+
+void FireworkManager::switch_activate()
+{
+	autoWork_ = !autoWork_;
 }

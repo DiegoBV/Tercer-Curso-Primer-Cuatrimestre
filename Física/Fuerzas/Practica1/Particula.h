@@ -17,16 +17,7 @@ private:
 	bool active = true;
 
 	//lifetime
-	double lifeTime_;
-
-	// Accumulated force
-	Vector3 force;
-
-	// Clears accumulated force
-	void clearForce();
-
-	// Add force to apply in next integration only
-	void addForce(const Vector3& f);
+	float lifeTime_;
 
 	//transform
 	physx::PxTransform transform;
@@ -63,7 +54,7 @@ public:
 
 	virtual ~Particula() { if (renderItem != nullptr) delete renderItem; };
 
-	virtual void update(double time) { integrate(time); lifeTime_ += time; };
+	virtual void update(float time) { integrate(time); lifeTime_ += time; };
 
 	//set renderItem
 	inline void setRenderItem(RenderItem* rn) { renderItem = rn; };

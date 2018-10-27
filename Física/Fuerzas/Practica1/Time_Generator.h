@@ -25,6 +25,6 @@ public:
 	virtual ~Time_Generator();
 	Time_Generator(Particula::Shape shp, float t, TemplatePool<Particula>* pool, Vector3 pos = { 10, 30, 0 }) : shape_(shp), time_inter(t), pool(pool), pos(pos) { srand(time(NULL)); };
 	Time_Generator() {};
-	void update(double time);
+	void update(float time);
 };
 

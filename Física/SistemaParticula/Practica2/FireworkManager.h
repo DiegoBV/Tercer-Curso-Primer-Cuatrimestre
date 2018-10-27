@@ -10,6 +10,10 @@ class FireworkManager
 
 private:
 	const unsigned int MAX_FIREWORKS = 5; //numero maximo de cohetes que se pueden disparar a la vez
+	const double TIME = 5; //cada "time" segundos se crea un firework si esa opcion esta activada
+
+	bool autoWork_;
+	double current_time = 0;
 
 	std::queue<Firework*> fireworks_to_introduce;
 
@@ -117,10 +121,14 @@ private:
 	static float RandomFloat(float a, float b);
 
 	void pushFireworks();
+
+	void autoCreateFireworks(double t);
+
 public:
 	FireworkManager();
 	virtual ~FireworkManager();
-	void FireworkCreate(unsigned type, const Firework* parent = NULL);
-	void FireworksUpdate(float t);
+	void Input_FireworkCreate(unsigned type = 0, const Firework* parent = NULL);
+	void FireworksUpdate(double t);
+	void switch_activate();
 };
 

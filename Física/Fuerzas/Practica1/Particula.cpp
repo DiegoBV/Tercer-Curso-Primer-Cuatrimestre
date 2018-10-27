@@ -23,16 +23,6 @@ physx::PxShape* Particula::createShape(Shape tipo, Medidas size)
 	return shape_;
 }
 
-void Particula::clearForce()
-{
-	force = { 0, 0, 0 }; //??
-}
-
-void Particula::addForce(const Vector3 & f)
-{
-	force += f;
-}
-
 void Particula::integrate(float t)
 {
 	//Si la masa es infinita, la particula no cambia su posicion (paredes, suelos)
@@ -41,17 +31,11 @@ void Particula::integrate(float t)
 	//update de la posicion (e = e + v*t)
 	p += v * t;
 
-	//aplicacion de fuerzas
-	Vector3 totalAcceleration = a;
-	a += force * inverse_mass;
-
 	//update de la velocidad
-	v += totalAcceleration * t;
+	v += a * t;
 
 	//aplicamos la fuerza de rozamiento --> v = v * d^t
 	v *= powf(damping, t);
 
 	transform.p = p;
-
-	clearForce();
 }

@@ -42,7 +42,6 @@ const Vector3 DEF_COLOR = {100, 0, 100};
 const unsigned int DEF_VEL = 100;
 const unsigned int DEF_ACC = 30;
 const unsigned int DEF_DIST_TRAV = 2000;
-double t = 0;
 //---------------------------------------------------------------------------------------------------------------------------
 
 // Initialize physics engine
@@ -92,6 +91,8 @@ void stepPhysics(bool interactive, double t)
 
 	t_gen.update(t);
 	fManager_.FireworksUpdate(t);
+	// Add custom application code
+	// ...
 }
 
 // Function to clean data
@@ -135,9 +136,10 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	switch(toupper(key))
 	{
 	case 'F':
-		fManager_.FireworkCreate(0);
+		fManager_.Input_FireworkCreate();
 		break;
-	case ' ':
+	case ' ': 
+		fManager_.switch_activate();
 		break;
 	case 'X': 
 	{

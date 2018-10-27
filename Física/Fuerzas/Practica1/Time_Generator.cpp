@@ -39,7 +39,7 @@ Time_Generator::~Time_Generator()
 {
 }
 
-void Time_Generator::update(double time)
+void Time_Generator::update(float time)
 {
 	generateNewParticle(time);
 	for (vector<Particula*>::iterator it = particles.begin(); it != particles.end();) {
