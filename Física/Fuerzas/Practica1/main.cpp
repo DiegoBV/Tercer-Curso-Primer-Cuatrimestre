@@ -14,7 +14,6 @@
 
 #include "FireworkManager.h"
 
-
 using namespace physx;
 
 PxDefaultAllocator		gAllocator;

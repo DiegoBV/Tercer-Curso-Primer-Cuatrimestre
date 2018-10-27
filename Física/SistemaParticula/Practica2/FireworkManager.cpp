@@ -1,6 +1,5 @@
 #include "FireworkManager.h"
-
-
+#include "json.hpp"
 
 FireworkManager::FireworkManager(): autoWork_(true)
 {
@@ -13,21 +12,28 @@ FireworkManager::~FireworkManager()
 
 void FireworkManager::initFireworkRules()
 {
-	FireworkRule rule;
-	rule.setParameters(0, 2, 5, Vector3(-500, 2500, -500), Vector3(500, 2800, 500), 0.1, 5, 10);
-	rule.payloads.push_back(FireworkRule::Payload(1, 15));
-	rule.payloads.push_back(FireworkRule::Payload(1, 8));
-	rules.insert({ 0, rule});
+	string name = ".\\JSONs\\Firework_Rules.json";
+	std::ifstream i(name);
+	
+	if (i.is_open()) { // Para que no intente abrir archivos que no existen
+		json j;
+		i >> j;
+		int n;
+		for (int i = 0; i < j["Rules"].size(); i++) {
+			FireworkRule rule;
+			rule.setParameters(j["Rules"][i]["type"], j["Rules"][i]["MinAge"], j["Rules"][i]["MaxAge"], 
+				Vector3(j["Rules"][i]["MinVel"][0], j["Rules"][i]["MinVel"][1], j["Rules"][i]["MinVel"][2]), 
+					Vector3(j["Rules"][i]["MaxVel"][0], j["Rules"][i]["MaxVel"][1], j["Rules"][i]["MaxVel"][2]), j["Rules"][i]["Dumping"], j["Rules"][i]["MinTam"], j["Rules"][i]["MaxTam"]);
 
-	rule = FireworkRule();
-	rule.setParameters(1, 3, 7, Vector3(-400, 1500, -400), Vector3(400, 1800, 400), 0.1, 5, 8);
-	rule.payloads.push_back(FireworkRule::Payload(2, 20));
-	rule.payloads.push_back(FireworkRule::Payload(2, 8));
-	rules.insert({ 1, rule });
-
-	rule = FireworkRule();
-	rule.setParameters(2, 2, 5, Vector3(-100, 1000, -100), Vector3(100, 1800, 100), 0.1, 4, 7);
-	rules.insert({ 2, rule });
+			for (int k = 0; k < j["Rules"][i]["Payloads"].size(); k++) {
+				rule.payloads.push_back(FireworkRule::Payload(j["Rules"][i]["Payloads"][k]["NextType"], j["Rules"][i]["Payloads"][k]["Count"]));
+			}
+			rules.insert({ j["Rules"][i]["type"], rule });
+		}
+	}
+	/*else {
+		//algun error
+	}*/
 
 	//si luego quiero incluir el tipo '7', la rule la seteo con el tipo 7 y la inserto con el id 7
 }

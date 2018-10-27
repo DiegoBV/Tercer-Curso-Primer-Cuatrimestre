@@ -43,6 +43,7 @@
     <ClInclude Include="FireworkManager.h">
       <Filter>Sistemas_Particulas</Filter>
     </ClInclude>
+    <ClInclude Include="json.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

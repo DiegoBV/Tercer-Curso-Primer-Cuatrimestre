@@ -1,9 +1,9 @@
 #pragma once
-#include "Firework.h"
-#include "TemplatePool.h"
 #include <time.h>
 #include <map>
 #include <queue>
+#include "Firework.h"
+#include "TemplatePool.h"
 
 class FireworkManager
 {
