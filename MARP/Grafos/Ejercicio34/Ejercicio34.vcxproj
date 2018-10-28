@@ -115,10 +115,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Grafo.h" />
+    <ClCompile Include="PlantillaJuezCasosIlimitados.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="PlantillaJuezCasosIlimitados.cpp" />
+    <ClInclude Include="ConjuntosDisjuntos.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

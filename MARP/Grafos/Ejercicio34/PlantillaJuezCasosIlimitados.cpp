@@ -5,70 +5,53 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include "Grafo.h"
+#include <string>
 #include <algorithm>
+#include "ConjuntosDisjuntos.h"
 
 using namespace std;
 
-vector<pair<int, int>> dir;
-int filas, columnas;
+vector<pair<int, int>> dirs;
 
-class calcula_mancha {
-private:
-	int tam_;
-	vector<bool> marcados;
-	void dps(const Grafo& g, const int V, int& nuevoTam) {
-		marcados[V] = true;
-		nuevoTam++;
-		for (int i : g.ady(V)) {
-			if (!marcados[i]) {
-				dps(g, i, nuevoTam);
-			}
-		}
-	}
-public:
-	calcula_mancha(const Grafo& g): tam_(0), marcados(g.V(), false) {
-		for (int i = 0; i < g.V(); i++) {
-			if (!marcados[i]) { //nueva mancha
-				int nTam = 0;
-				dps(g, i, nTam);
-				tam_ = max(tam_, nTam);
-			}
-		}
-	}
-
-	int getTam() const { return tam_; };
-};
-
-void representa_manchas(const vector<vector<char>>& v) {
-	for (int i = 0; i < v.size(); i++) {
-		for (int j = 0; j < v[i].size(); j++) {
-			cout << v[i][j];
+//coste O(F*C)
+void representa(const vector<string>& matriz) {
+	for (int i = 0; i < matriz.size(); i++) {
+		for (int j = 0; j < matriz[i].size(); j++) {
+			cout << matriz[i][j];
 		}
 		cout << endl;
 	}
+}
 
-	cout << endl << endl;
-};
+//coste O(1)
+bool es_correcta(int ni, int nj, const vector<string>& matriz) {
+	return (ni >= 0 && ni < matriz.size() && nj >= 0 && nj < matriz[ni].size());
+}
 
-void adyacencia(Grafo& g, const vector<vector<char>>& v, const vector<vector<int>>& indices, const int V, const char c, const int pi, const int pj) {
-	for (int i = 0; i < dir.size(); i++) {
-		int nI, nJ;
-		nI = pi - dir[i].first;
-		nJ = pj - dir[i].second;
+//coste O(8)
+void adyacencia(ConjuntosDisjuntos& g, const vector<string>& matriz, int i, int j) {
+	for (pair<int, int> nDir : dirs) {
+		int nI = i + nDir.first;
+		int nJ = j + nDir.second;
 
-		if (nI >= 0 && nI < filas && nJ >= 0 && nJ < columnas) {
-			if (v[nI][nJ] == c) { //hay adyacencia
-				g.ponArista(V, indices[nI][nJ]);
+		if (es_correcta(nI, nJ, matriz) && matriz[nI][nJ] == '#') { //si su adyacente es mancha de petroleo, se establece union
+			g.unir(i*matriz.size() + j, nI*matriz.size() + nJ);
+		}
+	}
+}
+
+//coste O(F*C) ---> no ha sido necesario usarlo
+unsigned int getMaxTam(const vector<string>& matriz, const ConjuntosDisjuntos& g) {
+	unsigned int tam = 0;
+	for (int i = 0; i < matriz.size(); i++) {
+		for (int j = 0; j < matriz[i].size(); j++) {
+			if (matriz[i][j] == '#') {
+				unsigned int temp = g.tam(i*matriz.size() + j);
+				tam = max(temp, tam);
 			}
 		}
 	}
-};
-
-void representa_sol(const Grafo& g) {
-	calcula_mancha calc(g);
-	// escribir sol
-	cout << calc.getTam() << " ";
+	return tam;
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -76,62 +59,54 @@ void representa_sol(const Grafo& g) {
 bool resuelveCaso() {
     // leer los datos de la entrada
 	int F, C;
-	cin >> F >> C; //filas y columnas
-
-	filas = F;
-	columnas = C;
-
+	cin >> F >> C;
     if (! std::cin)
         return false;
 
-	Grafo g(F*C);
-	vector<vector<char>> v;
-	vector<vector<int>> indices;
+	ConjuntosDisjuntos g(F*C);
+	vector<string> matriz;
+	matriz.resize(F);
 
-	int index = 0;
-	//lectura del archivo de datos
-	for (int i = 0; i < filas; i++) {
-		v.push_back(vector<char>());
-		indices.push_back(vector<int>());
-		for (int j = 0; j < columnas; j++) {
-			char nElem;
-			cin >> nElem;
-			v[i].push_back(nElem);
-			indices[i].push_back(index); //numero del vertice
-			index++;
-		}
-	}
+	unsigned int maxTam = 0;
 
-	for (int i = 0; i < filas; i++) {
-		for (int j = 0; j < columnas; j++) {
-			int p = i * C + j;
-			if (v[i][j] == '#') {
-				adyacencia(g, v, indices, indices[i][j], v[i][j], i, j);
+	//O(F*C)
+	for (int i = 0; i < F; i++) {
+		matriz[i].resize(C);
+		for (int j = 0; j < C; j++) {
+			char c;
+			cin >> c;
+			matriz[i][j] = c;
+			if (c == '#') {
+				adyacencia(g, matriz, i, j);
+				maxTam = max(maxTam, (unsigned)g.tam(i*F + j));
 			}
 		}
 	}
 
-	representa_sol(g);
-	int N;
-	cin >> N; //numero de nuevas fotos
+	cout << maxTam << " ";
 
+	int N;
+	cin >> N;
+
+	//O(N)
 	for (int i = 0; i < N; i++) {
 		int nF, nC;
-		cin >> nF >> nC; //mancha nueva
-
-		v[nF-1][nC-1] = '#';
-		adyacencia(g, v, indices, indices[nF - 1][nC - 1], v[nF - 1][nC - 1], nF - 1, nC - 1);
-		representa_sol(g);
+		cin >> nF >> nC;
+		matriz[nF - 1][nC - 1] = '#';
+		//ADYACENCIA
+		adyacencia(g, matriz, nF - 1, nC - 1);
+		maxTam = max(maxTam, (unsigned)g.tam((nF - 1)* F + (nC - 1)));
+		cout << maxTam << " ";
 	}
 
 	cout << endl;
-    
+
     return true;
     
 }
 
 int main() {
-	dir.resize(8);
+	dirs.resize(8);
 	pair<int, int> p0(0, 1);
 	pair<int, int> p1(0, -1);
 	pair<int, int> p2(1, 0);
@@ -140,15 +115,14 @@ int main() {
 	pair<int, int> p5(1, -1);
 	pair<int, int> p6(-1, 1);
 	pair<int, int> p7(-1, -1);
-	dir[0] = p0;
-	dir[1] = p1;
-	dir[2] = p2;
-	dir[3] = p3;
-	dir[4] = p4;
-	dir[5] = p5;
-	dir[6] = p6;
-	dir[7] = p7;
-
+	dirs[0] = p0;
+	dirs[1] = p1;
+	dirs[2] = p2;
+	dirs[3] = p3;
+	dirs[4] = p4;
+	dirs[5] = p5;
+	dirs[6] = p6;
+	dirs[7] = p7;
     // Para la entrada por fichero.
     // Comentar para acepta el reto
     #ifndef DOMJUDGE
