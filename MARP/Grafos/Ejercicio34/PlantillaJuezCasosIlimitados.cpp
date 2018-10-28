@@ -36,9 +36,6 @@ void adyacencia(ConjuntosDisjuntos& g, const vector<string>& matriz, int i, int 
 	for (pair<int, int> nDir : dirs) {
 		int nI = i + nDir.first;
 		int nJ = j + nDir.second;
-		if (j == 6) {
-			int kk = 0;
-		}
 		if (es_correcta(nI, nJ, matriz) && matriz[nI][nJ] == '#') { //si su adyacente es mancha de petroleo, se establece union
 			g.unir(i*C + j, nI*C + nJ); //se unen las posiciones
 		}
