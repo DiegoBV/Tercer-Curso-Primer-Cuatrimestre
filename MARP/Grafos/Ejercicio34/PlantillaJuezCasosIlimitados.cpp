@@ -28,7 +28,7 @@ void representa(const vector<string>& matriz) {
 
 //coste O(1), devuelve true si las coordenadas del vector son correctas --> estan dentro del rango del mismo
 bool es_correcta(int ni, int nj, const vector<string>& matriz) {
-	return (ni >= 0 && ni < matriz.size() && nj >= 0 && nj < matriz[ni].size());
+	return (ni >= 0 && ni < F && nj >= 0 && nj < C);
 }
 
 //coste O(8), comprueba la adyacencia en las 8 direcciones del vector de strings
@@ -65,17 +65,18 @@ bool resuelveCaso() {
         return false;
 
 	ConjuntosDisjuntos g(F*C); //creacion del conjunto disjunto
-	vector<string> matriz; //matriz de chars, donde se comprueba la dyacencia
-	matriz.resize(F);
+	vector<string> matriz(F, string(C, 0)); //matriz de chars, donde se comprueba la dyacencia
 
 	unsigned int maxTam = 0;
 
 	//O(F*C)
 	for (int i = 0; i < F; i++) {
-		matriz[i].resize(C);
 		for (int j = 0; j < C; j++) {
 			char c;
-			cin >> c;
+			cin.get(c);
+			if (c == '\n') {
+				cin.get(c);
+			}
 			matriz[i][j] = c;
 			if (c == '#') {
 				adyacencia(g, matriz, i, j);
