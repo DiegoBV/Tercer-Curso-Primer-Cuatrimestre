@@ -34,14 +34,21 @@ void FireworkManager::initFireworkRules()
 	else {
 		cout << "NO SE HA ENCONTRADO EL ARCHIVO DE LAS REGLAS DE LOS FIREWORKS, SE CREARAN REGLAS POR DEFECTO";
 		FireworkRule rule;
-		rule.setParameters(0, 2, 5, Vector3(-50, 250, -50), Vector3(50, 280, 50), 0.1, 4, 5);
-		rule.payloads.push_back(FireworkRule::Payload(2, 15));
-		rule.payloads.push_back(FireworkRule::Payload(2, 8));
+		rule.setParameters(0, 2, 5, Vector3(-500, 2500, -500), Vector3(500, 2800, 500), 0.1, 5, 10);
+		rule.payloads.push_back(FireworkRule::Payload(1, 15));
+		rule.payloads.push_back(FireworkRule::Payload(1, 8));
 		rules.insert({ 0, rule });
 
 		rule = FireworkRule();
-		rule.setParameters(2, 3, 7, Vector3(-40, 1500, -40), Vector3(40, 180, 40), 0.1, 2 , 3);
+		rule.setParameters(1, 3, 7, Vector3(-400, 1500, -400), Vector3(400, 1800, 400), 0.1, 5, 8);
+		rule.payloads.push_back(FireworkRule::Payload(2, 20));
+		rule.payloads.push_back(FireworkRule::Payload(2, 8));
+		rules.insert({ 1, rule });
+
+		rule = FireworkRule();
+		rule.setParameters(2, 2, 5, Vector3(-100, 1000, -100), Vector3(100, 1800, 100), 0.1, 4, 7);
 		rules.insert({ 2, rule });
+
 	}
 
 	//si luego quiero incluir el tipo '7', la rule la seteo con el tipo 7 y la inserto con el id 7
