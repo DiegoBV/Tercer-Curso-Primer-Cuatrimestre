@@ -65,7 +65,7 @@ public:
 	//set inerse_mass
 	inline void setInverseMass(const float newMass) { inverse_mass = newMass; };
 	//set shape si no tiene forma
-	inline void setShape(Shape shp, Medidas size) { if(renderItem->shape == nullptr) renderItem->shape = createShape(shp, size);};
+	inline void setShape(Shape shp, Medidas size) { renderItem->shape = createShape(shp, size);};
 	//setSphereShape
 	inline void setSphereShape(float r) { renderItem->shape = createShape(Sphere, r); };
 	//setCapsuleShape

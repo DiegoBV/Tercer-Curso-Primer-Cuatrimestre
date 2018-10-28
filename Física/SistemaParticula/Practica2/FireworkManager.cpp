@@ -1,7 +1,7 @@
 #include "FireworkManager.h"
 #include "json.hpp"
 
-FireworkManager::FireworkManager(): autoWork_(true)
+FireworkManager::FireworkManager(): autoWork_(false)
 {
 	initFireworkRules();
 }
@@ -31,9 +31,18 @@ void FireworkManager::initFireworkRules()
 			rules.insert({ j["Rules"][i]["type"], rule });
 		}
 	}
-	/*else {
-		//algun error
-	}*/
+	else {
+		cout << "NO SE HA ENCONTRADO EL ARCHIVO DE LAS REGLAS DE LOS FIREWORKS, SE CREARAN REGLAS POR DEFECTO";
+		FireworkRule rule;
+		rule.setParameters(0, 2, 5, Vector3(-50, 250, -50), Vector3(50, 280, 50), 0.1, 4, 5);
+		rule.payloads.push_back(FireworkRule::Payload(2, 15));
+		rule.payloads.push_back(FireworkRule::Payload(2, 8));
+		rules.insert({ 0, rule });
+
+		rule = FireworkRule();
+		rule.setParameters(2, 3, 7, Vector3(-40, 1500, -40), Vector3(40, 180, 40), 0.1, 2 , 3);
+		rules.insert({ 2, rule });
+	}
 
 	//si luego quiero incluir el tipo '7', la rule la seteo con el tipo 7 y la inserto con el id 7
 }
