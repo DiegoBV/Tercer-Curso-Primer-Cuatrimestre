@@ -9,6 +9,7 @@
 #include "Render/Render.h"
 #include "Render/Camera.h"
 #include <fstream>
+#include <iostream>
 #include <vector>
 
 using namespace Snippets;

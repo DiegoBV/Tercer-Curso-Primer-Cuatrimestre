@@ -1,6 +1,16 @@
 #include "Particula.h"
 #include <iostream>
 
+void Particula::clearForce()
+{
+	force.x = force.y = force.z = 0;
+}
+
+void Particula::addForce(const Vector3 & f)
+{
+	force += f;
+}
+
 physx::PxShape* Particula::createShape(Shape tipo, Medidas size)
 {
 	physx::PxShape* shape_;
@@ -31,6 +41,10 @@ void Particula::integrate(float t)
 	//update de la posicion (e = e + v*t)
 	p += v * t;
 
+	//Forces
+	Vector3 totalAcceleration = a;
+	a += force * inverse_mass;
+
 	//update de la velocidad
 	v += a * t;
 
@@ -38,4 +52,6 @@ void Particula::integrate(float t)
 	v *= powf(damping, t);
 
 	transform.p = p;
+
+	clearForce();
 }

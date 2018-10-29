@@ -27,7 +27,7 @@ void Time_Generator::generateNewParticle(float time)
 
 bool Time_Generator::checkLifeTime(vector<Particula*>::iterator& it)
 {
-	if ((*it)->lifeTime() > MAX_LIFE_TIME) {
+	if ((*it)->getLifeTime() > MAX_LIFE_TIME) {
 		(*it)->setInactive();
 		it = particles.erase(it);
 		return true;

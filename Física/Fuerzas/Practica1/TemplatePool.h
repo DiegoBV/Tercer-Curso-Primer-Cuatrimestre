@@ -50,8 +50,8 @@ public:
 		p->setPosition(pos);
 		p->setColor(color);
 
-		p->v = vel; //sets de velocidad y aceleracion
-		p->a = ac;
+		p->setVelocity(vel); //sets de velocidad y aceleracion
+		p->setAcceleration(ac);
 
 		return p;
 	};

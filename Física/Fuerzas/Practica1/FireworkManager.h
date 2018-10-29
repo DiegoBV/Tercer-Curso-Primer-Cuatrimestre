@@ -69,7 +69,7 @@ private:
 			if (parent)
 			{ // inherit velocity from parent
 				firework->setPosition(parent->getPosition());
-				vel += parent->v;
+				vel += parent->getVelocity();
 			}
 			else
 			{
@@ -79,11 +79,11 @@ private:
 				firework->setPosition(start);
 			}
 			vel += {RandomFloat(minVel.x, maxVel.x), RandomFloat(minVel.y, maxVel.y), RandomFloat(minVel.z, maxVel.z)};
-			firework->v = vel;
+			firework->setVelocity(vel);
 			// Force the mass to 1
 			firework->setMass(1);
 			firework->setDamping(damping);
-			firework->a = { RandomFloat(minVel.x, maxVel.x), GRAVITY_, RandomFloat(minVel.x, maxVel.x) };
+			firework->setAcceleration({RandomFloat(minVel.x, maxVel.x), GRAVITY_, RandomFloat(minVel.x, maxVel.x)});
 			firework->resetLifeTime();
 
 			switch (t)

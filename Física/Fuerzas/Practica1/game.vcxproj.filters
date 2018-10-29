@@ -18,7 +18,15 @@
     <ClCompile Include="FireworkManager.cpp">
       <Filter>Sistemas_Particulas</Filter>
     </ClCompile>
-    <ClCompile Include="ParticleForceRegistry.cpp" />
+    <ClCompile Include="ParticleForceRegistry.cpp">
+      <Filter>Forces</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleGravity.cpp">
+      <Filter>Forces</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleDrag.cpp">
+      <Filter>Forces</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -47,7 +55,15 @@
     <ClInclude Include="ParticleForceGenerator.h">
       <Filter>Forces</Filter>
     </ClInclude>
-    <ClInclude Include="ParticleForceRegistry.h" />
+    <ClInclude Include="ParticleForceRegistry.h">
+      <Filter>Forces</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleGravity.h">
+      <Filter>Forces</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleDrag.h">
+      <Filter>Forces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

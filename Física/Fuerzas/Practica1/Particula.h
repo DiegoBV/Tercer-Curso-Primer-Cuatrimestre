@@ -21,7 +21,21 @@ private:
 
 	//transform
 	physx::PxTransform transform;
+
+	//Posicion en el mundo
+	Vector3 p; //tiene el transform...
+	//Velocidad (lineal) en el mundo
+	Vector3 v;
+	//Aceleracion (lineal) en el mundo
+	Vector3 a;
+	// Accumulated force
+	Vector3 force;
 	
+	//Integracion
+	void integrate(float t);
+	// Clears accumulated force
+	void clearForce();
+
 public:
 	//enum tipos de shapes
 	enum Shape { Capsule, Sphere, Box };
@@ -41,14 +55,9 @@ public:
 		Medidas(float x, float y, float z) : x_(x), y_(y), z_(z) {};
 	};
 
-	//Posicion en el mundo
-	Vector3 p; //tiene el transform...
-	//Velocidad (lineal) en el mundo
-	Vector3 v;
-	//Aceleracion (lineal) en el mundo
-	Vector3 a;
 
-	Particula(RenderItem* rItem, float inverse_mass = 1.0) : renderItem(rItem), inverse_mass(inverse_mass), damping(0.95), v(0, 0, 0), a(0, 0, 0), p(0, 0, 0), transform(p), lifeTime_(0) { renderItem->transform = &transform; };
+	Particula(RenderItem* rItem, float inverse_mass = 1.0) : renderItem(rItem), inverse_mass(inverse_mass), 
+		damping(0.95), v(0, 0, 0), a(0, 0, 0), p(0, 0, 0), transform(p), lifeTime_(0), force(0, 0, 0) { renderItem->transform = &transform; };
 
 	Particula() : renderItem(nullptr), inverse_mass(1), damping(0.95), lifeTime_(0) {};
 
@@ -56,12 +65,37 @@ public:
 
 	virtual void update(float time) { integrate(time); lifeTime_ += time; };
 
+	//-------------------------------------------------------------------GETTERS------------------------------------------------------------
+
+	//get invmass
+	inline int getMass() const { return inverse_mass; };
+	//get dumping
+	inline float getDamping() const { return damping; };
+	//getPosition
+	inline Vector3 getPosition() const { return p; }
+	//getAcceleration
+	inline Vector3 getAcceleration() const { return a; }
+	//getVelocity
+	inline Vector3 getVelocity() const { return v; }
+	//distancia recorrida desde el inicio
+	inline const unsigned int getDistanceTraveled() { return p.magnitude(); };
+	//isactive
+	inline const bool isActive() { return active; };
+	//tiempo de vida
+	inline const float getLifeTime() { return lifeTime_; };
+
+	//-------------------------------------------------------------------SETTERS--------------------------------------------------------------
+
+	//setPosition
+	inline void setPosition(const Vector3 pos) { p = pos; transform.p = p; };
+	//setAcc
+	inline void setAcceleration(const Vector3 a_) { a = a_; };
+	//setVelocity
+	inline void setVelocity(const Vector3 v_) { v = v_; };
 	//set renderItem
 	inline void setRenderItem(RenderItem* rn) { renderItem = rn; };
 	//setDamping
 	inline void setDamping(const float newDamping) { if (newDamping >= 0 && newDamping <= 1) damping = newDamping; } //else ---> avisar, lanzar una excepcion...?
-	//Integracion
-	void integrate(float t);
 	//set inerse_mass
 	inline void setMass(const float newMass) { inverse_mass = newMass; };
 	//set shape si no tiene forma
@@ -74,22 +108,17 @@ public:
 	inline void setBoxShape(float x, float y, float z) { renderItem->shape = createShape(Box, { x, y, z }); };
 	//set color
 	inline void setColor(Vector3 color_) { renderItem->color = color_; };
-	//set transform
-	inline void setPosition(const Vector3 pos) { p = pos; transform.p = p; };
-	//getTransform
-	inline Vector3 getPosition() const { return p; }
-	//isactive
-	inline const bool isActive() { return active; };
 	//setActive and RegisterRenderItem
 	inline void setActive() { active = true;  RegisterRenderItem(renderItem); };
 	//setInactive and DeregisterRenderItem
 	inline void setInactive() { active = false;  resetLifeTime();  DeregisterRenderItem(renderItem); };
 	//set JUST THE BOOL ACTIVE 
 	inline void setActive(bool nAct) { active = nAct; };
-	//distancia recorrida desde el inicio
-	inline const unsigned int getDistanceTraveled() { return p.magnitude(); };
-	//tiempo de vida
-	inline const float lifeTime() { return lifeTime_; };
+
+	//------------------------------------------------------------------------------OTHERS-------------------------------------------------
+
+	// Add force to apply in next integration only
+	void addForce(const Vector3& f);
 	//reset tiempo de vida
 	inline void resetLifeTime() { lifeTime_ = 0; };
 

@@ -121,9 +121,9 @@ void shoot() {
 	p->setPosition((GetCamera()->getEye()));
 	p->setColor(DEF_COLOR);
 
-	p->v = GetCamera()->getDir() * DEF_VEL; //sets de velocidad y aceleracion
-	p->a = GetCamera()->getDir() * DEF_ACC;
-	p->a.y = -100;
+	p->setVelocity(GetCamera()->getDir() * DEF_VEL); //sets de velocidad y aceleracion
+	p->setAcceleration(GetCamera()->getDir() * DEF_ACC);
+	p->setAcceleration({p->getAcceleration().x, -100, p->getAcceleration().z});
 
 	particles.push_back(p); //se añade al vector de particulas para poder actualizarlas
 }
