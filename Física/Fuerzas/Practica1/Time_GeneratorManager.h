@@ -5,7 +5,7 @@
 #include "ParticleForceRegistry.h"
 #include <time.h>
 
-class Time_Generator: public Manager
+class Time_GeneratorManager: public Manager
 {
 	//------------------------------------------------GENERADORES DE FUERZAS------------------------------------------------
 	ParticleGravity* gravity_generator_ = nullptr;
@@ -32,12 +32,12 @@ class Time_Generator: public Manager
 	bool checkLifeTime(vector<Particula*>::iterator& it);
 
 public:
-	virtual ~Time_Generator();
+	virtual ~Time_GeneratorManager();
 
-	Time_Generator(Particula::Shape shp, float t, TemplatePool<Particula>* pool, ParticleGravity* g_grav = nullptr, Vector3 pos = { 10, 30, 0 }):
+	Time_GeneratorManager(Particula::Shape shp, float t, TemplatePool<Particula>* pool, ParticleGravity* g_grav = nullptr, Vector3 pos = { 10, 30, 0 }):
 			Manager(), shape_(shp), time_inter(t), pool(pool), gravity_generator_(g_grav), pos(pos) { srand(time(NULL)); };
 
-	Time_Generator() {};
+	Time_GeneratorManager() {};
 
 	virtual void update(double t);
 

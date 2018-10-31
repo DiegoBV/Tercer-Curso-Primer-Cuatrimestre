@@ -10,7 +10,7 @@
 
 #include "TemplatePool.h"
 
-#include "Time_Generator.h"
+#include "Time_GeneratorManager.h"
 
 #include "FireworkManager.h"
 
@@ -67,7 +67,7 @@ void initPhysics(bool interactive)
 
 	FireworkManager* fManager_ = new FireworkManager();
 	managers.push_back(fManager_);
-	Time_Generator* t_gen = new Time_Generator(Particula::Sphere, 0.01, &pool, grav_gen_);
+	Time_GeneratorManager* t_gen = new Time_GeneratorManager(Particula::Sphere, 0.01, &pool, grav_gen_);
 	managers.push_back(t_gen);
 	Shot_Manager* s_man = new Shot_Manager(&pool, ingrav_gen_);
 	managers.push_back(s_man);

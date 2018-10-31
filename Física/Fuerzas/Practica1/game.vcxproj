@@ -264,7 +264,7 @@
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Render.cpp" />
     <ClCompile Include="Shot_Manager.cpp" />
-    <ClCompile Include="Time_Generator.cpp" />
+    <ClCompile Include="Time_GeneratorManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -281,7 +281,7 @@
     <ClInclude Include="Render\Render.h" />
     <ClInclude Include="Shot_Manager.h" />
     <ClInclude Include="TemplatePool.h" />
-    <ClInclude Include="Time_Generator.h" />
+    <ClInclude Include="Time_GeneratorManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

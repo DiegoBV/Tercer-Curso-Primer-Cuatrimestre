@@ -20,9 +20,6 @@
     <ClCompile Include="ParticleDrag.cpp">
       <Filter>Forces</Filter>
     </ClCompile>
-    <ClCompile Include="Time_Generator.cpp">
-      <Filter>Managers</Filter>
-    </ClCompile>
     <ClCompile Include="Shot_Manager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
@@ -31,6 +28,9 @@
     </ClCompile>
     <ClCompile Include="RenderUtils.cpp">
       <Filter>OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Time_GeneratorManager.cpp">
+      <Filter>Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -61,9 +61,6 @@
     <ClInclude Include="ParticleDrag.h">
       <Filter>Forces</Filter>
     </ClInclude>
-    <ClInclude Include="Time_Generator.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
     <ClInclude Include="Shot_Manager.h">
       <Filter>Managers</Filter>
     </ClInclude>
@@ -77,6 +74,9 @@
       <Filter>OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="Manager.h" />
+    <ClInclude Include="Time_GeneratorManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
