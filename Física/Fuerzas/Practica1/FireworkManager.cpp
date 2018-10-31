@@ -1,7 +1,7 @@
 #include "FireworkManager.h"
 #include "json.hpp"
 
-FireworkManager::FireworkManager(): autoWork_(false)
+FireworkManager::FireworkManager(): Manager(), autoWork_(false)
 {
 	initFireworkRules();
 }
@@ -15,7 +15,7 @@ void FireworkManager::initFireworkRules()
 	string name = ".\\JSONs\\Firework_Rules.json";
 	std::ifstream i(name);
 	
-	if (i.is_open()) { // Para que no intente abrir archivos que no existen
+	if (i.is_open()) {                                    // Para que no intente abrir archivos que no existen
 		json j;
 		i >> j;
 		int n;
@@ -71,9 +71,9 @@ void FireworkManager::Input_FireworkCreate(unsigned type, const Firework * paren
 
 FireworkManager::FireworkRule* FireworkManager::GetRuleFromType(unsigned t)
 {
-	map<unsigned, FireworkRule>::iterator it = rules.find(t); //al ser un map, la busqueda es mucho mas eficiente que buscar por un vector
+	map<unsigned, FireworkRule>::iterator it = rules.find(t);              //al ser un map, la busqueda es mucho mas eficiente que buscar por un vector
 
-	if (it == rules.end()) //si no se encuentra ningun elemento se devuelve nullptr
+	if (it == rules.end())                                                //si no se encuentra ningun elemento se devuelve nullptr
 		return nullptr;
 
 	return &(*it).second;
@@ -82,7 +82,7 @@ FireworkManager::FireworkRule* FireworkManager::GetRuleFromType(unsigned t)
 Firework* FireworkManager::AllocNewFirework()
 {
 	Firework* f = pool.getObject();
-	fireworks_to_introduce.push(f); //LOS INTRODUCE A LA COLA PARA PUSHEARLOS DESPUES
+	fireworks_to_introduce.push(f);                                       //LOS INTRODUCE A LA COLA PARA PUSHEARLOS DESPUES
 	return f;
 }
 
@@ -95,8 +95,7 @@ float FireworkManager::RandomFloat(float a, float b)
 
 }
 
-//Vacia la cola. Es necesario para que al crear nuevos fireworks no den errores los iteradores (puede haber otra manera...?)
-void FireworkManager::pushFireworks()
+void FireworkManager::pushFireworks()        //Vacia la cola. Es necesario para que al crear nuevos fireworks no den errores los iteradores (puede haber otra manera...?)
 {
 	while (!fireworks_to_introduce.empty()) {
 		fireworks.push_back(fireworks_to_introduce.front());
@@ -116,7 +115,7 @@ void FireworkManager::autoCreateFireworks(double t)
 	}
 }
 
-void FireworkManager::FireworksUpdate(double t)
+void FireworkManager::update(double t)
 {
 	autoCreateFireworks(t);
 	for (vector<Firework*>::iterator it = fireworks.begin(); it != fireworks.end();)
@@ -140,7 +139,22 @@ void FireworkManager::FireworksUpdate(double t)
 			it++;
 		}
 	}
-	pushFireworks(); //si se han creado fireworks --> se pushean
+	pushFireworks();                           //si se han creado fireworks --> se pushean
+}
+
+void FireworkManager::handle_event(unsigned char key)
+{
+	switch (toupper(key)) 
+	{
+	case 'F':
+		Input_FireworkCreate();
+		break;
+	case ' ':
+		switch_activate();
+		break;
+	default:
+		break;
+	}
 }
 
 void FireworkManager::switch_activate()

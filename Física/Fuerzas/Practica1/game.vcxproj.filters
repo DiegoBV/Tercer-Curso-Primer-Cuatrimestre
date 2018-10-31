@@ -7,16 +7,9 @@
     <ClCompile Include="Render\Render.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="RenderUtils.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Particula.cpp">
       <Filter>Particulas</Filter>
-    </ClCompile>
-    <ClCompile Include="Time_Generator.cpp">
-      <Filter>Sistemas_Particulas</Filter>
-    </ClCompile>
-    <ClCompile Include="FireworkManager.cpp">
-      <Filter>Sistemas_Particulas</Filter>
     </ClCompile>
     <ClCompile Include="ParticleForceRegistry.cpp">
       <Filter>Forces</Filter>
@@ -27,30 +20,34 @@
     <ClCompile Include="ParticleDrag.cpp">
       <Filter>Forces</Filter>
     </ClCompile>
+    <ClCompile Include="Time_Generator.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Shot_Manager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="FireworkManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderUtils.cpp">
+      <Filter>OpenGL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="core.hpp" />
     <ClInclude Include="Render\Camera.h">
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="Render\Render.h">
       <Filter>Render</Filter>
     </ClInclude>
-    <ClInclude Include="RenderUtils.hpp" />
     <ClInclude Include="Particula.h">
       <Filter>Particulas</Filter>
-    </ClInclude>
-    <ClInclude Include="Time_Generator.h">
-      <Filter>Sistemas_Particulas</Filter>
     </ClInclude>
     <ClInclude Include="TemplatePool.h">
       <Filter>Particulas</Filter>
     </ClInclude>
     <ClInclude Include="Firework.h">
       <Filter>Particulas</Filter>
-    </ClInclude>
-    <ClInclude Include="FireworkManager.h">
-      <Filter>Sistemas_Particulas</Filter>
     </ClInclude>
     <ClInclude Include="ParticleForceGenerator.h">
       <Filter>Forces</Filter>
@@ -64,6 +61,22 @@
     <ClInclude Include="ParticleDrag.h">
       <Filter>Forces</Filter>
     </ClInclude>
+    <ClInclude Include="Time_Generator.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Shot_Manager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="FireworkManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderUtils.hpp">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="core.hpp">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
@@ -72,11 +85,14 @@
     <Filter Include="Particulas">
       <UniqueIdentifier>{10f36aaf-f94b-48e4-aae8-e56e970f48bb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sistemas_Particulas">
-      <UniqueIdentifier>{27cea8fe-b98c-4f70-83b4-595e2e7a01d4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Forces">
       <UniqueIdentifier>{32b76350-7bee-4359-9cfa-27c3d64994e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers">
+      <UniqueIdentifier>{31d06c15-4a36-4a11-b8e2-4a2baaa05af7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL">
+      <UniqueIdentifier>{c94d7032-654d-41ee-b550-d78b797b4f2a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

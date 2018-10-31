@@ -4,8 +4,9 @@ class ParticleForceGenerator
 {
 public:
 	ParticleForceGenerator() {};
+
 	virtual ~ParticleForceGenerator() {};
-	// Overload to provide functionality
-	virtual void updateForce(Particula* particle, float t) = 0;
+
+	virtual void updateForce(Particula* particle, float t) = 0;        // Overload to provide functionality
 };
 

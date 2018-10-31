@@ -263,12 +263,14 @@
     <ClCompile Include="RenderUtils.cpp" />
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Render.cpp" />
+    <ClCompile Include="Shot_Manager.cpp" />
     <ClCompile Include="Time_Generator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
     <ClInclude Include="Firework.h" />
     <ClInclude Include="FireworkManager.h" />
+    <ClInclude Include="Manager.h" />
     <ClInclude Include="ParticleDrag.h" />
     <ClInclude Include="ParticleForceGenerator.h" />
     <ClInclude Include="ParticleForceRegistry.h" />
@@ -277,6 +279,7 @@
     <ClInclude Include="RenderUtils.hpp" />
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\Render.h" />
+    <ClInclude Include="Shot_Manager.h" />
     <ClInclude Include="TemplatePool.h" />
     <ClInclude Include="Time_Generator.h" />
   </ItemGroup>

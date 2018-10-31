@@ -14,6 +14,10 @@
 
 #include "FireworkManager.h"
 
+#include "ParticleGravity.h"
+
+#include "Shot_Manager.h"
+
 using namespace physx;
 
 PxDefaultAllocator		gAllocator;
@@ -26,21 +30,13 @@ PxMaterial*				gMaterial	= NULL;
 
 PxPvd*                  gPvd        = NULL;
 
-std::vector<Particula*> particles; //vector para manejar las particulas
+TemplatePool<Particula> pool;                                      //pool de particulas creadas para disparar, por defecto se crean 300 al principio y se van reusando
 
-TemplatePool<Particula> pool; //pool de particulas creadas para disparar, por defecto se crean 30 al principio y se van reusando
+vector<Manager*> managers;                                         // vector de managers (clase abstracta) para manejar mejor sus handle y updates
 
-Time_Generator t_gen(Particula::Sphere, 0.01, &pool);
+vector<ParticleForceGenerator*> generators;                        // vector de generators para no tener muchas variables globales
 
-FireworkManager fManager_ = FireworkManager();
 
-//------------------------------------------------ Constantes del disparo ---------------------------------------------------
-const Particula::Shape DEF_SHAPE = Particula::Sphere;
-const unsigned int DEF_SIZE = { 10 };
-const Vector3 DEF_COLOR = {100, 0, 100};
-const unsigned int DEF_VEL = 100;
-const unsigned int DEF_ACC = 30;
-const unsigned int DEF_DIST_TRAV = 2000;
 //---------------------------------------------------------------------------------------------------------------------------
 
 // Initialize physics engine
@@ -60,19 +56,24 @@ void initPhysics(bool interactive)
 	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
 
 	// Add custom application code
+	//----------------------------------------------------GENERATORS-------------------------------------------------------
+
+	ParticleGravity* grav_gen_ = new ParticleGravity({ 0, -2, 0 });
+	generators.push_back(grav_gen_);
+	ParticleGravity* ingrav_gen_ = new ParticleGravity({ 0, 2, 0 });
+	generators.push_back(ingrav_gen_);
+
+	//----------------------------------------------------MANAGERS-------------------------------------------------------
+
+	FireworkManager* fManager_ = new FireworkManager();
+	managers.push_back(fManager_);
+	Time_Generator* t_gen = new Time_Generator(Particula::Sphere, 0.01, &pool, grav_gen_);
+	managers.push_back(t_gen);
+	Shot_Manager* s_man = new Shot_Manager(&pool, ingrav_gen_);
+	managers.push_back(s_man);
 	// ...
 }
 
-bool checkBullet(vector<Particula*>::iterator& it) {
-
-	if ((*it)->getDistanceTraveled() > DEF_DIST_TRAV) {
-		(*it)->setInactive();
-		it = particles.erase(it);
-		return true;
-	}
-
-	return false;
-}
 
 // Function to configure what happens in each step of physics
 // interactive: true if the game is rendering, false if it offline
@@ -82,15 +83,11 @@ void stepPhysics(bool interactive, double t)
 	PX_UNUSED(interactive);
 	PX_UNUSED(t);
 
-	for (vector<Particula*>::iterator it = particles.begin(); it != particles.end();) {
-
-		(*it)->update(t);
-		if (!checkBullet(it)) { it++; } //si ninguna bala ha desaparecido se aumenta el iterador, si desaparece el iterador aumenta al borrar el contenido
-	}
-
-	t_gen.update(t);
-	fManager_.FireworksUpdate(t);
 	// Add custom application code
+	for (Manager* man : managers) {
+		man->update(t);
+	}
+	Particula::registry_.updateForces(t);
 	// ...
 }
 
@@ -101,6 +98,15 @@ void cleanupPhysics(bool interactive)
 	PX_UNUSED(interactive);
 
 	// Add custom application code
+	for (Manager* man : managers) {
+		delete man;
+		man = nullptr;
+	}
+
+	for (ParticleForceGenerator* gen : generators) {
+		delete gen;
+		gen = nullptr;
+	}
 	// ...
 
 	gPhysics->release();	
@@ -112,41 +118,12 @@ void cleanupPhysics(bool interactive)
 
 }
 
-void shoot() {
-
-	Particula* p = pool.getObject(); //se busca una particula inactiva en la pool (y se activa). Si no existe, se crea una nueva
-
-	p->setShape(DEF_SHAPE, DEF_SIZE); //set de la forma, color, velocidad, aceleracion...
-
-	p->setPosition((GetCamera()->getEye()));
-	p->setColor(DEF_COLOR);
-
-	p->setVelocity(GetCamera()->getDir() * DEF_VEL); //sets de velocidad y aceleracion
-	p->setAcceleration(GetCamera()->getDir() * DEF_ACC);
-	p->setAcceleration({p->getAcceleration().x, -100, p->getAcceleration().z});
-
-	particles.push_back(p); //se añade al vector de particulas para poder actualizarlas
-}
-
 // Function called when a key is pressed
 void keyPress(unsigned char key, const PxTransform& camera)
 {
 	PX_UNUSED(camera);
-	switch(toupper(key))
-	{
-	case 'F':
-		fManager_.Input_FireworkCreate();
-		break;
-	case ' ': 
-		fManager_.switch_activate();
-		break;
-	case 'X': 
-	{
-		shoot();
-		break;
-	}
-	default:
-		break;
+	for (Manager* man : managers) {
+		man->handle_event(key);
 	}
 }
 

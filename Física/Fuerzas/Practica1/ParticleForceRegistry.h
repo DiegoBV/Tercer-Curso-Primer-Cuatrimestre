@@ -4,8 +4,7 @@
 class ParticleForceRegistry
 {
 protected:
-	// Storage for generator-particle entry
-	struct ParticleForceRegistration
+	struct ParticleForceRegistration                                // Storage for generator-particle entry
 	{
 		Particula* particle;
 		ParticleForceGenerator* fg;
@@ -19,13 +18,13 @@ protected:
 	Registry registrations;
 public:
 	ParticleForceRegistry() {};
-	// Associate generator with a particle
-	void add(Particula* particle, ParticleForceGenerator* fg);
-	// Remove association
-	void remove(Particula* particle, ParticleForceGenerator* fg);
-	// Removes all associations. Particle and Generators won't be deleted
-	void clear();
-	// Update all the generators in the registry
-	void updateForces(float t);
+
+	void add(Particula* particle, ParticleForceGenerator* fg);       // Associate generator with a particle  
+	
+	void remove(Particula* particle, ParticleForceGenerator* fg);    // Remove association
+	
+	void clear();                                                   // Removes all associations. Particle and Generators won't be deleted
+	
+	void updateForces(double t);                                    // Update all the generators in the registry
 };
 

@@ -1,7 +1,5 @@
 #include "Time_Generator.h"
 
-
-
 Vector3 Time_Generator::generateRandomVel()
 {
 	Vector3 nVel = { (float)(rand() % (VEL_MAX_) - VEL_MAX_ /2), (float)(VEL_MIN_ + rand() % (VEL_MAX_ - VEL_MIN_)), (float)(rand() % (VEL_MAX_) - VEL_MAX_ /2) }; //esto es para que salgan tipo fuente y se observe la gravedad bien
@@ -14,11 +12,14 @@ Vector3 Time_Generator::generateRandomColor()
 	return nCol;
 }
 
-void Time_Generator::generateNewParticle(float time)
+void Time_Generator::generateNewParticle(double t)
 {
-	tiempo_transcurrido += time;
+	tiempo_transcurrido += t;
 	if (tiempo_transcurrido > next_period) {
-		Particula* p = pool->generateObject(pos, generateRandomVel(), { 0, G_, 0 }, generateRandomColor());
+		Particula* p = pool->generateObject(pos, generateRandomVel(), { 0, 0, 0 }, generateRandomColor());
+
+		if (gravity_generator_ != nullptr) { Particula::registry_.add(p, gravity_generator_); }                   //la añadimos al generador de gravedad
+
 		p->setShape(shape_, {1});
 		next_period = tiempo_transcurrido + time_inter;
 		particles.push_back(p);
@@ -29,9 +30,14 @@ bool Time_Generator::checkLifeTime(vector<Particula*>::iterator& it)
 {
 	if ((*it)->getLifeTime() > MAX_LIFE_TIME) {
 		(*it)->setInactive();
+
+		if (gravity_generator_ != nullptr) { Particula::registry_.remove((*it), gravity_generator_); }            //la borramos del generador de gravedad
+
 		it = particles.erase(it);
+
 		return true;
 	}
+
 	return false;
 }
 
@@ -39,11 +45,16 @@ Time_Generator::~Time_Generator()
 {
 }
 
-void Time_Generator::update(float time)
+void Time_Generator::update(double t)
 {
-	generateNewParticle(time);
+	generateNewParticle(t);
 	for (vector<Particula*>::iterator it = particles.begin(); it != particles.end();) {
-		(*it)->update(time);
+		(*it)->update(t);
 		if (!checkLifeTime(it)) { it++; };
 	}
+}
+
+void Time_Generator::handle_event(unsigned char key)
+{
+	//do something
 }

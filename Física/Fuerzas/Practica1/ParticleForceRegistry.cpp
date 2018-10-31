@@ -6,7 +6,7 @@ void ParticleForceRegistry::add(Particula * particle, ParticleForceGenerator * f
 	pFG.particle = particle;
 	pFG.fg = fg;
 
-	registrations.push_back(pFG); //add the new registration
+	registrations.push_back(pFG);              //add the new registration
 }
 
 void ParticleForceRegistry::remove(Particula * particle, ParticleForceGenerator * fg)
@@ -17,10 +17,10 @@ void ParticleForceRegistry::remove(Particula * particle, ParticleForceGenerator 
 
 void ParticleForceRegistry::clear()
 {
-	registrations.clear(); //clear vector
+	registrations.clear();                    //clear vector
 }
 
-void ParticleForceRegistry::updateForces(float t)
+void ParticleForceRegistry::updateForces(double t)
 {
 	for (auto it = registrations.begin(); it != registrations.end(); ++it)
 	{

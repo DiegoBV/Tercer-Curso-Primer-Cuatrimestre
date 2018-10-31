@@ -1,47 +1,46 @@
-#include "RenderUtils.hpp"
 #pragma once
+#include "RenderUtils.hpp"
 
+class ParticleForceRegistry;
 
 class Particula
 {
 private:
-	//Render Item
-	RenderItem* renderItem = nullptr;
-	//fuerza de rozamiento
-	float damping;
-
-	//masa inversa
-	float inverse_mass;
-
-	//active
-	bool active = true;
-
-	//lifetime
-	float lifeTime_;
-
-	//transform
-	physx::PxTransform transform;
-
-	//Posicion en el mundo
-	Vector3 p; //tiene el transform...
-	//Velocidad (lineal) en el mundo
-	Vector3 v;
-	//Aceleracion (lineal) en el mundo
-	Vector3 a;
-	// Accumulated force
-	Vector3 force;
 	
-	//Integracion
-	void integrate(float t);
-	// Clears accumulated force
-	void clearForce();
+	RenderItem* renderItem = nullptr;                  //Render Item
+
+	float damping;                                     //fuerza de rozamiento
+
+	float inverse_mass;                                //masa inversa
+
+	bool active = true;                                //active	
+
+	float lifeTime_;                                   //lifetime
+
+	physx::PxTransform transform;                      //transform
+
+	Vector3 p;                                        //Posicion en el mundo
+
+	Vector3 v;                                        //Velocidad (lineal) en el mundo
+
+	Vector3 a;                                        //Aceleracion (lineal) en el mundo
+
+	Vector3 force;                                    // Accumulated force	
+
+	void integrate(float t);                         //Integracion
+
+	void clearForce();                               // Clears accumulated force
+
 
 public:
-	//enum tipos de shapes
-	enum Shape { Capsule, Sphere, Box };
 
-	//struct medidas del shape
-	struct Medidas { 
+	static ParticleForceRegistry registry_;                     //variable estatica del registro de particulas --> todos tienen acceso al mismo
+
+	
+	enum Shape { Capsule, Sphere, Box };                       //enum tipos de shapes
+
+	
+	struct Medidas {                                          //struct medidas del shape
 		float x_;
 
 		union{

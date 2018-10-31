@@ -3,16 +3,18 @@
 #include <map>
 #include <queue>
 #include "Firework.h"
-#include "TemplatePool.h"
+#include "Manager.h"
 
-class FireworkManager
+class FireworkManager: public Manager
 {
 
 private:
-	const unsigned int MAX_FIREWORKS = 5; //numero maximo de cohetes que se pueden disparar a la vez
-	const double TIME = 5; //cada "time" segundos se crea un firework si esa opcion esta activada
+	const unsigned int MAX_FIREWORKS = 5;                 //numero maximo de cohetes que se pueden disparar a la vez
+
+	const double TIME = 5;                               //cada "time" segundos se crea un firework si esa opcion esta activada
 
 	bool autoWork_;
+
 	double current_time = 0;
 
 	std::queue<Firework*> fireworks_to_introduce;
@@ -105,7 +107,7 @@ private:
 		FireworkRule() {};
 	};
 
-	TemplatePool<Firework> pool; //podria usar la misma pool que existe pero habria que hacer casteos...
+	TemplatePool<Firework> pool;                        //podria usar la misma pool que existe pero habria que hacer casteos...
 
 	std::map<unsigned, FireworkRule> rules;
 	std::vector<Firework*> fireworks;
@@ -128,7 +130,8 @@ public:
 	FireworkManager();
 	virtual ~FireworkManager();
 	void Input_FireworkCreate(unsigned type = 0, const Firework* parent = NULL);
-	void FireworksUpdate(double t);
+	virtual void update(double t);
+	virtual void handle_event(unsigned char key);
 	void switch_activate();
 };
 

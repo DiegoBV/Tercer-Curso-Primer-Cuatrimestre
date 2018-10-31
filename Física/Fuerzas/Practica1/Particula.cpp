@@ -1,5 +1,8 @@
 #include "Particula.h"
+#include "ParticleForceRegistry.h"
 #include <iostream>
+
+ParticleForceRegistry Particula::registry_ = ParticleForceRegistry();
 
 void Particula::clearForce()
 {
@@ -35,21 +38,16 @@ physx::PxShape* Particula::createShape(Shape tipo, Medidas size)
 
 void Particula::integrate(float t)
 {
-	//Si la masa es infinita, la particula no cambia su posicion (paredes, suelos)
-	if (inverse_mass <= 0.0f) return;
+	if (inverse_mass <= 0.0f) return;                   //Si la masa es infinita, la particula no cambia su posicion (paredes, suelos)
 
-	//update de la posicion (e = e + v*t)
-	p += v * t;
+	p += v * t;                                         //update de la posicion (e = e + v*t)
 
-	//Forces
-	Vector3 totalAcceleration = a;
+	Vector3 totalAcceleration = a;                      //forces
 	a += force * inverse_mass;
+	
+	v += a * t;                                        //update de la velocidad
 
-	//update de la velocidad
-	v += a * t;
-
-	//aplicamos la fuerza de rozamiento --> v = v * d^t
-	v *= powf(damping, t);
+	v *= powf(damping, t);                            //aplicamos la fuerza de rozamiento --> v = v * d^t
 
 	transform.p = p;
 
