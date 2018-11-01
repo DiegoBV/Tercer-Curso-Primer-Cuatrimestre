@@ -18,6 +18,8 @@
 
 #include "ParticleDrag.h"
 
+#include "Wind.h"
+
 #include "Shot_Manager.h"
 
 using namespace physx;
@@ -63,19 +65,23 @@ void initPhysics(bool interactive)
 	ParticleGravity* grav_gen_ = new ParticleGravity({ 0, -2, 0 });
 	generators.push_back(grav_gen_);
 	ParticleGravity* ingrav_gen_ = new ParticleGravity({ 0, 2, 0 });
-	generators.push_back(ingrav_gen_);
-	ParticleDrag* dr = new ParticleDrag(0.2, 0.3);
-	generators.push_back(dr);
+	generators.push_back(ingrav_gen_);;
+	Wind* wind = new Wind(30, { 1, 0, 0 }, {0, -30, 0});
+	generators.push_back(wind);
+	//ParticleDrag* dr = new ParticleDrag(0.2, 0.3);
+	//generators.push_back(dr);
 	//----------------------------------------------------MANAGERS-------------------------------------------------------
 
 	FireworkManager* fManager_ = new FireworkManager();
+	fManager_->addGenerator(grav_gen_);
 	managers.push_back(fManager_);
 	Time_GeneratorManager* t_gen = new Time_GeneratorManager(Particula::Sphere, 0.01, &pool);
 	t_gen->addGenerator(grav_gen_);
+	t_gen->addGenerator(wind);
 	managers.push_back(t_gen);
 	Shot_Manager* s_man = new Shot_Manager(&pool);
 	s_man->addGenerator(ingrav_gen_);
-	s_man->addGenerator(dr);
+	s_man->addGenerator(wind);
 	managers.push_back(s_man);
 	// ...
 }
@@ -130,6 +136,9 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	PX_UNUSED(camera);
 	for (Manager* man : managers) {
 		man->handle_event(key);
+	}
+	for (ParticleForceGenerator* gen : generators) {
+		gen->handle_event(key);
 	}
 }
 

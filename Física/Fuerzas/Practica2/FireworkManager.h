@@ -17,6 +17,8 @@ private:
 
 	double current_time = 0;
 
+	Vector3 pos;
+
 	std::queue<Firework*> fireworks_to_introduce;
 
 	struct FireworkRule
@@ -41,11 +43,9 @@ private:
 		float minTam;
 		float maxTam;
 
-		float GRAVITY_;
-
 		std::vector<Payload> payloads;
 
-		void setParameters(unsigned t, float minAge_, float maxAge_, Vector3 minVel_, Vector3 maxVel_, float damp, float minTam_, float maxTam_, float G = -25) {
+		void setParameters(unsigned t, float minAge_, float maxAge_, Vector3 minVel_, Vector3 maxVel_, float damp, float minTam_, float maxTam_) {
 			type = t;
 
 			minAge = minAge_;
@@ -58,11 +58,9 @@ private:
 
 			minTam = minTam_;
 			maxTam = maxTam_;
-
-			GRAVITY_ = G;
 		};
 
-		void create(Firework* firework, unsigned t, const Firework* parent = NULL) const
+		void create(Firework* firework, Vector3 pos, unsigned t, const Firework* parent = NULL) const
 		{
 			firework->setType(t);
 			firework->setAge(RandomFloat(minAge, maxAge));
@@ -75,7 +73,7 @@ private:
 			}
 			else
 			{
-				Vector3 start = {0, 0, 0};
+				Vector3 start = pos;
 				int x = rand() % 3 - 1;
 				start.x = 5.0f * x;
 				firework->setPosition(start);
@@ -85,7 +83,7 @@ private:
 			// Force the mass to 1
 			firework->setMass(1);
 			firework->setDamping(damping);
-			firework->setAcceleration({RandomFloat(minVel.x, maxVel.x), GRAVITY_, RandomFloat(minVel.x, maxVel.x)});
+			firework->setAcceleration({RandomFloat(minVel.x, maxVel.x)/2, RandomFloat(minVel.y, maxVel.y)/2, RandomFloat(minVel.z, maxVel.z)/2});
 			firework->resetLifeTime();
 
 			switch (t)
@@ -127,7 +125,7 @@ private:
 	void autoCreateFireworks(double t);
 
 public:
-	FireworkManager();
+	FireworkManager(Vector3 pos = {0, 0, 0});
 
 	virtual ~FireworkManager();
 

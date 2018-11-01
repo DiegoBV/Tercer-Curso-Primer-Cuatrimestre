@@ -265,6 +265,7 @@
     <ClCompile Include="Render\Render.cpp" />
     <ClCompile Include="Shot_Manager.cpp" />
     <ClCompile Include="Time_GeneratorManager.cpp" />
+    <ClCompile Include="Wind.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -282,6 +283,7 @@
     <ClInclude Include="Shot_Manager.h" />
     <ClInclude Include="TemplatePool.h" />
     <ClInclude Include="Time_GeneratorManager.h" />
+    <ClInclude Include="Wind.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

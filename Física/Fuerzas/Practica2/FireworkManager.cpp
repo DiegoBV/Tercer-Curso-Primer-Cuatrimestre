@@ -1,7 +1,7 @@
 #include "FireworkManager.h"
 #include "json.hpp"
 
-FireworkManager::FireworkManager(): Manager(), autoWork_(false)
+FireworkManager::FireworkManager(Vector3 pos): Manager(), autoWork_(false), pos(pos)
 {
 	initFireworkRules();
 }
@@ -57,7 +57,7 @@ void FireworkManager::initFireworkRules()
 void FireworkManager::create(unsigned type, unsigned count, FireworkRule * rule, Firework * parent)
 {
 	for (int i = 0; i < count; i++) {
-		rule->create(AllocNewFirework(), type, parent);
+		rule->create(AllocNewFirework(), pos, type, parent);
 	}
 }
 
@@ -65,7 +65,7 @@ void FireworkManager::Input_FireworkCreate(unsigned type, const Firework * paren
 {
 	if (fireworks.size() < MAX_FIREWORKS && !autoWork_) {
 		FireworkRule* rule = GetRuleFromType(type);
-		if (rule != nullptr) { Firework* newFirework = AllocNewFirework(); rule->create(newFirework, type, parent); }
+		if (rule != nullptr) { Firework* newFirework = AllocNewFirework(); rule->create(newFirework, pos, type, parent); }
 	}
 }
 
@@ -82,6 +82,7 @@ FireworkManager::FireworkRule* FireworkManager::GetRuleFromType(unsigned t)
 Firework* FireworkManager::AllocNewFirework()
 {
 	Firework* f = pool.getObject();
+	register_particle_in_generators(f);
 	fireworks_to_introduce.push(f);                                       //LOS INTRODUCE A LA COLA PARA PUSHEARLOS DESPUES
 	return f;
 }
@@ -110,7 +111,7 @@ void FireworkManager::autoCreateFireworks(double t)
 		current_time = 0;
 		if (autoWork_) {
 			FireworkRule* rule = GetRuleFromType(0);
-			if (rule != nullptr) { Firework* newFirework = AllocNewFirework(); rule->create(newFirework, 0, NULL); }
+			if (rule != nullptr) { Firework* newFirework = AllocNewFirework(); rule->create(newFirework, pos, 0, NULL); }
 		}
 	}
 }
@@ -124,6 +125,7 @@ void FireworkManager::update(double t)
 		firework->Particula::update(t);
 		if (firework->getLifeTime() > firework->getAge())
 		{
+			remove_particle_from_generators(firework);
 			firework->setInactive();
 			it = fireworks.erase(it);
 			FireworkRule* rule = GetRuleFromType(firework->getType());

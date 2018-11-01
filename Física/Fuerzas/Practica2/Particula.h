@@ -129,7 +129,7 @@ public:
 	inline void setActive() { active = true;  RegisterRenderItem(renderItem); };
 
 	//setInactive and DeregisterRenderItem
-	inline void setInactive() { active = false;  resetLifeTime();  DeregisterRenderItem(renderItem); };
+	inline void setInactive() { if (active) { active = false;  resetLifeTime();  DeregisterRenderItem(renderItem); } };
 
 	//set JUST THE BOOL ACTIVE 
 	inline void setActive(bool nAct) { active = nAct; };

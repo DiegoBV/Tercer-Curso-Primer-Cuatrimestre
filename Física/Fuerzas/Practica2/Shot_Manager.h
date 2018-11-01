@@ -1,7 +1,6 @@
 #pragma once
 #include "Particula.h"
 #include "Manager.h"
-#include "ParticleForceRegistry.h"
 
 class Shot_Manager: public Manager
 {

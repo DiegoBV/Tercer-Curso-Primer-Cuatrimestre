@@ -5,7 +5,7 @@ bool Shot_Manager::checkBullet(vector<Particula*>::iterator & it)
 	if ((*it)->getDistanceTraveled() > DEF_DIST_TRAV) {
 		(*it)->setInactive();
 
-		for (ParticleForceGenerator* gen : generators) { Particula::registry_.remove((*it), gen); }
+		remove_particle_from_generators((*it));
 
 		it = particles.erase(it);
 		return true;
@@ -46,7 +46,7 @@ void Shot_Manager::shoot()
 	p->setVelocity(GetCamera()->getDir() * DEF_VEL);        //sets de velocidad y aceleracion
 	p->setAcceleration(GetCamera()->getDir() * DEF_ACC);
 
-	for (ParticleForceGenerator* gen : generators) { Particula::registry_.add(p, gen); }
+	register_particle_in_generators(p);
 
 	particles.push_back(p);                                //se añade al vector de particulas para poder actualizarlas
 }

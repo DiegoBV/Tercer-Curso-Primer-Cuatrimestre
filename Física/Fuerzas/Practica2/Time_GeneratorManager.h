@@ -1,7 +1,6 @@
 #pragma once
 #include "Manager.h"
 #include "Particula.h"
-#include "ParticleForceRegistry.h"
 #include <time.h>
 
 class Time_GeneratorManager: public Manager
@@ -20,12 +19,14 @@ class Time_GeneratorManager: public Manager
 	const int VEL_MIN_ = 20;
 	const float G_ = -75;
 	const float MAX_LIFE_TIME = 3;
+	bool on = true;
 
 	//------------------------------------------------AUX METHODS------------------------------------------------
 	Vector3 generateRandomVel();
 	Vector4 generateRandomColor();
 	void generateNewParticle(double t);
 	bool checkLifeTime(vector<Particula*>::iterator& it);
+
 
 public:
 	virtual ~Time_GeneratorManager();

@@ -32,6 +32,7 @@
     <ClCompile Include="Time_GeneratorManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
+    <ClCompile Include="Wind.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render\Camera.h">
@@ -79,6 +80,7 @@
     <ClInclude Include="Manager.h">
       <Filter>Managers</Filter>
     </ClInclude>
+    <ClInclude Include="Wind.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
