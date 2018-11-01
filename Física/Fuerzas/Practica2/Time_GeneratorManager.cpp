@@ -18,7 +18,7 @@ void Time_GeneratorManager::generateNewParticle(double t)
 	if (tiempo_transcurrido > next_period) {
 		Particula* p = pool->generateObject(pos, generateRandomVel(), { 0, 0, 0 }, generateRandomColor());
 
-		if (gravity_generator_ != nullptr) { Particula::registry_.add(p, gravity_generator_); }                   //la añadimos al generador de gravedad
+		for (ParticleForceGenerator* gen : generators) { Particula::registry_.add(p, gen); }
 
 		p->setShape(shape_, {1});
 		next_period = tiempo_transcurrido + time_inter;
@@ -31,7 +31,7 @@ bool Time_GeneratorManager::checkLifeTime(vector<Particula*>::iterator& it)
 	if ((*it)->getLifeTime() > MAX_LIFE_TIME) {
 		(*it)->setInactive();
 
-		if (gravity_generator_ != nullptr) { Particula::registry_.remove((*it), gravity_generator_); }            //la borramos del generador de gravedad
+		for (ParticleForceGenerator* gen : generators) { Particula::registry_.remove((*it), gen); }            //la borramos de los generadores
 
 		it = particles.erase(it);
 

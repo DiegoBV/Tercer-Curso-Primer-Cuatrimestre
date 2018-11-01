@@ -2,7 +2,6 @@
 #include "Particula.h"
 #include "Manager.h"
 #include "ParticleForceRegistry.h"
-#include "ParticleGravity.h"
 
 class Shot_Manager: public Manager
 {
@@ -19,15 +18,12 @@ private:
 	std::vector<Particula*> particles; 
 	TemplatePool<Particula>* pool = nullptr;
 
-	//------------------------------------------------GENERATORS------------------------------------------------
-	ParticleGravity* grav_gen_;
-
 public:
 	Shot_Manager() {};
 
 	~Shot_Manager() {};
 
-	Shot_Manager(TemplatePool<Particula>* pool, ParticleGravity* grav_gen = nullptr) : Manager(), pool(pool), grav_gen_(grav_gen) {};
+	Shot_Manager(TemplatePool<Particula>* pool) : Manager(), pool(pool) {};
 
 	bool checkBullet(vector<Particula*>::iterator& it);
 

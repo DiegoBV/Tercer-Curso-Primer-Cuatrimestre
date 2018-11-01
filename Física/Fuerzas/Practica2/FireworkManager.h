@@ -128,10 +128,15 @@ private:
 
 public:
 	FireworkManager();
+
 	virtual ~FireworkManager();
+
 	void Input_FireworkCreate(unsigned type = 0, const Firework* parent = NULL);
+
 	virtual void update(double t);
+
 	virtual void handle_event(unsigned char key);
+
 	void switch_activate();
 };
 

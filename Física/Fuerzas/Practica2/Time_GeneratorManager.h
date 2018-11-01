@@ -1,15 +1,11 @@
 #pragma once
 #include "Manager.h"
 #include "Particula.h"
-#include "ParticleGravity.h"
 #include "ParticleForceRegistry.h"
 #include <time.h>
 
 class Time_GeneratorManager: public Manager
 {
-	//------------------------------------------------GENERADORES DE FUERZAS------------------------------------------------
-	ParticleGravity* gravity_generator_ = nullptr;
-
 	//------------------------------------------------PARTICLE STORAGE------------------------------------------------
 	TemplatePool<Particula>* pool = nullptr;
 	vector<Particula*> particles;
@@ -34,8 +30,8 @@ class Time_GeneratorManager: public Manager
 public:
 	virtual ~Time_GeneratorManager();
 
-	Time_GeneratorManager(Particula::Shape shp, float t, TemplatePool<Particula>* pool, ParticleGravity* g_grav = nullptr, Vector3 pos = { 10, 30, 0 }):
-			Manager(), shape_(shp), time_inter(t), pool(pool), gravity_generator_(g_grav), pos(pos) { srand(time(NULL)); };
+	Time_GeneratorManager(Particula::Shape shp, float t, TemplatePool<Particula>* pool, Vector3 pos = { 10, 30, 0 }):
+			Manager(), shape_(shp), time_inter(t), pool(pool), pos(pos) { srand(time(NULL)); };
 
 	Time_GeneratorManager() {};
 

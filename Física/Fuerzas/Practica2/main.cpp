@@ -16,6 +16,8 @@
 
 #include "ParticleGravity.h"
 
+#include "ParticleDrag.h"
+
 #include "Shot_Manager.h"
 
 using namespace physx;
@@ -62,14 +64,18 @@ void initPhysics(bool interactive)
 	generators.push_back(grav_gen_);
 	ParticleGravity* ingrav_gen_ = new ParticleGravity({ 0, 2, 0 });
 	generators.push_back(ingrav_gen_);
-
+	ParticleDrag* dr = new ParticleDrag(0.2, 0.3);
+	generators.push_back(dr);
 	//----------------------------------------------------MANAGERS-------------------------------------------------------
 
 	FireworkManager* fManager_ = new FireworkManager();
 	managers.push_back(fManager_);
-	Time_GeneratorManager* t_gen = new Time_GeneratorManager(Particula::Sphere, 0.01, &pool, grav_gen_);
+	Time_GeneratorManager* t_gen = new Time_GeneratorManager(Particula::Sphere, 0.01, &pool);
+	t_gen->addGenerator(grav_gen_);
 	managers.push_back(t_gen);
-	Shot_Manager* s_man = new Shot_Manager(&pool, ingrav_gen_);
+	Shot_Manager* s_man = new Shot_Manager(&pool);
+	s_man->addGenerator(ingrav_gen_);
+	s_man->addGenerator(dr);
 	managers.push_back(s_man);
 	// ...
 }
