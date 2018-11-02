@@ -31,6 +31,9 @@ void comprueba_adyacencia(const int& v, const int& k, ConjuntosDisjuntos& g) {
 			fin_cercano = v;
 		if (pto_medio_final != INT_MIN && pto_medio_final + k - v >= 0) {
 			g.unir(pto_medio_final, v);
+			if (pto_medio_principio != INT_MAX) {
+				fin_cercano = pto_medio_principio;
+			}
 		}
 	}
 
@@ -41,6 +44,9 @@ void comprueba_adyacencia(const int& v, const int& k, ConjuntosDisjuntos& g) {
 			in_cercano = v;
 		if (pto_medio_principio != INT_MAX && v + k - pto_medio_principio >= 0) {
 			g.unir(pto_medio_principio, v);
+			if (pto_medio_final != INT_MIN) {
+				in_cercano = pto_medio_final;
+			}
 		}
 	}
 
