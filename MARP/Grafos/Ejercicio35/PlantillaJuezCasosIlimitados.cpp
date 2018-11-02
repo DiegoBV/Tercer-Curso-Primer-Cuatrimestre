@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <fstream>
 #include <stack>
+#include <climits>
 #include "ConjuntosDisjuntos.h"
 
 using namespace std;
@@ -13,19 +14,50 @@ using namespace std;
 int fin = 0;
 int fin_cercano = 0;
 int in_cercano = 0;
+int pto_medio_principio = INT_MAX;
+int pto_medio_final = INT_MIN;
+bool primera_vuelta = true;
 
 void comprueba_adyacencia(const int& v, const int& k, ConjuntosDisjuntos& g) {
+	bool no_conecta = true;
+
 	int compr = (v + k) - fin_cercano;
 
 	if (compr >= 0) //significa que esta conectado con el final
 	{
+		no_conecta = false;
 		g.unir(v, fin_cercano);
-		fin_cercano = v;
+		if(v < fin_cercano)
+			fin_cercano = v;
+		if (pto_medio_final != INT_MIN && pto_medio_final + k - v >= 0) {
+			g.unir(pto_medio_final, v);
+		}
 	}
 
 	if ((in_cercano + k) - (v) >= 0){ //significa que esta conectado con el principio
+		no_conecta = false;
 		g.unir(in_cercano, v);
-		in_cercano = v;
+		if(v > in_cercano)
+			in_cercano = v;
+		if (pto_medio_principio != INT_MAX && v + k - pto_medio_principio >= 0) {
+			g.unir(pto_medio_principio, v);
+		}
+	}
+
+	if (no_conecta) {
+		if (pto_medio_final != INT_MIN) {
+				g.unir(pto_medio_final, v);
+		}
+		else if(pto_medio_principio != INT_MAX){
+			g.unir(pto_medio_principio, v);
+		}
+
+		if (v > pto_medio_final) {
+			pto_medio_final = v;
+		}
+		else {
+			pto_medio_principio = v;
+		}
 	}
 }
 
@@ -42,6 +74,8 @@ bool resuelveCaso() {
 	fin = (N * (M + 1) + M);
 	in_cercano = 0;
 	fin_cercano = fin;
+	pto_medio_principio = INT_MAX;
+	pto_medio_final = INT_MIN;
 
     if (! std::cin)
         return false;
