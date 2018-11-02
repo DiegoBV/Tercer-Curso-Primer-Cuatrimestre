@@ -122,7 +122,7 @@ void FireworkManager::update(double t)
 	for (vector<Firework*>::iterator it = fireworks.begin(); it != fireworks.end();)
 	{
 		Firework* firework = (*it);
-		firework->Particula::update(t);
+		firework->Particle::update(t);
 		if (firework->getLifeTime() > firework->getAge())
 		{
 			remove_particle_from_generators(firework);

@@ -1,6 +1,6 @@
 #include "Blast.h"
 
-//A VER, MI IDEA ES QUE EN EL MAIN TENGA UNA LISTA (GUAY PARA BORRAR9) DE TOODAS LAS PARTICULAS QUE SE VAN A RENDERIZAR, EN CADA MANAGER, CADA VEZ QUE SE CREA UNA 
+//A VER, MI IDEA ES QUE EN EL MAIN TENGA UNA LISTA (GUAY PARA BORRAR9) DE TOODAS LAS ParticleS QUE SE VAN A RENDERIZAR, EN CADA MANAGER, CADA VEZ QUE SE CREA UNA 
 //SE AÑADE ESA A LA LISTA, SI SE BORRA PUES SE BORRA DE DICHA LISTA. EN EL MAIN, SI LE DAS AL ESPACIO...
 
 //OTRA IDEA, PASARLE UNA REFERENCIA A LOS MANAGERS DE UN VECTOR DE EXPLOSIONES (A NULLPTR). AL AÑADIRLOS PUES HACER LA COMPROBACION DE SI NO ES NULLPTR Y TAL
@@ -9,21 +9,21 @@
 
 //LA SEGUNDA IDEA ES LA MEJOR
 
-bool Blast::is_inside(Particula * particle)
+bool Blast::is_inside(Particle * particle)
 {
 	Vector3 pos = particle->getPosition();
 	return (((center.x + rad) >= (pos.x) && (center.y + rad) >= (pos.y) && (center.z + rad) >= (pos.z)))
 		&& ((center.x - rad) <= (pos.x) && (center.y - rad) <= (pos.y) && (center.z - rad) <= (pos.z));
 }
 
-bool Blast::is_near(Particula * particle) //----> esto ta mal
+bool Blast::is_near(Particle * particle) //----> esto ta mal
 {
 	Vector3 pos = particle->getPosition();
 	return (((center.x + rad/2) >= (pos.x) && (center.y + rad/2) >= (pos.y) && (center.z + rad/2) >= (pos.z)))
 		&& ((center.x - rad/2) <= (pos.x) && (center.y - rad/2) <= (pos.y) && (center.z - rad/2) <= (pos.z));
 }
 
-bool Blast::is_medium_distance(Particula * particle)
+bool Blast::is_medium_distance(Particle * particle)
 {
 	Vector3 pos = particle->getPosition();
 	return (((center.x + rad / 4) >= (pos.x) && (center.y + rad / 4) >= (pos.y) && (center.z + rad / 4) >= (pos.z)))
@@ -32,7 +32,7 @@ bool Blast::is_medium_distance(Particula * particle)
 
 void Blast::deactivate()
 {
-	if (auxRef >= references_) {  //si ya ha comprobado todas las particulas que tiene referenciadas, la explosion se desactiva
+	if (auxRef >= references_) {  //si ya ha comprobado todas las Particles que tiene referenciadas, la explosion se desactiva
 		active_ = false;
 		auxRef = 0;
 	}
@@ -48,7 +48,7 @@ Blast::~Blast()
 	delete rn;
 }
 
-void Blast::updateForce(Particula * particle, float t)
+void Blast::updateForce(Particle * particle, float t)
 {
 	if (is_inside(particle)) {
 		Vector3 dir = particle->getPosition() - center;
@@ -68,16 +68,4 @@ void Blast::updateForce(Particula * particle, float t)
 	auxRef++;
 
 	deactivate();
-}
-
-void Blast::handle_event(unsigned char key)
-{
-	switch (toupper(key))
-	{
-	case 'G':
-		active_ = true;
-		break;
-	default:
-		break;
-	}
 }

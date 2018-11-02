@@ -1,13 +1,13 @@
 #include "Wind.h"
 
-bool Wind::is_inside(Particula * particle)
+bool Wind::is_inside(Particle * particle)
 {
 	Vector3 pos = particle->getPosition();
 	return (((center.x + rad) >= (pos.x) && (center.y + rad) >= (pos.y) && (center.z + rad) >= (pos.z)))
 		&& ((center.x - rad) <= (pos.x) && (center.y - rad) <= (pos.y) && (center.z - rad) <= (pos.z));
 }
 
-void Wind::updateForce(Particula * particle, float t)
+void Wind::updateForce(Particle * particle, float t)
 {
 	if (particle->getMass() <= 0.0f) return;
 

@@ -16,7 +16,7 @@ private:
 
 	RenderItem* rn = nullptr;
 
-	bool is_inside(Particula* particle);
+	bool is_inside(Particle* particle);
 
 public:
 	Wind() : wind_force_(0), wind_direction_(0) {};
@@ -25,7 +25,7 @@ public:
 
 	Wind(float wind_force, Vector3 wind_direction, Vector3 center = { 0, 0, 0 }, float rad = 50) : 
 		wind_force_(wind_force), wind_direction_(wind_direction), center(center), rad(rad), transform(center), rn(new RenderItem()){ 
-			rn->shape = CreateShape(physx::PxSphereGeometry(rad)); rn->transform = &transform; rn->color = { 1, 0, 0, 0 }; RegisterRenderItem(rn); wind_direction_.normalize(); };
+			rn->shape = CreateShape(physx::PxSphereGeometry(rad)); rn->transform = &transform; rn->color = { 0, 0, 1, 0 }; RegisterRenderItem(rn); wind_direction_.normalize(); };
 
 	inline float getWindForce() const { return wind_force_; };
 
@@ -35,7 +35,7 @@ public:
 
 	inline void setWindDirection(Vector3 wd) { wd.normalize(); wind_direction_ = wd; };
 
-	virtual void updateForce(Particula* particle, float t);
+	virtual void updateForce(Particle* particle, float t);
 
 	inline void changeDirection() { std::swap(wind_direction_.x, wind_direction_.y); std::swap(wind_direction_.y, wind_direction_.z); };
 

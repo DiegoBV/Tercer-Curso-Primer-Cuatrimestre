@@ -1,6 +1,6 @@
 #include "Shot_Manager.h"
 
-bool Shot_Manager::checkBullet(vector<Particula*>::iterator & it)
+bool Shot_Manager::checkBullet(vector<Particle*>::iterator & it)
 {
 	if ((*it)->getDistanceTraveled() > DEF_DIST_TRAV) {
 		(*it)->setInactive();
@@ -16,7 +16,7 @@ bool Shot_Manager::checkBullet(vector<Particula*>::iterator & it)
 
 void Shot_Manager::update(double t)
 {
-	for (vector<Particula*>::iterator it = particles.begin(); it != particles.end();) {
+	for (vector<Particle*>::iterator it = particles.begin(); it != particles.end();) {
 		(*it)->update(t);
 		if (!checkBullet(it)) { it++; }                //si ninguna bala ha desaparecido se aumenta el iterador, si desaparece el iterador aumenta al borrar el contenido
 	}
@@ -36,7 +36,7 @@ void Shot_Manager::handle_event(unsigned char key)
 
 void Shot_Manager::shoot()
 {
-	Particula* p = pool->getObject();                       //se busca una particula inactiva en la pool (y se activa). Si no existe, se crea una nueva
+	Particle* p = pool->getObject();                       //se busca una Particle inactiva en la pool (y se activa). Si no existe, se crea una nueva
 
 	p->setShape(DEF_SHAPE, DEF_SIZE);                       //set de la forma, color, velocidad, aceleracion...
 
@@ -48,5 +48,5 @@ void Shot_Manager::shoot()
 
 	register_particle_in_generators(p);
 
-	particles.push_back(p);                                //se añade al vector de particulas para poder actualizarlas
+	particles.push_back(p);                                //se añade al vector de Particles para poder actualizarlas
 }

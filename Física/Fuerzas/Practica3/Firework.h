@@ -1,8 +1,8 @@
 #pragma once
-#include "Particula.h"
+#include "Particle.h"
 
 class Firework :
-	public Particula
+	public Particle
 {
 private:
 	
@@ -12,7 +12,7 @@ private:
 
 public:
 	Firework() {};
-	Firework(RenderItem* rItem, float inverse_mass = 1.0) : Particula(rItem, inverse_mass) {};
+	Firework(RenderItem* rItem, float inverse_mass = 1.0) : Particle(rItem, inverse_mass) {};
 	virtual ~Firework() {};
 	//---------------------------------------------------------SETTERS--------------------------------------------
 

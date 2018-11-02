@@ -17,7 +17,7 @@ void Time_GeneratorManager::generateNewParticle(double t)
 {
 	tiempo_transcurrido += t;
 	if (tiempo_transcurrido > next_period) {
-		Particula* p = pool->generateObject(pos, generateRandomVel(), { 0, 0, 0 }, generateRandomColor());
+		Particle* p = pool->generateObject(pos, generateRandomVel(), { 0, 0, 0 }, generateRandomColor());
 
 		register_particle_in_generators(p);
 
@@ -27,7 +27,7 @@ void Time_GeneratorManager::generateNewParticle(double t)
 	}
 }
 
-bool Time_GeneratorManager::checkLifeTime(vector<Particula*>::iterator& it)
+bool Time_GeneratorManager::checkLifeTime(vector<Particle*>::iterator& it)
 {
 	if ((*it)->getLifeTime() > MAX_LIFE_TIME) {
 		(*it)->setInactive();
@@ -52,7 +52,7 @@ void Time_GeneratorManager::update(double t)
 		generateNewParticle(t);
 	}
 
-	for (vector<Particula*>::iterator it = particles.begin(); it != particles.end();) {
+	for (vector<Particle*>::iterator it = particles.begin(); it != particles.end();) {
 		(*it)->update(t);
 		if (!checkLifeTime(it)) { it++; };
 	}

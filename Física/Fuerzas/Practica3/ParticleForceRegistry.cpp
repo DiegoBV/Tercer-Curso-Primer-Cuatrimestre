@@ -1,6 +1,6 @@
 #include "ParticleForceRegistry.h"
 
-void ParticleForceRegistry::add(Particula * particle, ParticleForceGenerator * fg)
+void ParticleForceRegistry::add(Particle * particle, ParticleForceGenerator * fg)
 {
 	ParticleForceRegistration pFG;
 	pFG.particle = particle;
@@ -10,7 +10,7 @@ void ParticleForceRegistry::add(Particula * particle, ParticleForceGenerator * f
 	registrations.push_back(pFG);              //add the new registration
 }
 
-void ParticleForceRegistry::remove(Particula * particle, ParticleForceGenerator * fg)
+void ParticleForceRegistry::remove(Particle * particle, ParticleForceGenerator * fg)
 {
 	auto it = std::find(registrations.begin(), registrations.end(), ParticleForceRegistration(particle, fg));
 

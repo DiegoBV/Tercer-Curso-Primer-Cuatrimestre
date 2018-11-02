@@ -1,16 +1,16 @@
 #pragma once
 #include "Manager.h"
-#include "Particula.h"
+#include "Particle.h"
 #include <time.h>
 
 class Time_GeneratorManager: public Manager
 {
 	//------------------------------------------------PARTICLE STORAGE------------------------------------------------
-	TemplatePool<Particula>* pool = nullptr;
-	vector<Particula*> particles;
+	TemplatePool<Particle>* pool = nullptr;
+	vector<Particle*> particles;
 
 	//------------------------------------------------PARAMETERS------------------------------------------------
-	Particula::Shape shape_;
+	Particle::Shape shape_;
 	float time_inter = 0;
 	float next_period = 0;
 	float tiempo_transcurrido = 0;
@@ -25,13 +25,13 @@ class Time_GeneratorManager: public Manager
 	Vector3 generateRandomVel();
 	Vector4 generateRandomColor();
 	void generateNewParticle(double t);
-	bool checkLifeTime(vector<Particula*>::iterator& it);
+	bool checkLifeTime(vector<Particle*>::iterator& it);
 
 
 public:
 	virtual ~Time_GeneratorManager();
 
-	Time_GeneratorManager(Particula::Shape shp, float t, TemplatePool<Particula>* pool, Vector3 pos = { 10, 30, 0 }):
+	Time_GeneratorManager(Particle::Shape shp, float t, TemplatePool<Particle>* pool, Vector3 pos = { 10, 30, 0 }):
 			Manager(), shape_(shp), time_inter(t), pool(pool), pos(pos) { srand(time(NULL)); };
 
 	Time_GeneratorManager() {};

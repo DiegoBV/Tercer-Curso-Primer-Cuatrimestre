@@ -8,9 +8,6 @@
       <Filter>Render</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Particula.cpp">
-      <Filter>Particulas</Filter>
-    </ClCompile>
     <ClCompile Include="ParticleForceRegistry.cpp">
       <Filter>Forces</Filter>
     </ClCompile>
@@ -36,6 +33,11 @@
       <Filter>Forces</Filter>
     </ClCompile>
     <ClCompile Include="Blast.cpp" />
+    <ClCompile Include="Grenade.cpp" />
+    <ClCompile Include="Particle.cpp">
+      <Filter>Particulas</Filter>
+    </ClCompile>
+    <ClCompile Include="GrenadeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render\Camera.h">
@@ -43,9 +45,6 @@
     </ClInclude>
     <ClInclude Include="Render\Render.h">
       <Filter>Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Particula.h">
-      <Filter>Particulas</Filter>
     </ClInclude>
     <ClInclude Include="TemplatePool.h">
       <Filter>Particulas</Filter>
@@ -87,6 +86,11 @@
       <Filter>Forces</Filter>
     </ClInclude>
     <ClInclude Include="Blast.h" />
+    <ClInclude Include="Grenade.h" />
+    <ClInclude Include="Particle.h">
+      <Filter>Particulas</Filter>
+    </ClInclude>
+    <ClInclude Include="GrenadeManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

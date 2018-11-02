@@ -9,7 +9,7 @@ private:
 public:
 	ParticleGravity() {};
 	ParticleGravity(const Vector3& gravity) : g(gravity) {}
-	virtual void updateForce(Particula* particle, float t);
+	virtual void updateForce(Particle* particle, float t);
 	virtual ~ParticleGravity() {};
 };
 

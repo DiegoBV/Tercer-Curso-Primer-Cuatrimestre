@@ -1,20 +1,20 @@
-#include "Particula.h"
+#include "Particle.h"
 #include "ParticleForceRegistry.h"
 #include <iostream>
 
-ParticleForceRegistry Particula::registry_ = ParticleForceRegistry();
+ParticleForceRegistry Particle::registry_ = ParticleForceRegistry();
 
-void Particula::clearForce()
+void Particle::clearForce()
 {
 	force.x = force.y = force.z = 0;
 }
 
-void Particula::addForce(const Vector3 & f)
+void Particle::addForce(const Vector3 & f)
 {
 	force += f;
 }
 
-physx::PxShape* Particula::createShape(Shape tipo, Medidas size)
+physx::PxShape* Particle::createShape(Shape tipo, Medidas size)
 {
 	physx::PxShape* shape_;
 
@@ -36,9 +36,9 @@ physx::PxShape* Particula::createShape(Shape tipo, Medidas size)
 	return shape_;
 }
 
-void Particula::integrate(float t)
+void Particle::integrate(float t)
 {
-	if (inverse_mass <= 0.0f) return;                   //Si la masa es infinita, la particula no cambia su posicion (paredes, suelos)
+	if (inverse_mass <= 0.0f) return;                   //Si la masa es infinita, la Particle no cambia su posicion (paredes, suelos)
 
 	p += v * t;                                         //update de la posicion (e = e + v*t)
 

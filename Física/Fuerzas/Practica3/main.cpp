@@ -6,7 +6,7 @@
 
 #include "core.hpp"
 
-#include "Particula.h"
+#include "Particle.h"
 
 #include "TemplatePool.h"
 
@@ -22,7 +22,7 @@
 
 #include "Shot_Manager.h"
 
-#include "Blast.h"
+#include "GrenadeManager.h"
 
 using namespace physx;
 
@@ -36,7 +36,7 @@ PxMaterial*				gMaterial	= NULL;
 
 PxPvd*                  gPvd        = NULL;
 
-TemplatePool<Particula> pool;                                      //pool de particulas creadas para disparar, por defecto se crean 300 al principio y se van reusando
+TemplatePool<Particle> pool;                                      //pool de Particles creadas para disparar, por defecto se crean 300 al principio y se van reusando
 
 vector<Manager*> managers;                                         // vector de managers (clase abstracta) para manejar mejor sus handle y updates
 
@@ -68,28 +68,30 @@ void initPhysics(bool interactive)
 	generators.push_back(grav_gen_);
 	ParticleGravity* ingrav_gen_ = new ParticleGravity({ 0, 2, 0 });
 	generators.push_back(ingrav_gen_);;
-	//Wind* wind = new Wind(30, { 1, 0, 0 }, {0, -30, 0});
-	//generators.push_back(wind);
-	//Wind* wind2 = new Wind(30, { 0, 0, 1 }, { 100, -40, 0 });
-	//generators.push_back(wind2);
-	Blast* blast = new Blast(500);
-	generators.push_back(blast);
+	Wind* wind = new Wind(30, { 1, 0, 0 }, {0, -30, 0});
+	generators.push_back(wind);
+	Wind* wind2 = new Wind(30, { 0, 0, 1 }, { 100, -40, 0 });
+	generators.push_back(wind2);
 
 	//----------------------------------------------------MANAGERS-------------------------------------------------------
 
+	GrenadeManager* gren_man = new GrenadeManager();
+	gren_man->addGenerator(grav_gen_);
+	managers.push_back(gren_man);
 	FireworkManager* fManager_ = new FireworkManager();
 	fManager_->addGenerator(grav_gen_);
 	managers.push_back(fManager_);
-	Time_GeneratorManager* t_gen = new Time_GeneratorManager(Particula::Sphere, 0.0001, &pool);
+	Time_GeneratorManager* t_gen = new Time_GeneratorManager(Particle::Sphere, 0.0001, &pool);
 	t_gen->addGenerator(grav_gen_);
-	t_gen->addGenerator(blast);
-	//t_gen->addGenerator(wind);
-	//t_gen->addGenerator(wind2);
+	t_gen->addGenerator(gren_man->getBlast());
+	t_gen->addGenerator(wind);
+	t_gen->addGenerator(wind2);
 	managers.push_back(t_gen);
 	Shot_Manager* s_man = new Shot_Manager(&pool);
 	s_man->addGenerator(ingrav_gen_);
-	//s_man->addGenerator(wind);
-	//s_man->addGenerator(wind2);
+	s_man->addGenerator(wind);
+	s_man->addGenerator(wind2);
+	s_man->addGenerator(gren_man->getBlast());
 	managers.push_back(s_man);
 	// ...
 }
@@ -107,7 +109,7 @@ void stepPhysics(bool interactive, double t)
 	for (Manager* man : managers) {
 		man->update(t);
 	}
-	Particula::registry_.updateForces(t);
+	Particle::registry_.updateForces(t);
 	// ...
 }
 

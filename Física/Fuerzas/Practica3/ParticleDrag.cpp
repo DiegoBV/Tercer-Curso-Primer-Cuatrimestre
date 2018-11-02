@@ -1,6 +1,6 @@
 #include "ParticleDrag.h"
 
-void ParticleDrag::updateForce(Particula * particle, float t)
+void ParticleDrag::updateForce(Particle * particle, float t)
 {
 	Vector3 f;
 	f = particle->getVelocity();

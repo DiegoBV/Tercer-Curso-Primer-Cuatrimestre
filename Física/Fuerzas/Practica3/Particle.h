@@ -3,7 +3,7 @@
 
 class ParticleForceRegistry;
 
-class Particula
+class Particle
 {
 private:
 	
@@ -13,7 +13,7 @@ private:
 
 	float inverse_mass;                                //masa inversa
 
-	bool active = true;                                //active	
+	bool active = false;                                //active	
 
 	float lifeTime_;                                   //lifetime
 
@@ -34,7 +34,7 @@ private:
 
 public:
 
-	static ParticleForceRegistry registry_;                     //variable estatica del registro de particulas --> todos tienen acceso al mismo
+	static ParticleForceRegistry registry_;                     //variable estatica del registro de Particles --> todos tienen acceso al mismo
 
 	
 	enum Shape { Capsule, Sphere, Box };                       //enum tipos de shapes
@@ -55,12 +55,12 @@ public:
 	};
 
 
-	Particula(RenderItem* rItem, float inverse_mass = 1.0) : renderItem(rItem), inverse_mass(inverse_mass), 
+	Particle(RenderItem* rItem, float inverse_mass = 1.0) : renderItem(rItem), inverse_mass(inverse_mass), 
 		damping(0.95), v(0, 0, 0), a(0, 0, 0), p(0, 0, 0), transform(p), lifeTime_(0), force(0, 0, 0) { renderItem->transform = &transform; };
 
-	Particula() : renderItem(nullptr), inverse_mass(1), damping(0.95), lifeTime_(0) {};
+	Particle() : renderItem(nullptr), inverse_mass(1), damping(0.95), lifeTime_(0) {};
 
-	virtual ~Particula() { if (renderItem != nullptr) delete renderItem; };
+	virtual ~Particle() { if (renderItem != nullptr) delete renderItem; };
 
 	virtual void update(float time) { integrate(time); lifeTime_ += time; };
 
@@ -126,7 +126,7 @@ public:
 	inline void setColor(Vector4 color_) { renderItem->color = color_; };
 
 	//setActive and RegisterRenderItem
-	inline void setActive() { active = true;  RegisterRenderItem(renderItem); };
+	inline void setActive() { active = true;  RegisterRenderItem(renderItem); resetLifeTime(); };
 
 	//setInactive and DeregisterRenderItem
 	inline void setInactive() { if (active) { active = false;  resetLifeTime();  DeregisterRenderItem(renderItem); } };

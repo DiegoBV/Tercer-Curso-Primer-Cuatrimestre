@@ -6,11 +6,11 @@ class ParticleForceRegistry
 protected:
 	struct ParticleForceRegistration                                // Storage for generator-particle entry
 	{
-		Particula* particle;
+		Particle* particle;
 		ParticleForceGenerator* fg;
 
 		ParticleForceRegistration() : particle(nullptr), fg(nullptr) {};
-		ParticleForceRegistration(Particula* particle, ParticleForceGenerator* fg) : particle(particle), fg(fg) {};
+		ParticleForceRegistration(Particle* particle, ParticleForceGenerator* fg) : particle(particle), fg(fg) {};
 		inline bool operator==(const ParticleForceRegistration& e1) { return (e1.particle == this->particle) && (e1.fg == this->fg); };
 	};
 
@@ -19,9 +19,9 @@ protected:
 public:
 	ParticleForceRegistry() {};
 
-	void add(Particula* particle, ParticleForceGenerator* fg);       // Associate generator with a particle  
+	void add(Particle* particle, ParticleForceGenerator* fg);       // Associate generator with a particle  
 	
-	void remove(Particula* particle, ParticleForceGenerator* fg);    // Remove association
+	void remove(Particle* particle, ParticleForceGenerator* fg);    // Remove association
 	
 	void clear();                                                   // Removes all associations. Particle and Generators won't be deleted
 	

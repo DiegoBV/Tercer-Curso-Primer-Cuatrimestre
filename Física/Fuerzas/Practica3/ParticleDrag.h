@@ -15,6 +15,6 @@ public:
 
 	ParticleDrag(float _k1, float _k2, Vector3 center = { 0, 0, 0 }, float rad = 50) : k1(_k1), k2(_k2) {};
 
-	virtual void updateForce(Particula* particle, float t);
+	virtual void updateForce(Particle* particle, float t);
 };
 

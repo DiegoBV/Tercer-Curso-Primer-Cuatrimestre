@@ -16,9 +16,9 @@ public:
 	virtual void handle_event(unsigned char key) = 0;         //virtual para poder llamarlo con vectores, handle_event
 	virtual void addGenerator(ParticleForceGenerator* gen) { generators.push_back(gen); }
 	virtual void addGenerators(const vector<ParticleForceGenerator*>& gens) { for (ParticleForceGenerator* gen : gens) { generators.push_back(gen); } }
-	//registra una particula en todos sus generadores
-	virtual void register_particle_in_generators(Particula* p) { for (ParticleForceGenerator* gen : generators) { if(gen != nullptr) Particula::registry_.add(p, gen); } };
-	//elimina una particula de la lista
-	virtual void remove_particle_from_generators(Particula* p) { for (ParticleForceGenerator* gen : generators) { if(gen != nullptr) Particula::registry_.remove(p, gen); } };
+	//registra una Particle en todos sus generadores
+	virtual void register_particle_in_generators(Particle* p) { for (ParticleForceGenerator* gen : generators) { if(gen != nullptr) Particle::registry_.add(p, gen); } };
+	//elimina una Particle de la lista
+	virtual void remove_particle_from_generators(Particle* p) { for (ParticleForceGenerator* gen : generators) { if(gen != nullptr) Particle::registry_.remove(p, gen); } };
 };
 

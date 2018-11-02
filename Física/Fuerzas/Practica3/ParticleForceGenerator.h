@@ -1,5 +1,5 @@
 #pragma once
-#include "Particula.h"
+#include "Particle.h"
 class ParticleForceGenerator
 {
 protected:
@@ -11,7 +11,7 @@ public:
 
 	virtual ~ParticleForceGenerator() {};
 
-	virtual void updateForce(Particula* particle, float t) = 0;        // Overload to provide functionality
+	virtual void updateForce(Particle* particle, float t) = 0;        // Overload to provide functionality
 	virtual void handle_event(unsigned char key) {};
 	void addReference() { references_++; };
 	void removeReference() { references_--; };
