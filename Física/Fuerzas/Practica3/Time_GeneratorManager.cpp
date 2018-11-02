@@ -29,7 +29,7 @@ void Time_GeneratorManager::generateNewParticle(double t)
 
 bool Time_GeneratorManager::checkLifeTime(vector<Particle*>::iterator& it)
 {
-	if ((*it)->getLifeTime() > MAX_LIFE_TIME) {
+	if ((*it)->getLifeTime() > MAX_LIFE_TIME_) {
 		(*it)->setInactive();
 
 		remove_particle_from_generators((*it));            //la borramos de los generadores

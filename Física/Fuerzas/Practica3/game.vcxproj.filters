@@ -32,12 +32,18 @@
     <ClCompile Include="Wind.cpp">
       <Filter>Forces</Filter>
     </ClCompile>
-    <ClCompile Include="Blast.cpp" />
-    <ClCompile Include="Grenade.cpp" />
     <ClCompile Include="Particle.cpp">
       <Filter>Particulas</Filter>
     </ClCompile>
-    <ClCompile Include="GrenadeManager.cpp" />
+    <ClCompile Include="Grenade.cpp">
+      <Filter>Particulas</Filter>
+    </ClCompile>
+    <ClCompile Include="Blast.cpp">
+      <Filter>Forces</Filter>
+    </ClCompile>
+    <ClCompile Include="GrenadeManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render\Camera.h">
@@ -85,12 +91,18 @@
     <ClInclude Include="Wind.h">
       <Filter>Forces</Filter>
     </ClInclude>
-    <ClInclude Include="Blast.h" />
-    <ClInclude Include="Grenade.h" />
     <ClInclude Include="Particle.h">
       <Filter>Particulas</Filter>
     </ClInclude>
-    <ClInclude Include="GrenadeManager.h" />
+    <ClInclude Include="Grenade.h">
+      <Filter>Particulas</Filter>
+    </ClInclude>
+    <ClInclude Include="Blast.h">
+      <Filter>Forces</Filter>
+    </ClInclude>
+    <ClInclude Include="GrenadeManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

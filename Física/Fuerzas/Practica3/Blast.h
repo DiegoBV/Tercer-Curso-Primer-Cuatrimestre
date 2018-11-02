@@ -8,23 +8,27 @@ private:
 
 	float force = 100;
 
-	Vector3 center;               //sphere center
+	Vector3 center;                                     //sphere center
 
 	physx::PxTransform transform;
 
-	float rad;                   //sphere radius
+	float rad;                                        //sphere radius
 
-	RenderItem* rn = nullptr;
+	RenderItem* rn = nullptr;                        //renderItem
 
-	bool is_inside(Particle* particle);
+	bool is_inside(Particle* particle);             //comprueba si una particula esta dentro de la esfera
 
-	bool is_near(Particle* particle);
+	bool is_near(Particle* particle);              //comprueba si una particula esta cerca del centro
 
-	bool is_medium_distance(Particle* particle);
+	bool is_medium_distance(Particle* particle);  //comprueba si una particula esta a media distancia del centro de la esfera
 
-	void deactivate();
+	void deactivate();                           //si ha comprobado todas las particulas referenciadas, desaparece
 
-	int auxRef = 0;
+	int auxRef = 0;                              //auxiliar para comprobar si ya ha comprobado todas las particulas
+
+	bool debug_ = true;
+
+	void debug() { debug_ ? DeregisterRenderItem(rn) : RegisterRenderItem(rn); debug_ = !debug_; };    //debug
 
 public:
 	Blast();
@@ -39,5 +43,8 @@ public:
 	void setActive() { active_ = true; };
 
 	void setCenter(Vector3 pos) { center = pos; transform.p = center; };
+
+
+	virtual void handle_event(unsigned char key);
 };
 

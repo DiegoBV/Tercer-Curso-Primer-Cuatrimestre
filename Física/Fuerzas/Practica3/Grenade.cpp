@@ -2,7 +2,7 @@
 
 
 
-void Grenade::explosion()
+void Grenade::explode()
 {
 	expl->setCenter(this->getPosition());
 	expl->setActive();
@@ -21,15 +21,4 @@ Grenade::~Grenade()
 Grenade::Grenade(float rad, float time, Blast * expl) : Particle(new RenderItem()), rad(rad), time_to_explode(time), expl(expl)
 {
 	setSphereShape(rad);
-}
-
-void Grenade::update(float time)
-{
-	if (this->isActive()) {
-		Particle::update(time);
-
-		if (getLifeTime() >= time + time_to_explode) {
-			explosion();
-		}
-	}
 }

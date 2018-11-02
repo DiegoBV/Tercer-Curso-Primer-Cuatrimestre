@@ -72,11 +72,14 @@ void initPhysics(bool interactive)
 	generators.push_back(wind);
 	Wind* wind2 = new Wind(30, { 0, 0, 1 }, { 100, -40, 0 });
 	generators.push_back(wind2);
+	ParticleGravity* grav_diana = new ParticleGravity({ 0.001, -0.001, 0.001 });
+	generators.push_back(grav_diana);
 
 	//----------------------------------------------------MANAGERS-------------------------------------------------------
 
 	GrenadeManager* gren_man = new GrenadeManager();
 	gren_man->addGenerator(grav_gen_);
+	generators.push_back(gren_man->getBlast());
 	managers.push_back(gren_man);
 	FireworkManager* fManager_ = new FireworkManager();
 	fManager_->addGenerator(grav_gen_);
@@ -93,6 +96,11 @@ void initPhysics(bool interactive)
 	s_man->addGenerator(wind2);
 	s_man->addGenerator(gren_man->getBlast());
 	managers.push_back(s_man);
+	//para probar las granadas
+	Time_GeneratorManager* diana = new Time_GeneratorManager(Particle::Sphere, 0.1, &pool, 2, 1, 10, {300, 0, 0});
+	diana->addGenerator(grav_diana);
+	diana->addGenerator(gren_man->getBlast());
+	managers.push_back(diana);
 	// ...
 }
 
@@ -105,11 +113,11 @@ void stepPhysics(bool interactive, double t)
 	PX_UNUSED(interactive);
 	PX_UNUSED(t);
 
+	Particle::registry_.updateForces(t);
 	// Add custom application code
 	for (Manager* man : managers) {
 		man->update(t);
 	}
-	Particle::registry_.updateForces(t);
 	// ...
 }
 

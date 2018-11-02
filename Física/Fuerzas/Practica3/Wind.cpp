@@ -23,6 +23,9 @@ void Wind::handle_event(unsigned char key)
 	case 'P':
 		changeDirection();
 		break;
+	case 'B':
+		debug();
+		break;
 	default:
 		break;
 	}
