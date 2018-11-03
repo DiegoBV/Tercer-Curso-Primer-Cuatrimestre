@@ -24,6 +24,8 @@
 
 #include "GrenadeManager.h"
 
+#include "ParticleAnchoredSpring.h"
+
 using namespace physx;
 
 PxDefaultAllocator		gAllocator;
@@ -42,6 +44,7 @@ vector<Manager*> managers;                                         // vector de 
 
 vector<ParticleForceGenerator*> generators;                        // vector de generators para no tener muchas variables globales
 
+Particle* p = new Particle(new RenderItem());
 
 //---------------------------------------------------------------------------------------------------------------------------
 
@@ -74,7 +77,12 @@ void initPhysics(bool interactive)
 	generators.push_back(wind2);
 	ParticleGravity* grav_diana = new ParticleGravity({ 0.001, -0.001, 0.001 });
 	generators.push_back(grav_diana);
-
+	ParticleAnchoredSpring* spring = new ParticleAnchoredSpring(new Vector3(0, 10, 0), 10, 1); //es new por ahora, seria una referencia luego
+	
+	p->setCapsuleShape(1, 2);
+	p->setActive();
+	Particle::registry_.add(p, spring);
+	//Particle::registry_.add(p, grav_gen_);
 	//----------------------------------------------------MANAGERS-------------------------------------------------------
 
 	GrenadeManager* gren_man = new GrenadeManager();
@@ -118,6 +126,7 @@ void stepPhysics(bool interactive, double t)
 	for (Manager* man : managers) {
 		man->update(t);
 	}
+	p->update(t);
 	// ...
 }
 

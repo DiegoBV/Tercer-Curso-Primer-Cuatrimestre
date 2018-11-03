@@ -74,7 +74,7 @@ void GrenadeManager::shoot()                     //busca la primera inactiva y l
 
 			grenades_[i]->setPosition((GetCamera()->getEye()));
 
-			grenades_[i]->setVelocity({ GetCamera()->getDir().x * 30, abs(GetCamera()->getDir().y * 50), GetCamera()->getDir().z * 30 });        //sets de velocidad y aceleracion
+			grenades_[i]->setVelocity({ GetCamera()->getDir().x * 30, (GetCamera()->getDir().y * 50), GetCamera()->getDir().z * 30 });        //sets de velocidad y aceleracion
 
 			grenades_[i]->setAcceleration(GetCamera()->getDir());
 

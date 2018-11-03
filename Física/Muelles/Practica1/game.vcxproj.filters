@@ -44,6 +44,7 @@
     <ClCompile Include="GrenadeManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
+    <ClCompile Include="ParticleAnchoredSpring.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render\Camera.h">
@@ -103,6 +104,7 @@
     <ClInclude Include="GrenadeManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
+    <ClInclude Include="ParticleAnchoredSpring.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
