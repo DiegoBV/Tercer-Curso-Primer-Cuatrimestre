@@ -24,5 +24,7 @@ public:
 		CreateShape(physx::PxBoxGeometry(3, 3, 3)); rn->transform = &transform; rn->color = { 0, 1, 0, 1 }; RegisterRenderItem(rn); };
 
 	virtual void updateForce(Particle* particle, float t);
+
+	virtual void handle_event(unsigned char key);
 };
 

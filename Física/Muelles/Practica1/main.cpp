@@ -77,7 +77,8 @@ void initPhysics(bool interactive)
 	generators.push_back(wind2);
 	ParticleGravity* grav_diana = new ParticleGravity({ 0.001, -0.001, 0.001 });
 	generators.push_back(grav_diana);
-	ParticleAnchoredSpring* spring = new ParticleAnchoredSpring(new Vector3(0, 10, 0), 10, 1); //es new por ahora, seria una referencia luego
+	ParticleAnchoredSpring* spring = new ParticleAnchoredSpring(new Vector3(0, 10, 0), 0.01, 1); //es new por ahora, seria una referencia luego
+	generators.push_back(spring);
 	
 	p->setCapsuleShape(1, 2);
 	p->setActive();
