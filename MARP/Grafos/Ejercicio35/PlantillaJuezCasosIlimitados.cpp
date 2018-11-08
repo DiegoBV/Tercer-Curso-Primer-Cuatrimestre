@@ -7,6 +7,7 @@
 #include <fstream>
 #include <stack>
 #include <climits>
+#include <algorithm>
 #include "ConjuntosDisjuntos.h"
 
 using namespace std;
@@ -17,9 +18,15 @@ int in_cercano = 0;
 int pto_medio_principio = INT_MAX;
 int pto_medio_final = INT_MIN;
 bool primera_vuelta = true;
+int N, M;
+pair<int, int> sol;
 
-void comprueba_adyacencia(const int& v, const int& k, ConjuntosDisjuntos& g) {
-	bool no_conecta = true;
+bool principio_final_unidos(ConjuntosDisjuntos& g) {
+	return g.unidos(0, fin);
+}
+
+void comprueba_adyacencia(const pair<int, int>& v, const int& k, ConjuntosDisjuntos& g, vector<vector<int>>& bosque) {
+	/*bool no_conecta = true;
 
 	int compr = (v + k) - fin_cercano;
 
@@ -64,52 +71,75 @@ void comprueba_adyacencia(const int& v, const int& k, ConjuntosDisjuntos& g) {
 		else {
 			pto_medio_principio = v;
 		}
+	}*/
+	for (int i = k; i > -(k + 1); i--) {
+		for (int j = -(k); j < (k + 1); j++) {
+			int ni = v.first + i;
+			int nj = v.second + j;
+			if (ni >= 0 && ni < bosque.size() && nj >= 0 && nj < bosque[0].size()) {
+				if (bosque[ni][nj] == 1) { //hay arbol
+					pair<int, int> d = { v.first - ni, v.second - nj };
+					float dist = sqrt((pow(d.first, 2) + (pow(d.second, 2))));
+					if (dist <= k) {
+						int e1 = v.first * (M + 1) + v.second;
+						int e2 = ni * (M + 1) + nj;
+						g.unir(e1, e2);
+						if (principio_final_unidos(g)) {
+							sol = v;
+						}
+					}
+				}
+			}
+		}
 	}
-}
 
-bool principio_final_unidos(ConjuntosDisjuntos& g) {
-	return g.unidos(0, fin);
+
 }
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 bool resuelveCaso() {
     // leer los datos de la entrada
-	int N, M, K, n;
+	int K, n;
 	cin >> N >> M >> K >> n;
 	fin = (N * (M + 1) + M);
-	in_cercano = 0;
+	/*in_cercano = 0;
 	fin_cercano = fin;
 	pto_medio_principio = INT_MAX;
-	pto_medio_final = INT_MIN;
+	pto_medio_final = INT_MIN;*/
 
     if (! std::cin)
         return false;
    
 	ConjuntosDisjuntos g((N+1)*(M+1));
-	stack<int> orden_inverso;
+	std::vector<vector<int>> bosque(N+1, vector<int>(M+1));
+	stack<pair<int, int>> orden_inverso;
 
 	for (int i = 0; i < n; i++) {
 		int x, y;
 		cin >> x >> y;
-		int v = x * (M + 1) + y;
-		orden_inverso.push(v);
+		//int v = x * (M + 1) + y;
+		orden_inverso.push({x, y});
+		//bosque[x][y] = 1;
 	}
+	bosque[0][0] = 1;
+	bosque[N][M] = 1;
 
-	int ve = -1;
+	pair<int, int> ve = {-1, -1};
 	bool ppio_fin_estanUnidos = false;
 
 	while (!orden_inverso.empty() && !ppio_fin_estanUnidos) { //La primera vez que se unen en el recorrido inverso, singifica que hemos encontrado el ultimo arbol que unia el principio con el final
 		ve = orden_inverso.top();
 		orden_inverso.pop();
-		comprueba_adyacencia(ve, K*(M + 1), g); //va uniendo los vertices...
+		bosque[ve.first][ve.second] = 1;
+		comprueba_adyacencia(ve, K, g, bosque); //va uniendo los vertices...
 		ppio_fin_estanUnidos = principio_final_unidos(g);
 	}
     
     // escribir sol
-	pair<int, int> sol;
-	sol.first = ve / (M + 1);
-	sol.second = ve % (M + 1);
+	
+	//sol.first = ve / (M + 1);
+	//sol.second = ve % (M + 1);
 
 	ppio_fin_estanUnidos ? cout << sol.first << " " << sol.second : cout << "NUNCA SE PUDO";
 	cout << endl;

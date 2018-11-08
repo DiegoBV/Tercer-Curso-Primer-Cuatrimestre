@@ -26,12 +26,12 @@ public:
 			vertices.pop();
 
 			for (Arista<int> e : g.ady(vertice)) {
-				if (!union_.unidos(e.uno(), e.otro(e.uno()))) {
+				if (!union_.unidos(vertice, e.otro(vertice))) {
 					if (e.valor() >= anchura) { //el camion puede pasar
 						camino.push(e);
 						vertices.push(e.otro(vertice));
-						union_.unir(e.uno(), e.otro(e.uno()));
-						if (e.otro(e.uno()) == des) {
+						union_.unir(vertice, e.otro(vertice));
+						if (e.otro(vertice) == des) {
 							puede_pasar_ = true;
 						}
 					}
