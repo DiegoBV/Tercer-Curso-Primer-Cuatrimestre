@@ -5,27 +5,71 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
+#include <queue>
+#include "PriorityQueue.h"
+#include "GrafoValorado.h"
+#include "ConjuntosDisjuntos.h"
 
+using namespace std;
 
+class resuelve {
+private:
+	bool islas_unidas;
+	int coste_total;
+public:
+	resuelve() {};
+	~resuelve() {};
 
-// función que resuelve el problema
-TipoSolucion resolver(TipoDatos datos) {
-    
-    
-}
+	//kruskal tiene un coste de O(E*logE) siendo E el numero de puentes que hay
+	resuelve(const GrafoValorado<int>& g, PriorityQueue<Arista<int>>& heap): islas_unidas(false), coste_total(0) {
+
+		ConjuntosDisjuntos u(g.V());
+
+		while (!heap.empty()){
+			int v, w;
+			v = heap.top().uno();
+			w = heap.top().otro(v);
+			if (!u.unidos(v, w)) {
+				u.unir(v, w);
+				coste_total += heap.top().valor();
+			}
+			heap.pop();
+		}
+		
+		if (u.num_cjtos() == 1) {
+			islas_unidas = true;
+		}
+	};
+
+	int coste() const { return coste_total; };
+	bool estan_unidas() const { return islas_unidas; };
+};
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 bool resuelveCaso() {
     // leer los datos de la entrada
-    
+	int I, P;
+	cin >> I >> P;
+
     if (! std::cin)
         return false;
+
+	GrafoValorado<int> g(I);
+	PriorityQueue<Arista<int>> heap;
+
+	for (size_t i = 0; i < P; i++){
+		int isla1, isla2, coste;
+		cin >> isla1 >> isla2 >> coste;
+		Arista<int> a(isla1 - 1, isla2 - 1, coste);
+		g.ponArista(a);
+		heap.push(a);
+	}
     
-    TipoSolucion sol = resolver(datos);
-    
+	resuelve sol(g, heap);
     // escribir sol
-    
+	sol.estan_unidas() ? cout << sol.coste() : cout << "No hay puentes suficientes";
+	cout << endl;
     
     return true;
     
