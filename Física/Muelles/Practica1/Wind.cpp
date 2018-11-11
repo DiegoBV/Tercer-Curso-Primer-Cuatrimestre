@@ -28,7 +28,7 @@ void Wind::handle_event(unsigned char key)
 	case 'B':
 		debug();
 		break;
-	case ' ':
+	case 'M':
 		active_ = !active_;
 		break;
 	default:

@@ -20,7 +20,6 @@ private:
 
 	bool debug_ = true;
 
-	void debug() { debug_ ? DeregisterRenderItem(rn) : RegisterRenderItem(rn); debug_ = !debug_; };          //debug
 
 public:
 	Wind() : wind_force_(0), wind_direction_(0) {};
@@ -50,5 +49,7 @@ public:
 	inline void changeDirection() { std::swap(wind_direction_.x, wind_direction_.y); std::swap(wind_direction_.y, wind_direction_.z); };
 
 	virtual void handle_event(unsigned char key);
+
+	void debug() { debug_ ? DeregisterRenderItem(rn) : RegisterRenderItem(rn); debug_ = !debug_; };          //debug
 };
 

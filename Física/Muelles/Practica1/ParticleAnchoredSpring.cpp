@@ -14,6 +14,7 @@ void ParticleAnchoredSpring::calculateForce(Particle * particle)
 void ParticleAnchoredSpring::updateForce(Particle * particle, float t)
 {
 	calculateForce(particle);
+	p = particle; //por ahora...
 }
 
 void ParticleAnchoredSpring::handle_event(unsigned char key)
@@ -27,8 +28,11 @@ void ParticleAnchoredSpring::handle_event(unsigned char key)
 		k += 0.1;
 		break;
 	case ' ':
-		//campo de fuerza (?)
+	{
+		w->debug();
+		Particle::registry_.add(p, w);
 		break;
+	}
 	default:
 		break;
 	}
