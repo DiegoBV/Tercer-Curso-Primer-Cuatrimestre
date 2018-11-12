@@ -15,7 +15,9 @@ using namespace std;
 class resuelve {
 private:
 	vector<int> distTo;
+	vector<int> distToInv;
 	IndexPQ<int> pQueue;
+	IndexPQ<int> pQueueInv;
 	int esfuerzo_minimo;
 	bool es_posible;
 
@@ -29,55 +31,36 @@ private:
 		}
 	}
 
-	int djistra(const GrafoDirigidoValorado<int>& g, int ori, int dest) {
-		vector<int> distToOrigen(g.V());
-		IndexPQ<int> pQueueOrigen(g.V());
-		for (size_t i = 0; i < distTo.size(); i++) {
-			distToOrigen[i] = numeric_limits<int>::max();
+	void djistra(const GrafoDirigidoValorado<int>& g, int ori, vector<int>& dist, IndexPQ<int>& pQ) {
+		for (size_t i = 0; i < dist.size(); i++) {
+			dist[i] = numeric_limits<int>::max();
 		}
-		distToOrigen[ori] = 0; // casa inicial
-		pQueueOrigen.push(ori, 0);
+		dist[ori] = 0; // casa inicial
+		pQ.push(ori, 0);
 
-		while (!pQueueOrigen.empty()) {
-			int vertice = pQueueOrigen.top().elem;
-			pQueueOrigen.pop();
+		while (!pQ.empty()) {
+			int vertice = pQ.top().elem;
+			pQ.pop();
 
 			for (AristaDirigida<int> a : g.ady(vertice)) {
-				relax(a, distToOrigen, pQueueOrigen);
+				relax(a, dist, pQ);
 			}
 		}
-
-		return distToOrigen[dest];
 	}
+
 public:
-	resuelve(const GrafoDirigidoValorado<int>& g, queue<int>& cola_paquetes, const int ORIGEN) : distTo(g.V()), pQueue(g.V()), esfuerzo_minimo(0), es_posible(true) {
-		for (size_t i = 0; i < distTo.size(); i++) {
-			distTo[i] = numeric_limits<int>::max();
-		}
-		distTo[ORIGEN] = 0; // casa inicial
-		pQueue.push(ORIGEN, 0);
+	resuelve(const GrafoDirigidoValorado<int>& g, queue<int>& cola_paquetes, const int ORIGEN) : distTo(g.V()), pQueue(g.V()), distToInv(g.V()),pQueueInv(g.V()), esfuerzo_minimo(0), es_posible(true) {
+		djistra(g, ORIGEN, distTo, pQueue);
+		GrafoDirigidoValorado<int> gInverso = g.inverso();
+		djistra(gInverso, ORIGEN, distToInv, pQueueInv);
 
-		while (!pQueue.empty()) {
-			int vertice = pQueue.top().elem;
-			pQueue.pop();
-
-			for (AristaDirigida<int> a : g.ady(vertice)) {
-				relax(a, distTo, pQueue);
-			}
-		}
-
-		while (!cola_paquetes.empty() && es_posible) {
-			int dest = cola_paquetes.front();
+		while (!cola_paquetes.empty() && esPosible()) {
+			int v = cola_paquetes.front();
 			cola_paquetes.pop();
-			if (distTo[dest] != numeric_limits<int>::max()) {
-				esfuerzo_minimo += distTo[dest];
-				int n = djistra(g, dest, ORIGEN);
-				if (n != numeric_limits<int>::max()) {
-					esfuerzo_minimo += n;
-				}
-				else {
-					es_posible = false;
-				}
+
+			if (distTo[v] != numeric_limits<int>::max() && distToInv[v] != numeric_limits<int>::max()) {
+				esfuerzo_minimo += distTo[v];
+				esfuerzo_minimo += distToInv[v];
 			}
 			else {
 				es_posible = false;
