@@ -26,6 +26,8 @@
 
 #include "ParticleAnchoredSpring.h"
 
+#include "SpringManager.h"
+
 using namespace physx;
 
 PxDefaultAllocator		gAllocator;
@@ -45,6 +47,8 @@ vector<Manager*> managers;                                         // vector de 
 vector<ParticleForceGenerator*> generators;                        // vector de generators para no tener muchas variables globales
 
 Particle* p = new Particle(new RenderItem());
+
+Vector3 centerAnchoredSpring(0, 10, 0);
 
 //---------------------------------------------------------------------------------------------------------------------------
 
@@ -77,13 +81,6 @@ void initPhysics(bool interactive)
 	generators.push_back(wind2);
 	ParticleGravity* grav_diana = new ParticleGravity({ 0.001, -0.001, 0.001 });
 	generators.push_back(grav_diana);
-	ParticleAnchoredSpring* spring = new ParticleAnchoredSpring(new Vector3(0, 10, 0), 0.01, 1); //es new por ahora, seria una referencia luego
-	generators.push_back(spring);
-	
-	p->setCapsuleShape(1, 2);
-	p->setActive();
-	Particle::registry_.add(p, spring);
-	//Particle::registry_.add(p, grav_gen_);
 	//----------------------------------------------------MANAGERS-------------------------------------------------------
 
 	GrenadeManager* gren_man = new GrenadeManager();
@@ -105,6 +102,10 @@ void initPhysics(bool interactive)
 	s_man->addGenerator(wind2);
 	s_man->addGenerator(gren_man->getBlast());
 	managers.push_back(s_man);
+	SpringManager* sp_man = new SpringManager();
+	//sp_man->addGenerator(grav_gen_);
+	sp_man->addParticle_to_AnchoredSpring(&centerAnchoredSpring, 0.001, 10);
+	managers.push_back(sp_man);
 	//para probar las granadas
 	Time_GeneratorManager* diana = new Time_GeneratorManager(Particle::Sphere, 0.1, &pool, 2, 1, 10, {300, 0, 0});
 	diana->addGenerator(grav_diana);

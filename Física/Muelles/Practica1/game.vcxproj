@@ -268,6 +268,7 @@
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Render.cpp" />
     <ClCompile Include="Shot_Manager.cpp" />
+    <ClCompile Include="SpringManager.cpp" />
     <ClCompile Include="Time_GeneratorManager.cpp" />
     <ClCompile Include="Wind.cpp" />
   </ItemGroup>
@@ -289,6 +290,7 @@
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\Render.h" />
     <ClInclude Include="Shot_Manager.h" />
+    <ClInclude Include="SpringManager.h" />
     <ClInclude Include="TemplatePool.h" />
     <ClInclude Include="Time_GeneratorManager.h" />
     <ClInclude Include="Wind.h" />

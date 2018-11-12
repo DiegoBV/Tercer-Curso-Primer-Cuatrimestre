@@ -45,6 +45,7 @@
       <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="ParticleAnchoredSpring.cpp" />
+    <ClCompile Include="SpringManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render\Camera.h">
@@ -105,6 +106,7 @@
       <Filter>Managers</Filter>
     </ClInclude>
     <ClInclude Include="ParticleAnchoredSpring.h" />
+    <ClInclude Include="SpringManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

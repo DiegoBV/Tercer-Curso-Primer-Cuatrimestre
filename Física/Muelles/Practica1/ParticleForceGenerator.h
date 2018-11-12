@@ -16,5 +16,6 @@ public:
 	void addReference() { references_++; };
 	void removeReference() { references_--; };
 	bool isActive() const { return active_; };
+	virtual void setActive(const bool a) { active_ = a; };
 };
 

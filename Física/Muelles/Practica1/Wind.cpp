@@ -7,6 +7,19 @@ bool Wind::is_inside(Particle * particle)
 		&& ((center.x - rad) <= (pos.x) && (center.y - rad) <= (pos.y) && (center.z - rad) <= (pos.z));
 }
 
+void Wind::setActive(const bool a)
+{
+	ParticleForceGenerator::setActive(a);
+	if (!this->isActive()) {
+		debug_ = true;
+		debug();
+	}
+	else {
+		debug_ = false;
+		debug();
+	}
+}
+
 void Wind::updateForce(Particle * particle, float t)
 {
 	if (this->isActive()) {

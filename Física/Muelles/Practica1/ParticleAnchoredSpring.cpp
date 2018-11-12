@@ -11,10 +11,21 @@ void ParticleAnchoredSpring::calculateForce(Particle * particle)
 	particle->addForce(f);
 }
 
+void ParticleAnchoredSpring::deactivateWind(float t)
+{
+	if (w->isActive()) {
+		current_time += t;
+		if (current_time > TIME) {
+			w->setActive(false);
+			current_time = 0;
+		}
+	}
+}
+
 void ParticleAnchoredSpring::updateForce(Particle * particle, float t)
 {
 	calculateForce(particle);
-	p = particle; //por ahora...
+	deactivateWind(t);
 }
 
 void ParticleAnchoredSpring::handle_event(unsigned char key)
@@ -29,8 +40,7 @@ void ParticleAnchoredSpring::handle_event(unsigned char key)
 		break;
 	case ' ':
 	{
-		w->debug();
-		Particle::registry_.add(p, w);
+		w->setActive(true);
 		break;
 	}
 	default:

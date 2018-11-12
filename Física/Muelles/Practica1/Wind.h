@@ -20,6 +20,7 @@ private:
 
 	bool debug_ = true;
 
+	void debug() { debug_ ? DeregisterRenderItem(rn) : RegisterRenderItem(rn); debug_ = !debug_; };          //debug
 
 public:
 	Wind() : wind_force_(0), wind_direction_(0) {};
@@ -42,6 +43,8 @@ public:
 
 	inline void setWindDirection(Vector3 wd) { wd.normalize(); wind_direction_ = wd; };
 
+	virtual void setActive(const bool a);
+
 	//-------------------------------------------OTHERS----------------------------------
 
 	virtual void updateForce(Particle* particle, float t);
@@ -50,6 +53,5 @@ public:
 
 	virtual void handle_event(unsigned char key);
 
-	void debug() { debug_ ? DeregisterRenderItem(rn) : RegisterRenderItem(rn); debug_ = !debug_; };          //debug
 };
 
