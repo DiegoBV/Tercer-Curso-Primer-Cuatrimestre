@@ -44,8 +44,12 @@
     <ClCompile Include="GrenadeManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
-    <ClCompile Include="ParticleAnchoredSpring.cpp" />
-    <ClCompile Include="SpringManager.cpp" />
+    <ClCompile Include="ParticleAnchoredSpring.cpp">
+      <Filter>Forces</Filter>
+    </ClCompile>
+    <ClCompile Include="SpringManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render\Camera.h">
@@ -105,8 +109,12 @@
     <ClInclude Include="GrenadeManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
-    <ClInclude Include="ParticleAnchoredSpring.h" />
-    <ClInclude Include="SpringManager.h" />
+    <ClInclude Include="ParticleAnchoredSpring.h">
+      <Filter>Forces</Filter>
+    </ClInclude>
+    <ClInclude Include="SpringManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
