@@ -21,9 +21,9 @@ public:
 	~resuelve() {};
 
 	//kruskal tiene un coste de O(E*logE) siendo E el numero de puentes que hay
-	resuelve(const GrafoValorado<int>& g, PriorityQueue<Arista<int>>& heap): islas_unidas(false), coste_total(0) {
+	resuelve(const int numeroVertices, PriorityQueue<Arista<int>>& heap): islas_unidas(false), coste_total(0) {
 
-		ConjuntosDisjuntos u(g.V());
+		ConjuntosDisjuntos u(numeroVertices);
 
 		while (!heap.empty()){
 			int v, w;
@@ -55,18 +55,16 @@ bool resuelveCaso() {
     if (! std::cin)
         return false;
 
-	GrafoValorado<int> g(I);
 	PriorityQueue<Arista<int>> heap;
 
 	for (size_t i = 0; i < P; i++){
 		int isla1, isla2, coste;
 		cin >> isla1 >> isla2 >> coste;
 		Arista<int> a(isla1 - 1, isla2 - 1, coste);
-		g.ponArista(a);
 		heap.push(a);
 	}
     
-	resuelve sol(g, heap);
+	resuelve sol(I, heap);
     // escribir sol
 	sol.estan_unidas() ? cout << sol.coste() : cout << "No hay puentes suficientes";
 	cout << endl;
