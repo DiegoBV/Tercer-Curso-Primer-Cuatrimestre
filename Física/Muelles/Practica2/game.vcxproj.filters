@@ -50,6 +50,10 @@
     <ClCompile Include="SpringManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
+    <ClCompile Include="ParticleAbstractSpring.cpp">
+      <Filter>Forces</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSpring.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render\Camera.h">
@@ -115,6 +119,10 @@
     <ClInclude Include="SpringManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
+    <ClInclude Include="ParticleAbstractSpring.h">
+      <Filter>Forces</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSpring.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

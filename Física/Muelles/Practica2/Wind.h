@@ -37,11 +37,15 @@ public:
 
 	inline Vector3 getWindDirection() const { return wind_direction_; };
 
+	inline Vector3 getCenter() const { return center; };
+
 	//-------------------------------------------SETS----------------------------------
 
 	inline void setWindForce(float wf) { wind_force_ = wf; };
 
 	inline void setWindDirection(Vector3 wd) { wd.normalize(); wind_direction_ = wd; };
+
+	inline void setCenter(Vector3 c) { center = c; transform.p = center; };
 
 	virtual void setActive(const bool a);
 
