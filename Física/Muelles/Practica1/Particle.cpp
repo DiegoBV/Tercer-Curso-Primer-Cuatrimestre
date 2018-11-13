@@ -51,5 +51,6 @@ void Particle::integrate(float t)
 
 	transform.p = p;
 
+	a -= force * inverse_mass;
 	clearForce();
 }

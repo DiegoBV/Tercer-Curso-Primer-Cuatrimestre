@@ -71,13 +71,13 @@ void initPhysics(bool interactive)
 	// Add custom application code
 	//----------------------------------------------------GENERATORS-------------------------------------------------------
 
-	ParticleGravity* grav_gen_ = new ParticleGravity({ 0, -1, 0 });
+	ParticleGravity* grav_gen_ = new ParticleGravity({ 0, -80, 0 });
 	generators.push_back(grav_gen_);
 	ParticleGravity* ingrav_gen_ = new ParticleGravity({ 0, 2, 0 });
 	generators.push_back(ingrav_gen_);;
-	Wind* wind = new Wind(30, { 1, 0, 0 }, {0, -30, 0});
+	Wind* wind = new Wind(300, { 1, 0, 0 }, {0, -30, 0});
 	generators.push_back(wind);
-	Wind* wind2 = new Wind(30, { 0, 0, 1 }, { 100, -40, 0 });
+	Wind* wind2 = new Wind(200, { 0, 0, 1 }, { 100, -40, 0 });
 	generators.push_back(wind2);
 	ParticleGravity* grav_diana = new ParticleGravity({ 0.001, -0.001, 0.001 });
 	generators.push_back(grav_diana);
@@ -90,7 +90,7 @@ void initPhysics(bool interactive)
 	FireworkManager* fManager_ = new FireworkManager();
 	fManager_->addGenerator(grav_gen_);
 	managers.push_back(fManager_);
-	Time_GeneratorManager* t_gen = new Time_GeneratorManager(Particle::Sphere, 0.0001, &pool);
+	Time_GeneratorManager* t_gen = new Time_GeneratorManager(Particle::Sphere, 0.01, &pool);
 	t_gen->addGenerator(grav_gen_);
 	t_gen->addGenerator(gren_man->getBlast());
 	t_gen->addGenerator(wind);
@@ -103,8 +103,8 @@ void initPhysics(bool interactive)
 	s_man->addGenerator(gren_man->getBlast());
 	managers.push_back(s_man);
 	SpringManager* sp_man = new SpringManager();
-	//sp_man->addGenerator(grav_gen_);
-	sp_man->addParticle_to_AnchoredSpring(&centerAnchoredSpring, 0.001, 10);
+	sp_man->addGenerator(grav_gen_);
+	sp_man->addParticle_to_AnchoredSpring(&centerAnchoredSpring, 1, 10);
 	managers.push_back(sp_man);
 	//para probar las granadas
 	Time_GeneratorManager* diana = new Time_GeneratorManager(Particle::Sphere, 0.1, &pool, 2, 1, 10, {300, 0, 0});

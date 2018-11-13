@@ -30,7 +30,7 @@ private:
 public:
 	virtual ~ParticleAnchoredSpring() { delete rn; delete w; };
 
-	ParticleAnchoredSpring(Vector3* anch, float _k, float _rest_length) : anchor(anch), transform(*anch), k(_k), rest_length(_rest_length), rn(new RenderItem()), w(new Wind(0.01, { 0, 0, -1 }, { 0, 10, 0 })) { rn->shape =
+	ParticleAnchoredSpring(Vector3* anch, float _k, float _rest_length) : anchor(anch), transform(*anch), k(_k), rest_length(_rest_length), rn(new RenderItem()), w(new Wind(100, { 0, 0, -1 }, { 0, 10, 0 })) { rn->shape =
 		CreateShape(physx::PxBoxGeometry(3, 3, 3)); rn->transform = &transform; rn->color = { 0, 1, 0, 1 }; RegisterRenderItem(rn); w->setActive(false); };
 
 	virtual void updateForce(Particle* particle, float t);
