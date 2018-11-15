@@ -112,6 +112,8 @@ PxVec3 Camera::getEye() const
 	return mEye; 
 }
 
+
+
 PxVec3 Camera::getDir() const
 { 
 	return mDir; 

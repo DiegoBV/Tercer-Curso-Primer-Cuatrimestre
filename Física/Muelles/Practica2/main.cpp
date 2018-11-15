@@ -28,6 +28,8 @@
 
 #include "SpringManager.h"
 
+#include "CharacterManager.h"
+
 using namespace physx;
 
 PxDefaultAllocator		gAllocator;
@@ -77,6 +79,9 @@ void initPhysics(bool interactive)
 	ParticleGravity* ingrav_gen_ = new ParticleGravity({ 0, 2, 0 });
 	generators.push_back(ingrav_gen_);
 
+	ParticleDrag* drag_gen = new ParticleDrag(1, 1);
+	generators.push_back(drag_gen);
+
 	Wind* wind = new Wind(300, { 1, 0, 0 }, {0, -30, 0});
 	generators.push_back(wind);
 
@@ -85,6 +90,7 @@ void initPhysics(bool interactive)
 
 	ParticleGravity* grav_diana = new ParticleGravity({ 0.001, -0.001, 0.001 });
 	generators.push_back(grav_diana);
+
 	//----------------------------------------------------MANAGERS-------------------------------------------------------
 
 	GrenadeManager* gren_man = new GrenadeManager();
@@ -111,9 +117,10 @@ void initPhysics(bool interactive)
 	managers.push_back(s_man);
 
 	SpringManager* sp_man = new SpringManager();
-	//sp_man->addGenerator(grav_gen_);
+	sp_man->addGenerator(grav_gen_);
+	//sp_man->addGenerator(drag_gen);
 	sp_man->addParticle_to_AnchoredSpring(&centerAnchoredSpring, 1, 10);
-	sp_man->addSpring_of_TwoParticles(2, 3.5);
+	//sp_man->addSpring_of_TwoParticles(2, 3.5);
 	managers.push_back(sp_man);
 
 	//para probar las granadas
@@ -121,6 +128,12 @@ void initPhysics(bool interactive)
 	diana->addGenerator(grav_diana);
 	diana->addGenerator(gren_man->getBlast());
 	managers.push_back(diana);
+
+	//MainCharacter
+	/*CharacterManager* chr_man = new CharacterManager(1000);
+	chr_man->addGenerator(drag_gen);
+	chr_man->initCharacter();
+	managers.push_back(chr_man);*/
 	// ...
 }
 

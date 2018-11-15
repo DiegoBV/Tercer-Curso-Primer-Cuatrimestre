@@ -7,7 +7,7 @@ void ParticleAnchoredSpring::calculateForce(Particle * particle)
 	// Length
 	float length = f.normalize();
 	// Resulting force
-	f *= -((length) * getK());
+	f *= -((length)* getK());
 	particle->addForce(f);
 }
 

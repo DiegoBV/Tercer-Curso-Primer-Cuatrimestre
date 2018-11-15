@@ -43,14 +43,13 @@ void Particle::integrate(float t)
 	p += v * t;                                         //update de la posicion (e = e + v*t)
 
 	Vector3 totalAcceleration = a;                      //forces
-	a += force * inverse_mass;
+	totalAcceleration += force * inverse_mass;
 	
-	v += a * t;                                        //update de la velocidad
+	v += totalAcceleration * t;                                        //update de la velocidad
 
 	v *= powf(damping, t);                            //aplicamos la fuerza de rozamiento --> v = v * d^t
 
 	transform.p = p;
 
-	a -= force * inverse_mass;
 	clearForce();
 }

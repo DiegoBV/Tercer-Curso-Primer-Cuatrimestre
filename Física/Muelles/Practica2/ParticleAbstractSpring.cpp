@@ -17,7 +17,8 @@ void ParticleAbstractSpring::handle_event(unsigned char key)
 		break;
 	case ' ':
 	{
-		w->setActive(true);
+		if(!w->isActive())
+			w->setActive(true);
 		break;
 	}
 	default:

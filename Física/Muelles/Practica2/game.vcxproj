@@ -255,10 +255,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Blast.cpp" />
+    <ClCompile Include="CharacterManager.cpp" />
     <ClCompile Include="FireworkManager.cpp" />
     <ClCompile Include="Grenade.cpp" />
     <ClCompile Include="GrenadeManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainCharacter.cpp" />
     <ClCompile Include="ParticleAbstractSpring.cpp" />
     <ClCompile Include="ParticleDrag.cpp" />
     <ClCompile Include="ParticleForceRegistry.cpp" />
@@ -276,11 +278,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Blast.h" />
+    <ClInclude Include="CharacterManager.h" />
     <ClInclude Include="core.hpp" />
     <ClInclude Include="Firework.h" />
     <ClInclude Include="FireworkManager.h" />
     <ClInclude Include="Grenade.h" />
     <ClInclude Include="GrenadeManager.h" />
+    <ClInclude Include="MainCharacter.h" />
     <ClInclude Include="Manager.h" />
     <ClInclude Include="ParticleAbstractSpring.h" />
     <ClInclude Include="ParticleDrag.h" />

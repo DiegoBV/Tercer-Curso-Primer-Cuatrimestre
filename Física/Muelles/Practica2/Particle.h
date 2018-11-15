@@ -92,6 +92,9 @@ public:
 
 	//-------------------------------------------------------------------SETS--------------------------------------------------------------
 
+	//setRotation
+	//inline void setRotation(const Vector3 rot) { renderItem->transform->q.rotate(rot); };
+
 	//setPosition
 	inline void setPosition(const Vector3 pos) { p = pos; transform.p = p; };
 
