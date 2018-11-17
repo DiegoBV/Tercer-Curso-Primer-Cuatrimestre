@@ -73,6 +73,7 @@ void SpringManager::addParticle_to_Liquid(Vector3 pos, float _maxDepth, float _v
 	springs.push_back(b);
 
 	Particle::registry_.add(particles.back(), b);
+	Particle::registry_.add(particles.back(), b->getWind());
 
 	register_particle_in_generators(particles.back());
 

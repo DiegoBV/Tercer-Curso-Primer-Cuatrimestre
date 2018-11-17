@@ -1,7 +1,7 @@
 #pragma once
-#include "ParticleForceGenerator.h"
+#include "ParticleAbstractSpring.h"
 
-class ParticleBuoyancy : public ParticleForceGenerator
+class ParticleBuoyancy : public ParticleAbstractSpring
 {
 	float maxDepth;
 
@@ -10,14 +10,13 @@ class ParticleBuoyancy : public ParticleForceGenerator
 	// Considering a water plane parallel to XZ
 	float waterHeight;
 
-	// Density of the liquid the object is submerged in
-	float liquidDensity;
-
 public:
 
-	ParticleBuoyancy(float _maxDepth, float _volume, float _waterHeight, float _liquidDensity = 1) : maxDepth(_maxDepth),
-		volume(_volume), waterHeight(_waterHeight), liquidDensity(_liquidDensity) {};
+	ParticleBuoyancy(float _maxDepth, float _volume, float _waterHeight, float _liquidDensity = 1) : ParticleAbstractSpring(_liquidDensity, _waterHeight + _maxDepth), maxDepth(_maxDepth),
+		volume(_volume), waterHeight(_waterHeight) {};
 
 	virtual void updateForce(Particle* particle, float t);
+
+	virtual void handle_event(unsigned char key);
 };
 

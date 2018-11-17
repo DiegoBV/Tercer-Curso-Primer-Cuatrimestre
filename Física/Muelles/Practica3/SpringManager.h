@@ -10,7 +10,7 @@ class SpringManager :
 private:
 	vector<Particle*> particles;                  //particulas anyadidas a los muelles
 
-	vector<ParticleForceGenerator*> springs;      //Vector especial que controla los muelles
+	vector<ParticleAbstractSpring*> springs;      //Vector especial que controla los muelles
 
 public:
 	SpringManager() {};
