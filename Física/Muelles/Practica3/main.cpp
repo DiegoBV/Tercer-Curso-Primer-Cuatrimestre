@@ -76,6 +76,9 @@ void initPhysics(bool interactive)
 	ParticleGravity* grav_gen_ = new ParticleGravity({ 0, -80, 0 });
 	generators.push_back(grav_gen_);
 
+	ParticleGravity* grav_gen_2_ = new ParticleGravity({ 0, -10, 0 });
+	generators.push_back(grav_gen_2_);
+
 	ParticleGravity* ingrav_gen_ = new ParticleGravity({ 0, 2, 0 });
 	generators.push_back(ingrav_gen_);
 
@@ -117,10 +120,11 @@ void initPhysics(bool interactive)
 	managers.push_back(s_man);
 
 	SpringManager* sp_man = new SpringManager();
-	//sp_man->addGenerator(grav_gen_);
+	sp_man->addGenerator(grav_gen_2_);
 	//sp_man->addGenerator(drag_gen);
-	sp_man->addParticle_to_AnchoredSpring(&centerAnchoredSpring, 1, 10);
-	sp_man->addSpring_of_TwoParticles(2, 3.5);
+	//sp_man->addParticle_to_AnchoredSpring(&centerAnchoredSpring, 1, 10);
+	//sp_man->addSpring_of_TwoParticles(2, 3.5);
+	sp_man->addParticle_to_Liquid({ 0, 20, 0 }, 3, 4, 20, 10);
 	managers.push_back(sp_man);
 
 	//para probar las granadas
