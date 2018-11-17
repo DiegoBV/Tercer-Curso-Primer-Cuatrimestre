@@ -2,16 +2,16 @@
 
 void SpringManager::addParticle_to_AnchoredSpring(Vector3 * anchor, float k, float rest_length)
 {
-	particles.push_back(new Particle(new RenderItem()));
+	particles.push_back(new Particle(new RenderItem()));                                        //creacion de la particula
 	particles.back()->setCapsuleShape(1, 2);
 	particles.back()->setActive();
+	particles.back()->setDamping(0.8);
 
-	ParticleAnchoredSpring* aSpring = new ParticleAnchoredSpring(anchor, k, rest_length);
+	ParticleAnchoredSpring* aSpring = new ParticleAnchoredSpring(anchor, k, rest_length);      //creacion del muelle
 	springs.push_back(aSpring);
 
-	addGenerator(aSpring->getWind());
-
 	Particle::registry_.add(particles.back(), aSpring);
+	Particle::registry_.add(particles.back(), aSpring->getWind());
 
 	register_particle_in_generators(particles.back());
 }

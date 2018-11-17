@@ -2,11 +2,12 @@
 
 void SpringManager::addParticle_to_AnchoredSpring(Vector3 * anchor, float k, float rest_length)
 {
-	particles.push_back(new Particle(new RenderItem()));
+	particles.push_back(new Particle(new RenderItem()));                                        //creacion de la particula
 	particles.back()->setCapsuleShape(1, 2);
 	particles.back()->setActive();
+	particles.back()->setDamping(0.8);
 
-	ParticleAnchoredSpring* aSpring = new ParticleAnchoredSpring(anchor, k, rest_length);
+	ParticleAnchoredSpring* aSpring = new ParticleAnchoredSpring(anchor, k, rest_length);      //creacion del muelle
 	springs.push_back(aSpring);
 
 	Particle::registry_.add(particles.back(), aSpring);
@@ -17,24 +18,26 @@ void SpringManager::addParticle_to_AnchoredSpring(Vector3 * anchor, float k, flo
 
 void SpringManager::addSpring_of_TwoParticles(float k, float rest_length, Vector3 posONE, Vector3 posOTHER, Particle* one, Particle * other)
 {
-	if (one == nullptr) {
+	if (one == nullptr) {                                                //set de la primera particula
 		particles.push_back(new Particle(new RenderItem()));
 		particles.back()->setCapsuleShape(1, 2);
 		particles.back()->setActive();
 		particles.back()->setPosition(posONE);
 		particles.back()->setColor({ 1, 0, 0, 1 });
+		particles.back()->setDamping(0.8);
 	}
 	else {
 		particles.push_back(one); //se va a borrar... si da fallos es esto
 	}
 	one = particles.back();
 
-	if (other == nullptr) {
+	if (other == nullptr) {                                                  //set de la segunda particula
 		particles.push_back(new Particle(new RenderItem()));
 		particles.back()->setCapsuleShape(1, 2);
 		particles.back()->setActive();
 		particles.back()->setPosition(posOTHER);
 		particles.back()->setColor({ 0, 1, 0, 1 });
+		particles.back()->setDamping(0.8);
 	}
 	else {
 		particles.push_back(other); //se va a borrar... si da fallos es esto
@@ -42,17 +45,17 @@ void SpringManager::addSpring_of_TwoParticles(float k, float rest_length, Vector
 	other = particles.back();
 
 
-	ParticleSpring* springONE = new ParticleSpring(other, k, rest_length);
+	ParticleSpring* springONE = new ParticleSpring(other, k, rest_length);          //primer muelle
 	springs.push_back(springONE);
 
 	Particle::registry_.add(one, springONE);
 	Particle::registry_.add(one, springONE->getWind());
 
-	ParticleSpring* springOTHER = new ParticleSpring(one, k, rest_length);
+	ParticleSpring* springOTHER = new ParticleSpring(one, k, rest_length);       //segundo muelle
 	springs.push_back(springOTHER);
 
 	Particle::registry_.add(other, springOTHER);
-	Particle::registry_.add(other, springOTHER->getWind());
+	//Particle::registry_.add(other, springOTHER->getWind());
 
 	register_particle_in_generators(one);
 	register_particle_in_generators(other);

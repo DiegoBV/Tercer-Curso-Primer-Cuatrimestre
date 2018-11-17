@@ -7,15 +7,21 @@ class SpringManager :
 	public Manager
 {
 private:
-	vector<Particle*> particles;
-	vector<ParticleAbstractSpring*> springs;
+	vector<Particle*> particles;                  //particulas anyadidas a los muelles
+
+	vector<ParticleForceGenerator*> springs;      //Vector especial que controla los muelles
 
 public:
 	SpringManager() {};
+
 	~SpringManager() { for (ParticleForceGenerator* gen : springs) { delete gen; } for (Particle* p : particles) { delete p; } };
-	void addParticle_to_AnchoredSpring(Vector3* anchor, float k, float rest_length);
-	void addSpring_of_TwoParticles(float k, float rest_length, Vector3 posONE = {10, 0, 10}, Vector3 posOTHER = { 10, 10, 10 }, Particle* one = nullptr, Particle* other = nullptr);
+
+	void addParticle_to_AnchoredSpring(Vector3* anchor, float k, float rest_length);                                   //anyade una particula a una posicion estatica
+
+	void addSpring_of_TwoParticles(float k, float rest_length, Vector3 posONE = { 10, 0, 10 }, Vector3 posOTHER = { 10, 10, 10 }, Particle* one = nullptr, Particle * other = nullptr);    //anyade dos particulas unidad por un muelle
+
 	virtual void update(double t);
+
 	virtual void handle_event(unsigned char key);
 };
 

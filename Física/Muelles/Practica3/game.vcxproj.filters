@@ -62,7 +62,9 @@
     <ClCompile Include="ParticleSpring.cpp">
       <Filter>Forces</Filter>
     </ClCompile>
-    <ClCompile Include="ParticleBuoyancy.cpp" />
+    <ClCompile Include="ParticleBuoyancy.cpp">
+      <Filter>Forces</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render\Camera.h">
@@ -140,7 +142,9 @@
     <ClInclude Include="ParticleSpring.h">
       <Filter>Forces</Filter>
     </ClInclude>
-    <ClInclude Include="ParticleBuoyancy.h" />
+    <ClInclude Include="ParticleBuoyancy.h">
+      <Filter>Forces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
