@@ -3,6 +3,9 @@
 class System_Manager :
 	public Manager
 {
+private:
+	bool on = true;
+
 protected:
 	//------------------------------------------------PARAMETERS------------------------------------------------
 	Particle::Shape shape_;
@@ -13,7 +16,6 @@ protected:
 	const int VEL_MAX_;
 	const int VEL_MIN_;
 	const float MAX_LIFE_TIME_;
-	bool on = true;
 
 	//------------------------------------------------AUX METHODS------------------------------------------------
 	Vector3 generateRandomVel();
@@ -31,5 +33,9 @@ public:
 	virtual void handle_event(unsigned char key);
 
 	virtual void update(double t) = 0;
+
+	void setOn(bool on) { this->on = on; };
+
+	bool isOn() const { return on; };
 };
 

@@ -38,7 +38,7 @@ Time_GeneratorManager::~Time_GeneratorManager()
 
 void Time_GeneratorManager::update(double t)
 {
-	if (on) {
+	if (isOn()) {
 		generateNewElement(t);
 	}
 

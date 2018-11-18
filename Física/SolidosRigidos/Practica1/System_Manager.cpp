@@ -20,7 +20,7 @@ void System_Manager::handle_event(unsigned char key)
 	switch (toupper(key))
 	{
 	case 'T':
-		on = !on;
+		setOn(!on);
 		break;
 	default:
 		break;

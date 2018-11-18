@@ -145,7 +145,8 @@ void initPhysics(bool interactive)
 
 
 	//RigidBody
-	RigidSystem_Manager* rs_man = new RigidSystem_Manager(Particle::Box, 5, gPhysics, gScene);
+	RigidSystem_Manager* rs_man = new RigidSystem_Manager(Particle::Box, .1, gPhysics, gScene);
+	rs_man->generateStaticElement({ 0, -10, 0 }, Particle::Box, { 100, .1, 100 });
 	managers.push_back(rs_man);
 
 	//MainCharacter
