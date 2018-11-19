@@ -6,6 +6,7 @@
 class ParticleAbstractSpring :
 	public ParticleForceGenerator
 {
+private:
 	// Elasticity constant
 	float k;
 
@@ -21,12 +22,16 @@ protected:
 
 	void deactivateWind(float t);
 
+	virtual Vector3 calculateForce(Vector3 pos) = 0;
+
 public:
 	ParticleAbstractSpring(float _k, float _rest_length) : k(_k), rest_length(_rest_length), w(new Wind(100, { 0, -1, 0 }, { 0, 10, 0 })) { w->setActive(false); };
 
 	virtual ~ParticleAbstractSpring();
 
-	virtual void updateForce(Particle* particle, float t) = 0;
+	virtual void updateForce(Particle* particle, float t) {};
+
+	virtual void updateForce(physx::PxRigidBody* rb, float t) {};
 
 	virtual void handle_event(unsigned char key);
 

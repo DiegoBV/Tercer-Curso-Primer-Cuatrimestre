@@ -28,8 +28,14 @@ public:
 
 	virtual void handle_event(unsigned char key);
 
-	void generateDynamicElement(Vector3 pos = { 0, 0, 0 }, Particle::Shape shp = Particle::Box, Particle::Medidas size = {1, 1, 1}, physx::PxReal density = 1);
+	physx::PxRigidDynamic* generateDynamicElement(Vector3 pos = { 0, 0, 0 }, Particle::Shape shp = Particle::Box, Particle::Medidas size = {1, 1, 1}, physx::PxReal density = 1);
 
 	void generateStaticElement(Vector3 pos = { 0, 0, 0 }, Particle::Shape shp = Particle::Box, Particle::Medidas size = { 10, .1, 10 });
+
+	//registra un rigidBody en todos sus generadores
+	void register_rigid_body_in_generators(physx::PxRigidDynamic* obj) { for (ParticleForceGenerator* gen : generators) { if (gen != nullptr) Particle::registry_.add(obj, gen); } };
+
+	//elimina un rigidBody de la lista
+	void remove_rigid_body_from_generators(physx::PxRigidDynamic* obj) { for (ParticleForceGenerator* gen : generators) { if (gen != nullptr) Particle::registry_.remove(obj, gen); } };
 };
 

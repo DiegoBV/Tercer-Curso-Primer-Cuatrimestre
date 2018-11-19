@@ -83,7 +83,7 @@ void initPhysics(bool interactive)
 	// Add custom application code
 	//----------------------------------------------------GENERATORS-------------------------------------------------------
 
-	/*ParticleGravity* grav_gen_ = new ParticleGravity({ 0, -80, 0 });
+	ParticleGravity* grav_gen_ = new ParticleGravity({ 0, -80, 0 });
 	generators.push_back(grav_gen_);
 
 	ParticleGravity* grav_gen_2_ = new ParticleGravity({ 0, -10, 0 });
@@ -111,7 +111,7 @@ void initPhysics(bool interactive)
 	generators.push_back(gren_man->getBlast());
 	managers.push_back(gren_man);
 
-	FireworkManager* fManager_ = new FireworkManager();
+	/*FireworkManager* fManager_ = new FireworkManager();
 	fManager_->addGenerator(grav_gen_);
 	managers.push_back(fManager_);
 
@@ -120,7 +120,7 @@ void initPhysics(bool interactive)
 	t_gen->addGenerator(gren_man->getBlast());
 	t_gen->addGenerator(wind);
 	t_gen->addGenerator(wind2);
-	managers.push_back(t_gen);
+	managers.push_back(t_gen);*/
 
 	Shot_Manager* s_man = new Shot_Manager(&pool);
 	s_man->addGenerator(ingrav_gen_);
@@ -129,16 +129,16 @@ void initPhysics(bool interactive)
 	s_man->addGenerator(gren_man->getBlast());
 	managers.push_back(s_man);
 
-	SpringManager* sp_man = new SpringManager();
-	sp_man->addGenerator(grav_gen_2_);
+	/*SpringManager* sp_man = new SpringManager();
+	//sp_man->addGenerator(grav_gen_2_);
 	//sp_man->addGenerator(drag_gen);
 	//sp_man->addParticle_to_AnchoredSpring(&centerAnchoredSpring, 1, 10);
 	//sp_man->addSpring_of_TwoParticles(2, 3.5);
-	sp_man->addParticle_to_Liquid({ 0, 20, 0 }, 3, 4, 20, 10);
-	managers.push_back(sp_man);
+	//sp_man->addParticle_to_Liquid({ 0, 20, 0 }, 3, 4, 20, 10);
+	managers.push_back(sp_man);*/
 
 	//para probar las granadas
-	Time_GeneratorManager* diana = new Time_GeneratorManager(Particle::Sphere, 0.1, &pool, 2, 1, 10, { 300, 0, 0 });
+	/*Time_GeneratorManager* diana = new Time_GeneratorManager(Particle::Sphere, 0.1, &pool, 2, 1, 10, { 300, 0, 0 });
 	diana->addGenerator(grav_diana);
 	diana->addGenerator(gren_man->getBlast());
 	managers.push_back(diana);*/
@@ -146,7 +146,12 @@ void initPhysics(bool interactive)
 
 	//RigidBody
 	RigidSystem_Manager* rs_man = new RigidSystem_Manager(Particle::Box, .1, gPhysics, gScene);
+	rs_man->addGenerator(gren_man->getBlast());
+	//rs_man->addGenerator(wind);
+	//rs_man->addGenerator(wind2);
 	rs_man->generateStaticElement({ 0, -10, 0 }, Particle::Box, { 100, .1, 100 });
+	//sp_man->addRigid_Body_to_AnchoredSpring(rs_man->generateDynamicElement(), &centerAnchoredSpring, 1, 10);
+	//FALTA AÑADIR EL METODO AL SPRING MANAGER PARA HACER FLOTACION Y UNIR DOS RIGID BODY(TAMBIEN FALTA HACER ESO EN EL SPRING)....
 	managers.push_back(rs_man);
 
 	//MainCharacter

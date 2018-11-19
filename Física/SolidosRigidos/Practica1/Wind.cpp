@@ -1,8 +1,7 @@
 #include "Wind.h"
 
-bool Wind::is_inside(Particle * particle)
+bool Wind::is_inside(Vector3 pos)
 {
-	Vector3 pos = particle->getPosition();
 	return (((center.x + rad) >= (pos.x) && (center.y + rad) >= (pos.y) && (center.z + rad) >= (pos.z)))
 		&& ((center.x - rad) <= (pos.x) && (center.y - rad) <= (pos.y) && (center.z - rad) <= (pos.z));
 }
@@ -25,8 +24,19 @@ void Wind::updateForce(Particle * particle, float t)
 	if (this->isActive()) {
 		if (particle->getMass() <= 0.0f) return;
 
-		if (is_inside(particle)) {
+		if (is_inside(particle->getPosition())) {
 			particle->addForce(wind_direction_ * wind_force_ * particle->getMass());
+		}
+	}
+}
+
+void Wind::updateForce(physx::PxRigidBody* rb, float t)
+{
+	if (this->isActive()) {
+		if (rb->getMass() <= 0.0f) return;
+
+		if (is_inside(rb->getGlobalPose().p)) {
+			rb->addForce(wind_direction_ * wind_force_ * rb->getMass());
 		}
 	}
 }

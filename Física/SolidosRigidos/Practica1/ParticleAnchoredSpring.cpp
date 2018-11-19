@@ -1,19 +1,26 @@
 #include "ParticleAnchoredSpring.h"
 
-void ParticleAnchoredSpring::calculateForce(Particle * particle)
+Vector3 ParticleAnchoredSpring::calculateForce(Vector3 pos)
 {
-	Vector3 f = particle->getPosition();
+	Vector3 f = pos;
 	f -= *anchor;
 	// Length
 	float length = f.normalize();
 	// Resulting force
 	f *= -((length)* getK());
-	particle->addForce(f);
+
+	return f;
 }
 
 void ParticleAnchoredSpring::updateForce(Particle * particle, float t)
 {
-	calculateForce(particle);
+	particle->addForce(calculateForce(particle->getPosition()));
+	deactivateWind(t);
+}
+
+void ParticleAnchoredSpring::updateForce(physx::PxRigidBody* rb, float t)
+{
+	rb->addForce(calculateForce(rb->getGlobalPose().p));
 	deactivateWind(t);
 }
 

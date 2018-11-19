@@ -16,7 +16,7 @@ private:
 
 	RenderItem* rn = nullptr;
 
-	bool is_inside(Particle* particle);       //comprueba si la particula esta dentro de la esfera
+	bool is_inside(Vector3 pos);       //comprueba si la particula esta dentro de la esfera
 
 	bool debug_ = true;
 
@@ -52,6 +52,8 @@ public:
 	//-------------------------------------------OTHERS----------------------------------
 
 	virtual void updateForce(Particle* particle, float t);
+
+	virtual void updateForce(physx::PxRigidBody* rb, float t);
 
 	inline void changeDirection() { std::swap(wind_direction_.x, wind_direction_.y); std::swap(wind_direction_.y, wind_direction_.z); };
 

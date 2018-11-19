@@ -1,12 +1,13 @@
 #include "ParticleBuoyancy.h"
 
 
-void ParticleBuoyancy::updateForce(Particle* particle, float t)
+Vector3 ParticleBuoyancy::calculateForce(Vector3 pos)
 {
-	float depth = particle->getPosition().y;
+	float depth = pos.y;
 	if (depth > (getRestLength()))                 //restLength =  maxDepth + waterHeight
-		// Out of the water -> nothing to do
-		return;
+												   // Out of the water -> nothing to do
+		return Vector3(0, 0, 0);
+
 	Vector3 f(0.0f, 0.0f, 0.0f);
 	if (depth <= (waterHeight - maxDepth))
 	{ // Totally under the water
@@ -18,8 +19,19 @@ void ParticleBuoyancy::updateForce(Particle* particle, float t)
 		float volumeFactor = (depth - depthExterior) / (2 * maxDepth);
 		f.y = getK() * volumeFactor * volume;
 	}
-	particle->addForce(f);
 
+	return f;
+}
+
+void ParticleBuoyancy::updateForce(Particle* particle, float t)
+{
+	particle->addForce(calculateForce(particle->getPosition()));
+	deactivateWind(t);
+}
+
+void ParticleBuoyancy::updateForce(physx::PxRigidBody * rb, float t)
+{
+	rb->addForce(calculateForce(rb->getGlobalPose().p));
 	deactivateWind(t);
 }
 

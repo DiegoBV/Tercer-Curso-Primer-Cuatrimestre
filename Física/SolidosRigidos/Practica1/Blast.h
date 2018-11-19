@@ -16,11 +16,11 @@ private:
 
 	RenderItem* rn = nullptr;                        //renderItem
 
-	bool is_inside(Particle* particle);             //comprueba si una particula esta dentro de la esfera
+	bool is_inside(Vector3 pos);             //comprueba si una particula esta dentro de la esfera
 
-	bool is_near(Particle* particle);              //comprueba si una particula esta cerca del centro
+	bool is_near(Vector3 pos);              //comprueba si una particula esta cerca del centro
 
-	bool is_medium_distance(Particle* particle);  //comprueba si una particula esta a media distancia del centro de la esfera
+	bool is_medium_distance(Vector3 pos);  //comprueba si una particula esta a media distancia del centro de la esfera
 
 	void deactivate();                           //si ha comprobado todas las particulas referenciadas, desaparece
 
@@ -39,6 +39,8 @@ public:
 		rn->shape = CreateShape(physx::PxSphereGeometry(rad)); rn->transform = &transform; rn->color = { 1, 0, 0, 0 }; active_ = false; RegisterRenderItem(rn); }
 	
 	virtual void updateForce(Particle* particle, float t);
+
+	virtual void updateForce(physx::PxRigidBody* rb, float t);
 
 	void setActive() { active_ = true; };
 

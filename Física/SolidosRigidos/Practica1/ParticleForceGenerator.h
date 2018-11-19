@@ -12,6 +12,7 @@ public:
 	virtual ~ParticleForceGenerator() {};
 
 	virtual void updateForce(Particle* particle, float t) = 0;        // Overload to provide functionality
+	virtual void updateForce(physx::PxRigidBody* rb, float t) {};        // Overload to provide functionality
 	virtual void handle_event(unsigned char key) {};
 	void addReference() { references_++; };
 	void removeReference() { references_--; };

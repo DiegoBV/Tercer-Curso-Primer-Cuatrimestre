@@ -11,7 +11,7 @@ private:
 
 	physx::PxTransform transform;
 
-	virtual void calculateForce(Particle* particle);
+	virtual Vector3 calculateForce(Vector3 pos);
 public:
 	virtual ~ParticleAnchoredSpring() { delete rn; };
 
@@ -20,5 +20,6 @@ public:
 
 	virtual void updateForce(Particle* particle, float t);
 
+	virtual void updateForce(physx::PxRigidBody* rb, float t);
 };
 

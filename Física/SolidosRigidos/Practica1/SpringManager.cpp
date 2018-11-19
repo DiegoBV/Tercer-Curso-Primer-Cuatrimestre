@@ -16,6 +16,17 @@ void SpringManager::addParticle_to_AnchoredSpring(Vector3 * anchor, float k, flo
 	register_particle_in_generators(particles.back());
 }
 
+void SpringManager::addRigid_Body_to_AnchoredSpring(physx::PxRigidDynamic* obj, Vector3 * anchor, float k, float rest_length)
+{
+	ParticleAnchoredSpring* aSpring = new ParticleAnchoredSpring(anchor, k, rest_length);      //creacion del muelle
+	springs.push_back(aSpring);
+
+	Particle::registry_.add(obj, aSpring);
+	Particle::registry_.add(obj, aSpring->getWind());
+
+	//lo agrega sin mas, sin agregarle mas generadores que los que ya tenga propios ---> importante
+}
+
 void SpringManager::addSpring_of_TwoParticles(float k, float rest_length, Vector3 posONE, Vector3 posOTHER, Particle* one, Particle * other)
 {
 	if (one == nullptr) {                                                //set de la primera particula

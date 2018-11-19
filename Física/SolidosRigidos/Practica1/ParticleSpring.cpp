@@ -1,20 +1,25 @@
 #include "ParticleSpring.h"
 
-void ParticleSpring::calculateForce(Particle * particle)
+Vector3 ParticleSpring::calculateForce(Vector3 pos)
 {
 	// Calculate distance vector
-	Vector3 f = particle->getPosition();
+	Vector3 f = pos;
 	f -= other->getPosition();
 	// Length
 	float length = f.normalize();
 	// Resulting force
 	f *= -(length * getK());
-	particle->addForce(f);
+	return f;
 }
 
 void ParticleSpring::updateForce(Particle * particle, float t)
 {
-	calculateForce(particle);
+	particle->addForce(calculateForce(particle->getPosition()));
 	getWind()->setCenter(particle->getPosition());
 	deactivateWind(t);
+}
+
+void ParticleSpring::updateForce(physx::PxRigidBody * rb, float t)
+{
+	//A VER LOKO QUE AQUI HAGO QUE SE UNAN DOS PARTICULAS, TENGO QUE METER OTRO PUNTERILLO A UN RIGID BODY PERO HOY DA MUCHA PEREZAAAAAAAAAAAAAAAAA!!!!!!!!!
 }

@@ -22,6 +22,8 @@ void RigidSystem_Manager::generateNewElement(double t)
 
 		next_period = tiempo_transcurrido + time_inter;                             //actualizo el tiempo
 
+		register_rigid_body_in_generators(obj);                                   //register en todos los generadores asociados
+
 		total_++;                                                                 //actualizo el total
 	}
 }
@@ -49,7 +51,7 @@ void RigidSystem_Manager::handle_event(unsigned char key)
 	}
 }
 
-void RigidSystem_Manager::generateDynamicElement(Vector3 pos, Particle::Shape shp, Particle::Medidas size, physx::PxReal density)
+physx::PxRigidDynamic* RigidSystem_Manager::generateDynamicElement(Vector3 pos, Particle::Shape shp, Particle::Medidas size, physx::PxReal density)
 {
 	physx::PxTransform transform(pos);
 
@@ -64,6 +66,10 @@ void RigidSystem_Manager::generateDynamicElement(Vector3 pos, Particle::Shape sh
 	gScene->addActor(*obj);                                                       //lo anyado como actor
 
 	rn_items.push_back(new RenderItem(s, obj, generateRandomColor()));           //creo el renderItem y lo pusheo para poder borrarlo facilmente
+
+	register_rigid_body_in_generators(obj);                                   //register en todos los generadores asociados
+
+	return obj;
 }
 
 void RigidSystem_Manager::generateStaticElement(Vector3 pos, Particle::Shape shp, Particle::Medidas size)

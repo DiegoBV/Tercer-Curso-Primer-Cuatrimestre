@@ -7,7 +7,7 @@ private:
 	// The other particle the spring is attached to
 	Particle* other;
 
-	virtual void calculateForce(Particle* particle);
+	virtual Vector3 calculateForce(Vector3 pos);
 
 public:
 	ParticleSpring(Particle* _other, float _k, float _restLength) : ParticleAbstractSpring(_k, _restLength), other(_other) {
@@ -16,5 +16,7 @@ public:
 	virtual ~ParticleSpring() {};
 
 	virtual void updateForce(Particle* particle, float t);
+
+	virtual void updateForce(physx::PxRigidBody* rb, float t);
 };
 
