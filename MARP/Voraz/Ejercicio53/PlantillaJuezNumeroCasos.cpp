@@ -6,14 +6,11 @@
 #include <iomanip>
 #include <fstream>
 #include <vector>
-#include <queue>
+#include <algorithm>
 
 using namespace std;
 
 void resuelveCaso() {
-	//priority_queue<int> mayores;
-	//priority_queue<int, vector<int>, greater<int>> menores;
-
 	int NumeroPilas, V;
 	cin >> NumeroPilas >> V;
 	vector<int> pilas;
@@ -22,8 +19,6 @@ void resuelveCaso() {
 		int voltaje;
 		cin >> voltaje;
 		pilas.push_back(voltaje);
-		//mayores.push(voltaje);
-		//menores.push(voltaje);
 	}
 
 	sort(pilas.begin(), pilas.end());
@@ -38,22 +33,6 @@ void resuelveCaso() {
 
 		i++;
 	}
-	
-	/*int numCoches = 0;
-	int i = 0; int j = NumeroPilas - 1;
-	while (!mayores.empty() && !menores.empty() && j > i) {
-		int el_mayor = mayores.top();
-		int el_menor = menores.top();
-
-		menores.pop();                //siempre se quita
-		i++;
-
-		if (el_mayor + el_menor >= V) {
-			numCoches++; //se puede poner en funcionamiento otro coche
-			mayores.pop();  //se pasa a comprobar el siguiente de mayor voltaje
-			j--;
-		}
-	}*/
 	cout << numCoches << endl;
 }
 
