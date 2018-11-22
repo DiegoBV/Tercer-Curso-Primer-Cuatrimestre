@@ -6,23 +6,24 @@
 #include <iomanip>
 #include <fstream>
 #include <string>
+#include <algorithm>
 #include <vector>
 
 using namespace std;
 
-struct Pelicula {
-	int horaComienzo, horaFin;
+const int MINUTOS_LIBRES = 10;
 
-	Pelicula(int hc, int hf) : horaComienzo(hc), horaFin(hf) {};
+struct Pelicula {
+	int horaComienzo, horaFin, duracion, index;
+
+	Pelicula(int hc, int hf, int duracion, int index) : horaComienzo(hc), horaFin(hf), duracion(duracion), index(index) {};
 };
 
-int resuelve(vector<Pelicula>& peliculas) {
+//esta el problema de que, por ejemplo, la primera duire un huevo
+int resuelve(vector<Pelicula>& peliculas, vector<Pelicula>& auxHoras) {
 	int numPelis = 1;
-	Pelicula peliActual = peliculas[0];
-
-	for (size_t i = 1; i < peliculas.size(); i++){
-		if (peliActual.horaFin <= peliculas[i].horaComienzo) {
-			peliActual = peliculas[i];
+	for (size_t i = 0; i < peliculas.size(); i++){
+		if (peliculas[i].index + 1 < auxHoras.size() && peliculas[i].horaFin + MINUTOS_LIBRES <= auxHoras[peliculas[i].index + 1].horaComienzo) { //si no solapa...
 			numPelis++;
 		}
 	}
@@ -30,6 +31,7 @@ int resuelve(vector<Pelicula>& peliculas) {
 	return numPelis;
 };
 
+bool operator <(const Pelicula& p1, const Pelicula& p2) { return p1.duracion < p2.duracion; };
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 bool resuelveCaso() {
@@ -41,6 +43,7 @@ bool resuelveCaso() {
         return false;
    
 	vector<Pelicula> peliculas;
+	vector<Pelicula> auxHoras;
 	for (size_t i = 0; i < N; i++){
 		string hc;
 		cin >> hc;
@@ -50,10 +53,11 @@ bool resuelveCaso() {
 		int horaComienzo, duracion;
 		cin >> duracion;
 		horaComienzo = hora + minutos;
-		peliculas.push_back(Pelicula(horaComienzo, horaComienzo + duracion));
-	}	
-
-	cout << resuelve(peliculas) << endl;
+		peliculas.push_back(Pelicula(horaComienzo, horaComienzo + duracion, duracion, i));
+		auxHoras.push_back(Pelicula(horaComienzo, horaComienzo + duracion, duracion, i));
+	}
+	sort(peliculas.begin(), peliculas.end());
+	cout << resuelve(peliculas, auxHoras) << endl;
 
     // escribir sol
     
