@@ -7,7 +7,7 @@ Vector3 ParticleAnchoredSpring::calculateForce(Vector3 pos)
 	// Length
 	float length = f.normalize();
 	// Resulting force
-	f *= -((length)* getK());
+	f *= -((length - getRestLength())* getK());
 
 	return f;
 }

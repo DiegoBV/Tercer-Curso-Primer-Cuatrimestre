@@ -72,6 +72,22 @@ void SpringManager::addSpring_of_TwoParticles(float k, float rest_length, Vector
 	register_particle_in_generators(other);
 }
 
+void SpringManager::addSpring_of_TwoRigidBodies(float k, float rest_length, physx::PxRigidDynamic * one, physx::PxRigidDynamic * other)
+{
+	ParticleSpring* springONE = new ParticleSpring(other, k, rest_length);          //primer muelle
+	springs.push_back(springONE);
+
+	Particle::registry_.add(one, springONE);
+	Particle::registry_.add(one, springONE->getWind());
+
+	ParticleSpring* springOTHER = new ParticleSpring(one, k, rest_length);       //segundo muelle
+	springs.push_back(springOTHER);
+
+	Particle::registry_.add(other, springOTHER);
+
+	one->addTorque({ 0, 90, 0 });
+}
+
 void SpringManager::addParticle_to_Liquid(Vector3 pos, float _maxDepth, float _volume, float _waterHeight, float _liquidDensity)
 {
 	particles.push_back(new Particle(new RenderItem()));                  //set de la particula
@@ -93,6 +109,21 @@ void SpringManager::addParticle_to_Liquid(Vector3 pos, float _maxDepth, float _v
 	particles.back()->setActive();
 	particles.back()->setPosition(pos);
 	particles.back()->setColor({0, 0, 1, 1});
+}
+
+void SpringManager::addRigidBody_to_Liquid(physx::PxRigidDynamic* rb, float _maxDepth, float _volume, float _waterHeight, float _liquidDensity)
+{
+	ParticleBuoyancy* b = new ParticleBuoyancy(_maxDepth, _volume, _waterHeight, _liquidDensity);     //creacion del generador de flotacion
+	springs.push_back(b);
+
+	Particle::registry_.add(rb, b);
+	Particle::registry_.add(rb, b->getWind());
+
+	particles.push_back(new Particle(new RenderItem(), 0));       //"agua"
+	particles.back()->setBoxShape(100, .1, 100);
+	particles.back()->setActive();
+	particles.back()->setPosition(rb->getGlobalPose().p);
+	particles.back()->setColor({ 0, 0, 1, 1 });
 }
 
 void SpringManager::update(double t)

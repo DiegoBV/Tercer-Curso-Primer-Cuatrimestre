@@ -10,7 +10,7 @@ void RigidSystem_Manager::generateNewElement(double t)
 
 		physx::PxRigidDynamic* obj = gPhysics->createRigidDynamic(transform);            //creo el rigid dinamico
 
-		physx::PxShape* s = Particle::createShape(Particle::Box, { 1, 1, 1 });          //shape
+		physx::PxShape* s = Particle::createShape(Particle::Shape(rand()% 3), { 1, 1, 1 });          //shape
 
 		obj->attachShape(*s);
 

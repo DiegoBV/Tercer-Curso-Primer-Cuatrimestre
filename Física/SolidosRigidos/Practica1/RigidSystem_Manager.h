@@ -19,7 +19,7 @@ protected:
 public:
 	RigidSystem_Manager() : System_Manager(), MAX_ELEM_(0) {};
 
-	RigidSystem_Manager(Particle::Shape shp, float t, physx::PxPhysics* gPhysics, physx::PxScene* gScene, int velMax = 50, int velMin = 20, float maxLife = 3, Vector3 pos = { 10, 30, 0 }, int maxElem = 50) :
+	RigidSystem_Manager(Particle::Shape shp, float t, physx::PxPhysics* gPhysics, physx::PxScene* gScene, int velMax = 50, int velMin = 20, float maxLife = 3, Vector3 pos = { 10, 30, 0 }, int maxElem = 100) :
 		System_Manager(shp, t, velMax, velMin, maxLife, pos), gPhysics(gPhysics), gScene(gScene), MAX_ELEM_(maxElem) {};
 
 	virtual ~RigidSystem_Manager() { for (RenderItem* rn : rn_items) { delete rn; rn = nullptr; }; };
@@ -31,11 +31,5 @@ public:
 	physx::PxRigidDynamic* generateDynamicElement(Vector3 pos = { 0, 0, 0 }, Particle::Shape shp = Particle::Box, Particle::Medidas size = {1, 1, 1}, physx::PxReal density = 1);
 
 	void generateStaticElement(Vector3 pos = { 0, 0, 0 }, Particle::Shape shp = Particle::Box, Particle::Medidas size = { 10, .1, 10 });
-
-	//registra un rigidBody en todos sus generadores
-	void register_rigid_body_in_generators(physx::PxRigidDynamic* obj) { for (ParticleForceGenerator* gen : generators) { if (gen != nullptr) Particle::registry_.add(obj, gen); } };
-
-	//elimina un rigidBody de la lista
-	void remove_rigid_body_from_generators(physx::PxRigidDynamic* obj) { for (ParticleForceGenerator* gen : generators) { if (gen != nullptr) Particle::registry_.remove(obj, gen); } };
 };
 

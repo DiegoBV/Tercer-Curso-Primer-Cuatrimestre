@@ -7,15 +7,28 @@ class CharacterManager :
 {
 private:
 	MainCharacter* chr;
+
 	float velocity_;
 
+	physx::PxPhysics* gPhysics = nullptr; 
+
+	physx::PxScene* gScene = nullptr;
+
+	Vector3 initial_pos;
+
 public:
-	CharacterManager(float vel) : Manager(), velocity_(vel) {};
+	CharacterManager(float vel, physx::PxPhysics* gPhysics, physx::PxScene* gScene, Vector3 pos = { 0, 0, 0 }) : Manager(), velocity_(vel), 
+		gPhysics(gPhysics), gScene(gScene), initial_pos(pos) {};
+
 	virtual ~CharacterManager() { delete chr; };
+
 	virtual void update(double t);
+
 	virtual void handle_event(unsigned char key);
-	void initCharacter() { chr = new MainCharacter(100); register_particle_in_generators(chr); 
-		chr->setPosition({ 6, 20, 0 }); chr->setColor({ 0.5, 0, 0.5, 1 }); chr->setActive(); } //llamar despues de anyadir todos los generadores
+
+	void initCharacter() { chr = new MainCharacter(100, gPhysics, gScene, initial_pos); register_rigid_body_in_generators(chr->getPj()); 
+		chr->setColor({ 0.5, 0, 0.5, 1 }); } //llamar despues de anyadir todos los generadores
+
 	MainCharacter* getCharacter() const { return chr; };
 };
 

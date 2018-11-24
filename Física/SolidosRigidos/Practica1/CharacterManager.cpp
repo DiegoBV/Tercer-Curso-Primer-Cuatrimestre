@@ -2,7 +2,6 @@
 
 void CharacterManager::update(double t)
 {
-	chr->update(t);
 }
 
 void CharacterManager::handle_event(unsigned char key)
@@ -11,7 +10,7 @@ void CharacterManager::handle_event(unsigned char key)
 	{
 	case 'W':
 	{
-		chr->addForce({ 0, 0, -velocity_ });
+		chr->getPj()->setLinearVelocity({ 0, 0, -velocity_ });
 		/*Vector3 f = GetCamera()->getEye();        //pffffffffffffffffff
 		f -= chr->getPosition();
 		// Length
@@ -24,13 +23,13 @@ void CharacterManager::handle_event(unsigned char key)
 	}
 		break;
 	case 'S':
-		chr->addForce({ 0, 0, velocity_ });
+		chr->getPj()->setLinearVelocity({ 0, 0, velocity_ });
 		break;
 	case 'A':
-		chr->addForce({ -velocity_, 0, 0 });
+		chr->getPj()->setLinearVelocity({ -velocity_, 0, 0 });
 		break;
 	case 'D':
-		chr->addForce({ velocity_, 0, 0 });
+		chr->getPj()->setLinearVelocity({ velocity_, 0, 0 });
 		break;
 	default:
 		break;
