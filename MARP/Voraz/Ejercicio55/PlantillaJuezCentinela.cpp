@@ -12,30 +12,25 @@
 using namespace std;
 
 struct Pelicula {
-	int horaComienzo, horaFin, duracion, index;
+	int horaComienzo, horaFin, duracion;
 
-	Pelicula(int hc, int hf, int duracion, int index) : horaComienzo(hc), horaFin(hf), duracion(duracion), index(index) {};
+	Pelicula(int hc, int hf, int duracion) : horaComienzo(hc), horaFin(hf), duracion(duracion) {};
 };
 
 const int MINUTOS_LIBRES = 10;
 
-
-//esta el problema de que, por ejemplo, la primera duire un huevo
 int resuelve(vector<Pelicula>& peliculas/*, vector<Pelicula>& auxHoras*/) {
 	int numPelis = 1;
 	Pelicula p = peliculas[0];
 
 	for (size_t i = 1; i < peliculas.size(); i++){
-		/*if (peliculas[i].index + 1 < auxHoras.size() && peliculas[i].horaFin + MINUTOS_LIBRES <= auxHoras[peliculas[i].index + 1].horaComienzo) { //si no solapa...
-			numPelis++;
-		}*/
-		if (p.horaFin + MINUTOS_LIBRES <= peliculas[i].horaComienzo) {
+		if (p.horaFin + MINUTOS_LIBRES <= peliculas[i].horaComienzo) { //no se solapan
 			numPelis++;
 			p = peliculas[i];
 		}
 		else { //se solapan
-			if (p.duracion > peliculas[i].duracion) {
-				p = peliculas[i]; //ve la de menor duracion
+			if (p.horaFin > peliculas[i].horaFin) {
+				p = peliculas[i];                   //ve la que antes acabe
 			}
 			//else {p = p;}
 		}
@@ -66,10 +61,12 @@ bool resuelveCaso() {
 		int horaComienzo, duracion;
 		cin >> duracion;
 		horaComienzo = hora + minutos;
-		peliculas.push_back(Pelicula(horaComienzo, horaComienzo + duracion, duracion, i));
+		peliculas.push_back(Pelicula(horaComienzo, horaComienzo + duracion, duracion));
 		//auxHoras.push_back(Pelicula(horaComienzo, horaComienzo + duracion, duracion, i));
 	}
+
 	sort(peliculas.begin(), peliculas.end());
+
 	cout << resuelve(peliculas/*, auxHoras*/) << endl;
 
     // escribir sol
