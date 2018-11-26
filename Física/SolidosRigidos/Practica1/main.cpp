@@ -83,7 +83,7 @@ void initPhysics(bool interactive)
 	// Add custom application code
 	//----------------------------------------------------GENERATORS-------------------------------------------------------
 
-	/*ParticleGravity* grav_gen_ = new ParticleGravity({ 0, -80, 0 });
+	ParticleGravity* grav_gen_ = new ParticleGravity({ 0, -80, 0 });
 	generators.push_back(grav_gen_);
 
 	ParticleGravity* grav_gen_2_ = new ParticleGravity({ 0, -10, 0 });
@@ -111,18 +111,18 @@ void initPhysics(bool interactive)
 	generators.push_back(gren_man->getBlast());
 	managers.push_back(gren_man);
 
-	/*FireworkManager* fManager_ = new FireworkManager();
+	FireworkManager* fManager_ = new FireworkManager();
 	fManager_->addGenerator(grav_gen_);
 	managers.push_back(fManager_);
 
-	Time_GeneratorManager* t_gen = new Time_GeneratorManager(Particle::Sphere, 0.01, &pool);
+	/*Time_GeneratorManager* t_gen = new Time_GeneratorManager(Particle::Sphere, 0.01, &pool);
 	t_gen->addGenerator(grav_gen_);
 	t_gen->addGenerator(gren_man->getBlast());
 	t_gen->addGenerator(wind);
 	t_gen->addGenerator(wind2);
-	managers.push_back(t_gen);*/
+	managers.push_back(t_gen);
 
-	/*Shot_Manager* s_man = new Shot_Manager(&pool);
+	Shot_Manager* s_man = new Shot_Manager(&pool);
 	s_man->addGenerator(ingrav_gen_);
 	s_man->addGenerator(wind);
 	s_man->addGenerator(wind2);
@@ -138,7 +138,7 @@ void initPhysics(bool interactive)
 	managers.push_back(sp_man);
 
 	//para probar las granadas
-	/*Time_GeneratorManager* diana = new Time_GeneratorManager(Particle::Sphere, 0.1, &pool, 2, 1, 10, { 300, 0, 0 });
+	Time_GeneratorManager* diana = new Time_GeneratorManager(Particle::Sphere, 0.1, &pool, 2, 1, 10, { 300, 0, 0 });
 	diana->addGenerator(grav_diana);
 	diana->addGenerator(gren_man->getBlast());
 	managers.push_back(diana);*/
@@ -146,8 +146,8 @@ void initPhysics(bool interactive)
 
 	//RigidBody
 	RigidSystem_Manager* rs_man = new RigidSystem_Manager(Particle::Box, .1, gPhysics, gScene);
-	//rs_man->addGenerator(gren_man->getBlast());
-	rs_man->setOn(false);
+	rs_man->addGenerator(gren_man->getBlast());
+	//rs_man->setOn(false);
 	//rs_man->addGenerator(wind);
 	//rs_man->addGenerator(wind2);
 	rs_man->generateStaticElement({ 0, 15, 0 }, Particle::Box, { 100, .1, 100 });
@@ -157,10 +157,10 @@ void initPhysics(bool interactive)
 	managers.push_back(rs_man);
 	
 	//MainCharacter
-	CharacterManager* chr_man = new CharacterManager(50, gPhysics, gScene, {6, 20, 0});
+	/*CharacterManager* chr_man = new CharacterManager(50, gPhysics, gScene, {6, 20, 0});
 	//chr_man->addGenerator(drag_gen);
 	chr_man->initCharacter();
-	managers.push_back(chr_man);
+	managers.push_back(chr_man);*/
 	// ...
 }
 
