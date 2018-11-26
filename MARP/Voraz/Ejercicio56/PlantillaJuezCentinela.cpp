@@ -19,12 +19,12 @@ struct Actividad
 	Actividad(int tc, int tf) : tc(tc), tf(tf) {};
 };
 
-bool operator <(const Actividad& a1, const Actividad& a2) { return a1.tf > a2.tf; };
+bool operator <(const Actividad& a1, const Actividad& a2) { return a1.tc < a2.tc; }; //antes era a1.tf > a2.tf
 
 int resuelve(priority_queue<Actividad>& actividades) {
 	int numCompanyeros = 0;
-	int temp = 0;
-	int companyeros_libres = 0;
+	//int temp = 0;
+	int buffer_personas_libres = 0;
 
 	Actividad a = actividades.top();
 	actividades.pop();
@@ -34,14 +34,20 @@ int resuelve(priority_queue<Actividad>& actividades) {
 		actividades.pop();
 
 		if ((a.tc >= act.tc && a.tc < act.tf) || (a.tf > act.tc && a.tf < act.tf)) { //se solapan
-			temp++;
+			/*temp++;
 			if(temp > numCompanyeros)
-				numCompanyeros = temp;
+				numCompanyeros = temp;*/
+			buffer_personas_libres--;
+			if (buffer_personas_libres < 0) {
+				numCompanyeros = buffer_personas_libres * -1;
+			}
 		}
 		else {
 			//si no se solapan
+			/*a = act;
+			temp = 0; //todos los antiguos companyeros han acabado sus tareas*/
 			a = act;
-			temp = 0; //todos los antiguos companyeros han acabado sus tareas
+			buffer_personas_libres = numCompanyeros /*-1*/;
 		}
 	}
 
