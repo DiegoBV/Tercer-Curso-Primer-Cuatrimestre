@@ -1,0 +1,50 @@
+Ciclo Carrera:
+
+Bajar los brazos.
+
+Cerrar los puños.
+
+Cambiar el modo Active --> SingleOrigin pa cerrar los puños
+
+//Piernas
+Frame 1: pose contacto(pierna estirada hacia delante, otra doblada hacia atrás), inclinamos el cuerpo ligeramente. La cabeza hacia delante. Bajamos centro de gravedad
+
+Frame3: el pie tiene que estar completamente apoyado en el suelo, no de puntillas. Bajar un poco mas el centro de gravedad.
+
+Frame 5: bajamos el pie atrasado, ponemos de puntillas, subimos centro de gravedad. El oro pie comienza a dar el paso
+
+Frame 9: frame 1 pero cambiado.
+
+Frame 11: frame 3 pero cambiado.
+
+Frame 13: frame 5 cambiado.
+
+Frame 17: copia del frame1.
+
+//Brazos
+
+Frame 1: brazo contrario adelantado y flexionad, el otro estirado completamente. Otra opcion es el brazo estirado, encogerlo un poco más. La cadera se gira 
+en direccion contraria a la pierna estirada. Los hombos se rotan de manera opuesta a la cadera. El cuello restaura la centralidad de la mirada. (pulsa shift para ajustes finos).
+
+Frame 9: inverso frame 1
+
+Frame 17: copia frame 1.
+
+
+SI ESCALAS EL EL DOPE SE REDUCEN LOS FRAMES
+
+Ciclo Salto:
+
+Personaje saltando entre dos cubitos.
+
+Frame 5: un pie ligeramente mas adelantado. Espalda inclinada, mirad aal frente. Piernas flexionadas(bajamos centro de gravedad).
+
+Frame 7:  el root no se tiene que haber desplazado(clonamos el root hasta aqui otra vez). Pie izq subido, centro de gravedad adelantado.Pie en contacto con el suelo de puntillas
+
+Frame 13: elevar el root para el salto. Tocar las curvas del root, liberas ambos, quitar punto intermedio, volverlo a elevar... Curvas desplazamiento hrizontal es una bajada lineal. Putas curvas.
+
+Frame 20: pie izquierdo con el talon subido, cuerpo atrasado, mirada al frente. Pie derecho elevado y pierna flexionada, Centro de gravedad elevado. Brazos atrasados.
+
+Frame 25: igual que el 5 solo que los pies al contrario.
+
+Frame 30:  incorporamos.
