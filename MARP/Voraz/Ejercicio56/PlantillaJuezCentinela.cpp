@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <iomanip>
+#include <algorithm>
 #include <fstream>
 #include <queue>
 
@@ -19,15 +20,16 @@ struct Actividad
 	Actividad(int tc, int tf) : tc(tc), tf(tf) {};
 };
 
-bool operator <(const Actividad& a1, const Actividad& a2) { return a1.tc < a2.tc; }; //antes era a1.tf > a2.tf
+bool operator <(const Actividad& a1, const Actividad& a2) { return a1.tc > a2.tc; }; //antes era a1.tf > a2.tf
 
 int resuelve(priority_queue<Actividad>& actividades) {
 	int numCompanyeros = 0;
 	//int temp = 0;
 	int buffer_personas_libres = 0;
-
+	queue<Actividad> pendientes;
 	Actividad a = actividades.top();
 	actividades.pop();
+	pendientes.push(a);
 
 	while (!actividades.empty()) {
 		Actividad act = actividades.top();
@@ -38,16 +40,27 @@ int resuelve(priority_queue<Actividad>& actividades) {
 			if(temp > numCompanyeros)
 				numCompanyeros = temp;*/
 			buffer_personas_libres--;
-			if (buffer_personas_libres < 0) {
-				numCompanyeros = buffer_personas_libres * -1;
+			if (abs(buffer_personas_libres) >= abs(numCompanyeros)) {
+				numCompanyeros += 1;
 			}
+			pendientes.push(act);
 		}
 		else {
 			//si no se solapan
 			/*a = act;
 			temp = 0; //todos los antiguos companyeros han acabado sus tareas*/
+			/*a = act;
+			buffer_personas_libres = numCompanyeros; /*-1*/
+			//a = act;
+			while (a.tf <= act.tc && !pendientes.empty()) {
+				buffer_personas_libres++;
+				pendientes.pop();
+				if(!pendientes.empty()) a = pendientes.front();
+			}
+
 			a = act;
-			buffer_personas_libres = numCompanyeros /*-1*/;
+
+			//buffer_personas_libres = min(buffer_personas_libres + 1, numCompanyeros);
 		}
 	}
 
