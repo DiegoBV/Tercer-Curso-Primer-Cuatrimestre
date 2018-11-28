@@ -5,6 +5,7 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
+#include <algorithm>
 #include <vector>
 #include <queue>
 using namespace std;
@@ -19,16 +20,49 @@ struct Trabajo
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 bool operator <(const Trabajo& t1, const Trabajo& t2) {
-	return t1.f > t2.f;
+	return t1.c < t2.c;
+};
+
+bool estaEnRango(const Trabajo& t, const int c) {
+	return t.c <= c;
+};
+
+bool estaMasCercaDelFin(const Trabajo& t, const Trabajo& temp, const int F) {
+	return (abs(t.f - F) < abs(temp.f - F));
 }
 
-int resuelve(vector<Trabajo>& proyectos, const int C, const int F) {
+pair<int, bool> resuelve(vector<Trabajo>& proyectos, const int C, const int F) {
 	int numProyectos = 0;
 	int temp = C;
+	bool es_posible = false;
 
-	for (size_t i = 0; i < proyectos.size(); i++){
+	int i = 0;
+
+	Trabajo t_temp;
+
+	while (i < proyectos.size() && !es_posible){
+		Trabajo t = proyectos[i];
+
+		if (estaEnRango(t, temp)){
+			if (estaMasCercaDelFin(t, t_temp, F)) {
+				t_temp = t;
+			}
+
+			i++;
+		}
+		else {
+			numProyectos++;
+			if (numProyectos > proyectos.size()) break; //yolo
+			temp = t_temp.f;
+		}
+
+		if (t_temp.f >= F) {
+			es_posible = true;
+		}
 
 	}
+
+	return { numProyectos, es_posible };
 }
 
 bool resuelveCaso() {
@@ -48,9 +82,10 @@ bool resuelveCaso() {
 	}
 	std::sort(proyectos.begin(), proyectos.end());
     // escribir sol
-    
+	pair<int, bool> sol = resuelve(proyectos, C, F);
+	sol.second ? cout << sol.first + 1 : cout << "Imposible";
+	cout << endl;
     return true;
-    
 }
 
 int main() {
