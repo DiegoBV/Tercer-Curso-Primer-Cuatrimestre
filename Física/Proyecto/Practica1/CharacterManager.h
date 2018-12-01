@@ -16,8 +16,6 @@ private:
 
 	Vector3 initial_pos;
 
-	const float JUMP_FORCE = 80;
-
 public:
 	CharacterManager(float vel, physx::PxPhysics* gPhysics, physx::PxScene* gScene, Vector3 pos = { 0, 0, 0 }) : Manager(), velocity_(vel), 
 		gPhysics(gPhysics), gScene(gScene), initial_pos(pos) {};
@@ -31,6 +29,6 @@ public:
 	void initCharacter() { chr = new MainCharacter(100, gPhysics, gScene, initial_pos); register_rigid_body_in_generators(chr->getPj()); 
 	chr->setColor({ 0.5, 0, 0.5, 1 }); chr->getPj()->setLinearVelocity({ 0, 0, -velocity_ }); } //llamar despues de anyadir todos los generadores
 
-	MainCharacter* getCharacter() const { return chr; };
+	inline MainCharacter* getCharacter() const { return chr; };
 };
 

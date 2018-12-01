@@ -14,6 +14,7 @@ private:
 
 	physx::PxScene* gScene = nullptr;
 
+	float JUMP_FORCE = 80;
 
 public:
 	MainCharacter(int life, physx::PxPhysics* gPhysics, physx::PxScene* gScene, Vector3 pos = {0, 0, 0}) : gPhysics(gPhysics), gScene(gScene), 
@@ -25,5 +26,9 @@ public:
 	inline physx::PxRigidDynamic* getPj() const { return pj; };
 
 	void setColor(Vector4 col) { rn->color = col; };
+
+	inline void setNewJumpForce(float j) { JUMP_FORCE = j; };
+
+	inline float getJumpForce() { return JUMP_FORCE; };
 };
 
