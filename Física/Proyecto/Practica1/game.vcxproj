@@ -261,6 +261,7 @@
     <ClCompile Include="GrenadeManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainCharacter.cpp" />
+    <ClCompile Include="ObstacleManager.cpp" />
     <ClCompile Include="ParticleAbstractSpring.cpp" />
     <ClCompile Include="ParticleBuoyancy.cpp" />
     <ClCompile Include="ParticleDrag.cpp" />
@@ -289,6 +290,7 @@
     <ClInclude Include="GrenadeManager.h" />
     <ClInclude Include="MainCharacter.h" />
     <ClInclude Include="Manager.h" />
+    <ClInclude Include="ObstacleManager.h" />
     <ClInclude Include="ParticleAbstractSpring.h" />
     <ClInclude Include="ParticleBuoyancy.h" />
     <ClInclude Include="ParticleDrag.h" />

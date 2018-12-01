@@ -16,8 +16,8 @@ private:
 public:
 	virtual ~Time_GeneratorManager();
 
-	Time_GeneratorManager(Particle::Shape shp, float t, TemplatePool<Particle>* pool, int velMax = 50, int velMin = 20, float maxLife = 3, Vector3 pos = { 10, 30, 0 }):
-			System_Manager(shp, t, velMax, velMin, maxLife, pos), pool(pool) { srand(time(NULL)); };
+	Time_GeneratorManager(Particle::Shape shp, float t, TemplatePool<Particle>* pool, MainCharacter* ch = nullptr, Vector3 pos = { 10, 30, 0 }, int velMax = 50, int velMin = 20, float maxLife = 3):
+			System_Manager(shp, t, velMax, velMin, maxLife, pos, ch), pool(pool) { srand(time(NULL)); };
 
 	Time_GeneratorManager(): System_Manager() {};
 

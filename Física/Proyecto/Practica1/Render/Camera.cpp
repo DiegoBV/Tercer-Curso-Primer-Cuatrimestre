@@ -62,10 +62,10 @@ bool Camera::handleKey(unsigned char key, int x, int y, float speed)
 	PxVec3 viewY = mDir.cross(PxVec3(0,1,0)).getNormalized();
 	switch(toupper(key))
 	{
-	/*case 'W':	mEye += mDir*2.0f*speed;		break;
+	case 'W':	mEye += mDir*2.0f*speed;		break;
 	case 'S':	mEye -= mDir*2.0f*speed;		break;
 	case 'A':	mEye -= viewY*2.0f*speed;		break;
-	case 'D':	mEye += viewY*2.0f*speed;		break;*/
+	case 'D':	mEye += viewY*2.0f*speed;		break;
 	default:							return false;
 	}
 	return true;
@@ -109,7 +109,7 @@ PxTransform Camera::getTransform() const
 
 void Camera::update(float t, float speed)
 {
-	//mEye.z-= t * 5/*= mDir*t*49.70f*speed*/;
+	//mEye.z-= t * 30/*= mDir*t*49.70f*speed*/;
 }
 
 PxVec3 Camera::getEye() const

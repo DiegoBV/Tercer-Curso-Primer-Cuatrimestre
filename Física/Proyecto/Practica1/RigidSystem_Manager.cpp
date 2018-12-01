@@ -72,7 +72,7 @@ physx::PxRigidDynamic* RigidSystem_Manager::generateDynamicElement(Vector3 pos, 
 	return obj;
 }
 
-void RigidSystem_Manager::generateStaticElement(Vector3 pos, Particle::Shape shp, Particle::Medidas size)
+physx::PxRigidStatic* RigidSystem_Manager::generateStaticElement(Vector3 pos, Particle::Shape shp, Particle::Medidas size, Vector4 c)
 {
 	physx::PxTransform transform(pos);
 
@@ -85,5 +85,12 @@ void RigidSystem_Manager::generateStaticElement(Vector3 pos, Particle::Shape shp
 	gScene->addActor(*obj);                                                       //lo anyado como actor
 
 	rn_items.push_back(new RenderItem(s, obj, generateRandomColor()));           //creo el renderItem y lo pusheo para poder borrarlo facilmente
+	if(c.w == -1)
+		rn_items.back()->color = generateRandomColor();
+	else {
+		rn_items.back()->color = c;
+	}
+
+	return obj;
 }
 

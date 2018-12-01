@@ -10,7 +10,7 @@ void CharacterManager::handle_event(unsigned char key)
 	{
 	case 'A':
 		chr->getPj()->setGlobalPose({ chr->getPj()->getGlobalPose().p.x - 20 , chr->getPj()->getGlobalPose().p.y,  chr->getPj()->getGlobalPose().p.z});
-		//chr->getPj()->setLinearVelocity(...); improve del gameplay maybe
+		//chr->getPj()->setLinearVelocity({velocity_, 0, -velocity_}); //improve del gameplay maybe
 		break;
 	case 'D':
 		chr->getPj()->setGlobalPose({ chr->getPj()->getGlobalPose().p.x + 20 , chr->getPj()->getGlobalPose().p.y,  chr->getPj()->getGlobalPose().p.z });

@@ -46,6 +46,7 @@ double GetCounter()
 namespace
 {
 	Camera*	sCamera;
+	physx::PxTransform* pos = nullptr;
 
 void motionCallback(int x, int y)
 {
@@ -176,6 +177,7 @@ Camera* GetCamera()
 {
 	return sCamera;
 }
+
 
 PxShape* CreateShape(const PxGeometry& geo)
 {

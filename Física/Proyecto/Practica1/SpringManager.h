@@ -13,7 +13,7 @@ private:
 	vector<ParticleAbstractSpring*> springs;      //Vector especial que controla los muelles
 
 public:
-	SpringManager() {};
+	SpringManager(MainCharacter* ch = nullptr): Manager(ch) {};
 
 	~SpringManager() { for (ParticleForceGenerator* gen : springs) { delete gen; } for (Particle* p : particles) { delete p; } };
 

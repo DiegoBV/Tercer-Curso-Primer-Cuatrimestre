@@ -46,4 +46,8 @@ void Time_GeneratorManager::update(float t)
 		(*it)->update(t);
 		if (!checkLifeTime(it)) { it++; };
 	}
+
+	if (checkDistanceBtwChar(pos.z - 100)) {
+		pos = generateRandomPos(pos, 500, FLOOR_SIZE.x_/2, -FLOOR_SIZE.x_ / 2);
+	}
 }

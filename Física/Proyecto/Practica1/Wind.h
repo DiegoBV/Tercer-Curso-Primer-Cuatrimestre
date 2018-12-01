@@ -1,5 +1,6 @@
 #pragma once
 #include "ParticleForceGenerator.h"
+
 class Wind :
 	public ParticleForceGenerator
 {

@@ -130,6 +130,9 @@ void SpringManager::update(float t)
 {
 	for (Particle* p : particles) {
 		p->update(t);
+		if (checkDistanceBtwChar(p->getPosition().z)) {
+			p->setPosition(generateRandomPos(p->getPosition(), 500, FLOOR_SIZE.x_ / 2, -FLOOR_SIZE.x_ / 2));
+		}
 	}
 }
 

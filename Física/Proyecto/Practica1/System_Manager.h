@@ -25,7 +25,7 @@ protected:
 public:
 	System_Manager(): VEL_MAX_(0), VEL_MIN_(0), MAX_LIFE_TIME_(0) {};
 
-	System_Manager(Particle::Shape shp, float t, int velMax = 50, int velMin = 20, float maxLife = 3, Vector3 pos = { 10, 30, 0 }) :
+	System_Manager(Particle::Shape shp, float t, int velMax = 50, int velMin = 20, float maxLife = 3, Vector3 pos = { 10, 30, 0 }, MainCharacter* ch = nullptr) : Manager(ch),
 		shape_(shp), time_inter(t), VEL_MAX_(velMax), VEL_MIN_(velMin), MAX_LIFE_TIME_(maxLife), pos(pos) {};
 
 	virtual ~System_Manager() {};

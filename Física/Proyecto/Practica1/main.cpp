@@ -32,6 +32,8 @@
 
 #include "RigidSystem_Manager.h"
 
+#include "ObstacleManager.h"
+
 using namespace physx;
 
 PxDefaultAllocator		gAllocator;
@@ -54,11 +56,11 @@ vector<Manager*> managers;                                         // vector de 
 
 vector<ParticleForceGenerator*> generators;                        // vector de generators para no tener muchas variables globales
 
+vector<Wind*> vientos;                                            //manejador de vientos
+
 Vector3 centerAnchoredSpring(0, 10, 0);
 
 MainCharacter* pj;
-
-float dist;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -99,16 +101,27 @@ void initPhysics(bool interactive)
 	ParticleDrag* drag_gen = new ParticleDrag(1, 1);
 	generators.push_back(drag_gen);
 
-	Wind* wind = new Wind(300, { 1, 0, 0 }, { 0, -30, 0 });
+	Wind* wind = new Wind(100, { 1, 0, 0 }, { 0, 30, 0 });
 	generators.push_back(wind);
+	vientos.push_back(wind);
 
-	Wind* wind2 = new Wind(200, { 0, 0, 1 }, { 100, -40, 0 });
+	Wind* wind2 = new Wind(200, { 0, 0, 1 }, { 100, 40, 0 });
 	generators.push_back(wind2);
+	vientos.push_back(wind2);
 
 	ParticleGravity* grav_diana = new ParticleGravity({ 0.001, -0.001, 0.001 });
 	generators.push_back(grav_diana);
 
 	//----------------------------------------------------MANAGERS-------------------------------------------------------
+
+	//MainCharacter
+	CharacterManager* chr_man = new CharacterManager(50, gPhysics, gScene, {6, 20, 0});
+	//chr_man->addGenerator(drag_gen);
+	//chr_man->addGenerator(wind);
+	//chr_man->addGenerator(wind2);
+	chr_man->initCharacter();
+	managers.push_back(chr_man);
+	pj = chr_man->getCharacter();
 
 	GrenadeManager* gren_man = new GrenadeManager();
 	gren_man->addGenerator(grav_gen_);
@@ -119,27 +132,28 @@ void initPhysics(bool interactive)
 	fManager_->addGenerator(grav_gen_);
 	managers.push_back(fManager_);
 
-	/*Time_GeneratorManager* t_gen = new Time_GeneratorManager(Particle::Sphere, 0.01, &pool);
+	Time_GeneratorManager* t_gen = new Time_GeneratorManager(Particle::Sphere, 0.01, &pool, pj, {10, 50, 0});
 	t_gen->addGenerator(grav_gen_);
 	t_gen->addGenerator(gren_man->getBlast());
 	t_gen->addGenerator(wind);
 	t_gen->addGenerator(wind2);
 	managers.push_back(t_gen);
 
-	Shot_Manager* s_man = new Shot_Manager(&pool);
+	SpringManager* sp_man = new SpringManager(pj);
+	//sp_man->addGenerator(grav_gen_2_);
+	//sp_man->addGenerator(drag_gen);
+	//sp_man->addParticle_to_AnchoredSpring(&centerAnchoredSpring, 1, 10);
+	sp_man->addSpring_of_TwoParticles(2, 3.5, { 10, 20, -80 }, {10, 30, -80});
+	//sp_man->addParticle_to_Liquid({ 0, 20, 0 }, 3, 4, 20, 10);
+	managers.push_back(sp_man);
+
+	/*Shot_Manager* s_man = new Shot_Manager(&pool);
 	s_man->addGenerator(ingrav_gen_);
 	s_man->addGenerator(wind);
 	s_man->addGenerator(wind2);
 	s_man->addGenerator(gren_man->getBlast());
 	managers.push_back(s_man);
 
-	SpringManager* sp_man = new SpringManager();
-	//sp_man->addGenerator(grav_gen_2_);
-	//sp_man->addGenerator(drag_gen);
-	//sp_man->addParticle_to_AnchoredSpring(&centerAnchoredSpring, 1, 10);
-	//sp_man->addSpring_of_TwoParticles(2, 3.5);
-	//sp_man->addParticle_to_Liquid({ 0, 20, 0 }, 3, 4, 20, 10);
-	managers.push_back(sp_man);
 
 	//para probar las granadas
 	Time_GeneratorManager* diana = new Time_GeneratorManager(Particle::Sphere, 0.1, &pool, 2, 1, 10, { 300, 0, 0 });
@@ -154,19 +168,16 @@ void initPhysics(bool interactive)
 	rs_man->setOn(false);
 	//rs_man->addGenerator(wind);
 	//rs_man->addGenerator(wind2);
-	rs_man->generateStaticElement({ 0, 15, 0 }, Particle::Box, { 50, .1, 1000 });
+	//rs_man->generateStaticElement({ 0, 15, 0 }, Particle::Box, { 50, .1, 1000 });
 	//sp_man->addRigid_Body_to_AnchoredSpring(rs_man->generateDynamicElement(), &centerAnchoredSpring, 1, 10);
 	//sp_man->addSpring_of_TwoRigidBodies(1, 5, rs_man->generateDynamicElement({10, 0, 0}, Particle::Sphere), rs_man->generateDynamicElement());
 	//sp_man->addRigidBody_to_Liquid(rs_man->generateDynamicElement({0, -10, 0}), 3, 4, 1, 30);
 	managers.push_back(rs_man);
 	
-	//MainCharacter
-	CharacterManager* chr_man = new CharacterManager(50, gPhysics, gScene, {6, 20, 0});
-	//chr_man->addGenerator(drag_gen);
-	chr_man->initCharacter();
-	managers.push_back(chr_man);
-	pj = chr_man->getCharacter();
-	dist = abs(pj->getPj()->getGlobalPose().p.z - GetCamera()->getEye().z);
+
+	//Manager de obstaculos
+	ObstacleManager* obs_man = new ObstacleManager(chr_man->getCharacter(), Particle::Box, gPhysics, gScene);
+	managers.push_back(obs_man);
 	// ...
 }
 
@@ -185,6 +196,10 @@ void stepPhysics(bool interactive, double t)
 	// Add custom application code
 	for (Manager* man : managers) {
 		man->update(t);
+	}
+	for (Wind* w : vientos) {
+		if (pj->getPj()->getGlobalPose().p.z < w->getCenter().z- 200)
+			w->setCenter({ w->getCenter().x, w->getCenter().y, w->getCenter().z - 500});
 	}
 	GetCamera()->update(t);
 	// ...

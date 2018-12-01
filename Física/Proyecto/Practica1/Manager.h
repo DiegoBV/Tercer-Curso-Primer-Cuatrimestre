@@ -2,15 +2,24 @@
 #include "TemplatePool.h"
 #include "ParticleForceGenerator.h"
 #include "ParticleForceRegistry.h"
+#include "MainCharacter.h"
 
 class Manager
 {
 protected:
 	//------------------------------------------------GENERADORES DE FUERZAS------------------------------------------------
 	vector<ParticleForceGenerator*> generators;
+	const Particle::Medidas FLOOR_SIZE = { 50, .1, 1000 };
+	MainCharacter* ch = nullptr;
+	bool checkDistanceBtwChar(float dis) { if (ch != nullptr) return ch->getPj()->getGlobalPose().p.z < dis; else return false; };
+	Vector3 generateRandomPos(Vector3 actualPos, int dist, int rightLimit, int leftLimit) {
+		Vector3 randomPos =
+			{ (float)(rand() % (rightLimit - leftLimit + 1) + leftLimit), actualPos.y, actualPos.z - dist };
+				return randomPos;
+	};
 
 public:
-	Manager() {};
+	Manager(MainCharacter* ch = nullptr) : ch(ch) { srand(time(NULL)); };
 
 	virtual ~Manager() {};
 
