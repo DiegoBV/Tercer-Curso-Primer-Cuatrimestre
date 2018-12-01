@@ -82,7 +82,7 @@ void initPhysics(bool interactive)
 	gDispatcher = PxDefaultCpuDispatcherCreate(2);
 	sceneDesc.cpuDispatcher = gDispatcher;
 	sceneDesc.filterShader = PxDefaultSimulationFilterShader;
-	sceneDesc.gravity = { 0, -10, 0 };
+	sceneDesc.gravity = { 0, -100, 0 };
 	gScene = gPhysics->createScene(sceneDesc);
 	// ------------------------------------------------------
 
