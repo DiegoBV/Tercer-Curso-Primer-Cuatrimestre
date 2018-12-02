@@ -1,5 +1,6 @@
 #pragma once
 #include "RenderUtils.hpp"
+#include <string>
 
 class ParticleForceRegistry;
 
@@ -31,6 +32,7 @@ private:
 
 	void clearForce();                               // Clears accumulated force
 
+	std::string id;                                    //id de particula
 
 public:
 
@@ -91,6 +93,9 @@ public:
 	//tiempo de vida
 	inline const float getLifeTime() { return lifeTime_; };
 
+	//getId
+	inline std::string const getId() { return id; };
+
 	//-------------------------------------------------------------------SETS--------------------------------------------------------------
 
 	//setRotation
@@ -137,6 +142,9 @@ public:
 
 	//set JUST THE BOOL ACTIVE 
 	inline void setActive(bool nAct) { active = nAct; };
+
+	//set the id
+	inline void setId(std::string id_) { id = id_; };
 
 	//------------------------------------------------------------------------------OTHERS-------------------------------------------------
 

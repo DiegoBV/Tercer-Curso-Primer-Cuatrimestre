@@ -24,11 +24,11 @@ void GrenadeManager::force_explosion()                     //just debug
 	}
 }
 
-GrenadeManager::GrenadeManager(): blast(new Blast(2000, 30))   //constructora
+GrenadeManager::GrenadeManager(MainCharacter* ch): Manager(ch), blast(new Blast(2000, 30))   //constructora
 {
 	for (int i = 0; i <= 5; i++) {
 		grenades_.push_back(new Grenade(2, 1.5, blast));
-		grenades_.back()->setColor({ 0.5, 0.1, 0.5, 1 });
+		grenades_.back()->setColor({ 1, 0, 0, 1 });
 	}
 }
 
@@ -72,9 +72,9 @@ void GrenadeManager::shoot()                     //busca la primera inactiva y l
 
 			register_particle_in_generators(grenades_[i]);
 
-			grenades_[i]->setPosition((GetCamera()->getEye()));
+			grenades_[i]->setPosition(ch->getPj()->getGlobalPose().p);
 
-			grenades_[i]->setVelocity({ GetCamera()->getDir().x * 30, (GetCamera()->getDir().y * 50), GetCamera()->getDir().z * 30 });        //sets de velocidad y aceleracion
+			grenades_[i]->setVelocity({ 0, 70, ch->getPj()->getLinearVelocity().z*5 });        //sets de velocidad y aceleracion
 
 			grenades_[i]->setAcceleration(GetCamera()->getDir());
 

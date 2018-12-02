@@ -19,7 +19,6 @@ protected:
 
 	//------------------------------------------------AUX METHODS------------------------------------------------
 	Vector3 generateRandomVel();
-	Vector4 generateRandomColor();
 	virtual void generateNewElement(double t) = 0;
 
 public:

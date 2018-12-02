@@ -68,8 +68,8 @@ void SpringManager::addSpring_of_TwoParticles(float k, float rest_length, Vector
 	Particle::registry_.add(other, springOTHER);
 	//Particle::registry_.add(other, springOTHER->getWind());
 
-	register_particle_in_generators(one);
-	register_particle_in_generators(other);
+	//register_particle_in_generators(one);
+	//register_particle_in_generators(other);
 }
 
 void SpringManager::addSpring_of_TwoRigidBodies(float k, float rest_length, physx::PxRigidDynamic * one, physx::PxRigidDynamic * other)
@@ -88,13 +88,14 @@ void SpringManager::addSpring_of_TwoRigidBodies(float k, float rest_length, phys
 	one->addTorque({ 0, 90, 0 });
 }
 
-void SpringManager::addParticle_to_Liquid(Vector3 pos, float _maxDepth, float _volume, float _waterHeight, float _liquidDensity)
+void SpringManager::addParticle_to_Liquid(Vector3 pos, float _maxDepth, float _volume, float _waterHeight, Vector4 color, float _liquidDensity)
 {
 	particles.push_back(new Particle(new RenderItem()));                  //set de la particula
 	particles.back()->setCapsuleShape(1, 2);
 	particles.back()->setActive();
 	particles.back()->setPosition(pos);
 	particles.back()->setDamping(.8);
+	particles.back()->setColor(color);
 
 	ParticleBuoyancy* b = new ParticleBuoyancy(_maxDepth, _volume, _waterHeight, _liquidDensity);     //creacion del generador de flotacion
 	springs.push_back(b);
@@ -104,11 +105,15 @@ void SpringManager::addParticle_to_Liquid(Vector3 pos, float _maxDepth, float _v
 
 	register_particle_in_generators(particles.back());
 
-	particles.push_back(new Particle(new RenderItem(), 0));       //"agua"
-	particles.back()->setBoxShape(100, .1, 100);
-	particles.back()->setActive();
-	particles.back()->setPosition(pos);
-	particles.back()->setColor({0, 0, 1, 1});
+	if (actual_water < MAX_WATER) {
+		particles.push_back(new Particle(new RenderItem(), 0));       //"agua"
+		particles.back()->setBoxShape(30, .1, 10000);
+		particles.back()->setActive();
+		particles.back()->setPosition(pos);
+		particles.back()->setColor({ 0, 0, 1, 1 });
+		particles.back()->setId("water");
+		actual_water++;
+	}
 }
 
 void SpringManager::addRigidBody_to_Liquid(physx::PxRigidDynamic* rb, float _maxDepth, float _volume, float _waterHeight, float _liquidDensity)
@@ -119,11 +124,15 @@ void SpringManager::addRigidBody_to_Liquid(physx::PxRigidDynamic* rb, float _max
 	Particle::registry_.add(rb, b);
 	Particle::registry_.add(rb, b->getWind());
 
-	particles.push_back(new Particle(new RenderItem(), 0));       //"agua"
-	particles.back()->setBoxShape(100, .1, 100);
-	particles.back()->setActive();
-	particles.back()->setPosition(rb->getGlobalPose().p);
-	particles.back()->setColor({ 0, 0, 1, 1 });
+	if (actual_water < MAX_WATER) {
+		particles.push_back(new Particle(new RenderItem(), 0));       //"agua"
+		particles.back()->setBoxShape(100, .1, 10);
+		particles.back()->setActive();
+		particles.back()->setPosition(rb->getGlobalPose().p);
+		particles.back()->setColor({ 0, 0, 1, 1 });
+		particles.back()->setId("water");
+		actual_water++;
+	}
 }
 
 void SpringManager::update(float t)
@@ -131,7 +140,11 @@ void SpringManager::update(float t)
 	for (Particle* p : particles) {
 		p->update(t);
 		if (checkDistanceBtwChar(p->getPosition().z)) {
-			p->setPosition(generateRandomPos(p->getPosition(), 500, FLOOR_SIZE.x_ / 2, -FLOOR_SIZE.x_ / 2));
+			Vector3 nPos = generateRandomPos(p->getPosition(), 500, FLOOR_SIZE.x_ / 2, -FLOOR_SIZE.x_ / 2);
+			p->setPosition({ p->getPosition().x, p->getPosition().y, nPos.z });
+			if (p->getId() != "water") {
+				p->setColor(generateRandomColor());
+			}
 		}
 	}
 }

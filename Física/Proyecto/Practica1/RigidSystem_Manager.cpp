@@ -24,14 +24,18 @@ void RigidSystem_Manager::generateNewElement(double t)
 
 		register_rigid_body_in_generators(obj);                                   //register en todos los generadores asociados
 
+		rigidos.push_back(obj);
+
 		total_++;                                                                 //actualizo el total
 	}
 }
 
 void RigidSystem_Manager::update(float t)
 {
-	if(isOn())
+	if (isOn()) {
+		if (checkDistanceBtwChar(pos.z - 100)) { pos.z = generateRandomPos(pos, 00, FLOOR_SIZE.x_ / 2, -FLOOR_SIZE.x_ / 2).z; }
 		generateNewElement(t);
+	}
 }
 
 void RigidSystem_Manager::handle_event(unsigned char key)

@@ -1,7 +1,7 @@
 #include "FireworkManager.h"
 #include "json.hpp"
 
-FireworkManager::FireworkManager(Vector3 pos): Manager(), autoWork_(false), pos(pos)
+FireworkManager::FireworkManager(MainCharacter* ch, Vector3 pos): Manager(ch), autoWork_(false), pos(pos)
 {
 	initFireworkRules();
 }
@@ -118,6 +118,10 @@ void FireworkManager::autoCreateFireworks(double t)
 
 void FireworkManager::update(float t)
 {
+	if (checkDistanceBtwChar(pos.z)) {
+		pos.z -= 5000;
+	}
+
 	autoCreateFireworks(t);
 	for (vector<Firework*>::iterator it = fireworks.begin(); it != fireworks.end();)
 	{

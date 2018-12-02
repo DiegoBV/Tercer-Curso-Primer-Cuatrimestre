@@ -15,7 +15,7 @@ private:
 	void force_explosion();                                        //para debugear y explotar las granadas antes de tiempo
 
 public:
-	GrenadeManager();
+	GrenadeManager(MainCharacter* ch = nullptr);
 
 	virtual ~GrenadeManager();
 

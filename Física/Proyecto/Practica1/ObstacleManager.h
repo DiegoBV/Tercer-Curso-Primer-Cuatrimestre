@@ -40,6 +40,7 @@ private:
 	void checkObstacle();
 	void checkElasticBed();
 	void generateSpecialObstacle(); //un obstaculo alto con una especie de cama elastica
+	void generateObstacleMountain(a); //montanya de objetos dinamicos (puede que con un par valga...) para romper con una granada
 
 public:
 	ObstacleManager();

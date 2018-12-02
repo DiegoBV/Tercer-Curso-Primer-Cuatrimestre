@@ -8,12 +8,6 @@ Vector3 System_Manager::generateRandomVel()
 	return nVel;
 }
 
-Vector4 System_Manager::generateRandomColor()
-{
-	Vector4 nCol = { (float)(rand() % (11)) / 10, (float)(rand() % (11)) / 10 , (float)(rand() % (11)) / 10, 1 };
-	return nCol;
-}
-
 void System_Manager::handle_event(unsigned char key)
 {
 	//do something

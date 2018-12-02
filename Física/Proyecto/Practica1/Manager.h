@@ -17,6 +17,10 @@ protected:
 			{ (float)(rand() % (rightLimit - leftLimit + 1) + leftLimit), actualPos.y, actualPos.z - dist };
 				return randomPos;
 	};
+	Vector4 generateRandomColor() {
+		Vector4 nCol = { (float)(rand() % (11)) / 10, (float)(rand() % (11)) / 10 , (float)(rand() % (11)) / 10, 1 };
+		return nCol;
+	};
 
 public:
 	Manager(MainCharacter* ch = nullptr) : ch(ch) { srand(time(NULL)); };

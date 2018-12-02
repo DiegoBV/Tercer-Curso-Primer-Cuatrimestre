@@ -125,7 +125,7 @@ private:
 	void autoCreateFireworks(double t);
 
 public:
-	FireworkManager(Vector3 pos = {0, 0, 0});
+	FireworkManager(MainCharacter* ch = nullptr, Vector3 pos = {0, 0, 0});
 
 	virtual ~FireworkManager();
 

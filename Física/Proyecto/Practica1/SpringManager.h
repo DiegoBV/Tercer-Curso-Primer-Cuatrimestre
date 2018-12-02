@@ -12,6 +12,10 @@ private:
 
 	vector<ParticleAbstractSpring*> springs;      //Vector especial que controla los muelles
 
+	const int MAX_WATER = 2;                     //maximo de agua que puede haber
+
+	int actual_water = 0;                        //lvea la cuenta del agua
+
 public:
 	SpringManager(MainCharacter* ch = nullptr): Manager(ch) {};
 
@@ -25,7 +29,7 @@ public:
 
 	void addSpring_of_TwoRigidBodies(float k, float rest_length, physx::PxRigidDynamic* one, physx::PxRigidDynamic* other);
 
-	void addParticle_to_Liquid(Vector3 pos, float _maxDepth, float _volume, float _waterHeight, float _liquidDensity = 1);                  //anyade una particula con efecto de flotacion
+	void addParticle_to_Liquid(Vector3 pos, float _maxDepth, float _volume, float _waterHeight, Vector4 color = {0, 0, 0, 1}, float _liquidDensity = 1);                  //anyade una particula con efecto de flotacion
 
 	void addRigidBody_to_Liquid(physx::PxRigidDynamic* rb, float _maxDepth, float _volume, float _waterHeight, float _liquidDensity = 1);
 

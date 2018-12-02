@@ -9,7 +9,7 @@ void ObstacleManager::generateObstacle()
 
 void ObstacleManager::reparteObstaculos()
 {
-	float z = dis_between_obs;
+	float z = -dis_between_obs*10;
 	for (size_t i = 0; i < MAX_OBS; i++){
 		Obstacle obj = obstaculos.front();
 		obstaculos.pop();
@@ -59,7 +59,7 @@ void ObstacleManager::checkElasticBed()
 
 void ObstacleManager::generateSpecialObstacle()
 {
-	sp = SpecialObstacle(generateStaticElement({ 0, 0, -100 }, shape_, { 50, 70, 10 }), generateStaticElement({ 0, 14.5, -80 }, shape_, ELASTIC_BED_SIZE));
+	sp = SpecialObstacle(generateStaticElement({ 0, 0, -1300 }, shape_, { 50, 70, 10 }), generateStaticElement({ 0, 14.5, -1280 }, shape_, ELASTIC_BED_SIZE));
 	obstaculos.push(sp);
 }
 

@@ -123,16 +123,17 @@ void initPhysics(bool interactive)
 	managers.push_back(chr_man);
 	pj = chr_man->getCharacter();
 
-	GrenadeManager* gren_man = new GrenadeManager();
+	GrenadeManager* gren_man = new GrenadeManager(pj);
 	gren_man->addGenerator(grav_gen_);
 	generators.push_back(gren_man->getBlast());
 	managers.push_back(gren_man);
 
-	FireworkManager* fManager_ = new FireworkManager();
+	FireworkManager* fManager_ = new FireworkManager(pj);
 	fManager_->addGenerator(grav_gen_);
+	fManager_->switch_activate();
 	managers.push_back(fManager_);
 
-	Time_GeneratorManager* t_gen = new Time_GeneratorManager(Particle::Sphere, 0.01, &pool, pj, {10, 50, 0});
+	Time_GeneratorManager* t_gen = new Time_GeneratorManager(Particle::Sphere, 0.01, &pool, pj, {25, 50, 0});
 	t_gen->addGenerator(grav_gen_);
 	t_gen->addGenerator(gren_man->getBlast());
 	t_gen->addGenerator(wind);
@@ -140,11 +141,17 @@ void initPhysics(bool interactive)
 	managers.push_back(t_gen);
 
 	SpringManager* sp_man = new SpringManager(pj);
-	//sp_man->addGenerator(grav_gen_2_);
+	sp_man->addGenerator(grav_gen_2_);
 	//sp_man->addGenerator(drag_gen);
 	//sp_man->addParticle_to_AnchoredSpring(&centerAnchoredSpring, 1, 10);
-	sp_man->addSpring_of_TwoParticles(2, 3.5, { 10, 20, -80 }, {10, 30, -80});
-	//sp_man->addParticle_to_Liquid({ 0, 20, 0 }, 3, 4, 20, 10);
+	sp_man->addSpring_of_TwoParticles(2, 3.5, { 100, 90, -80 }, {10, 30, -80});
+	sp_man->addSpring_of_TwoParticles(10, 1, { -100, 110, -110 }, { -100, 150, -1100 });
+	sp_man->addParticle_to_Liquid({ -80, 15, -100 }, 3, 4, 20, {0.75, 0.1, 0.2, 1}, 10);
+	sp_man->addParticle_to_Liquid({ 80, 15, -150 }, 3, 4, 20, { 0.75, 0.5, 0.2, 1 }, 10);
+	sp_man->addParticle_to_Liquid({ 81, 15, -450 }, 4, 4, 17, { 0.15, 0.1, 0.92, 1 }, 10);
+	sp_man->addParticle_to_Liquid({ -81, 15, -300 }, 7, 4, 18, { 0.25, 0.81, 0.2, 1 }, 10);
+	sp_man->addParticle_to_Liquid({ 81, 15, -200 }, 3, 4, 15, { 0.15, 0.1, 0.2, 1 }, 10);
+	//sp_man->addRigidBody_to_Liquid(pj->getPj(), 30, 40, 20, 100);
 	managers.push_back(sp_man);
 
 	/*Shot_Manager* s_man = new Shot_Manager(&pool);
@@ -163,7 +170,7 @@ void initPhysics(bool interactive)
 
 
 	//RigidBody
-	RigidSystem_Manager* rs_man = new RigidSystem_Manager(Particle::Box, .1, gPhysics, gScene);
+	RigidSystem_Manager* rs_man = new RigidSystem_Manager(Particle::Box, .1, gPhysics, gScene, pj);
 	rs_man->addGenerator(gren_man->getBlast());
 	rs_man->setOn(false);
 	//rs_man->addGenerator(wind);
