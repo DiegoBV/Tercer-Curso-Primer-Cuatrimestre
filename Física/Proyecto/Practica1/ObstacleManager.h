@@ -10,8 +10,9 @@ private:
 	struct Obstacle 
 	{
 		physx::PxRigidStatic* obstacle;
+		RenderItem* rn;
 		int type;
-		Obstacle(physx::PxRigidStatic* obstacle, int type = 0) : obstacle(obstacle), type(type) {};
+		Obstacle(physx::PxRigidStatic* obstacle, RenderItem* rn, int type = 0) : obstacle(obstacle), rn(rn), type(type) {};
 		Obstacle() {};
 	};
 
@@ -19,7 +20,9 @@ private:
 	{
 		physx::PxRigidStatic* pared;
 		physx::PxRigidStatic* suelo;
-		SpecialObstacle(physx::PxRigidStatic* pared, physx::PxRigidStatic* suelo): Obstacle(pared, 1), suelo(suelo) {};
+		RenderItem* rn_suelo;
+		SpecialObstacle(physx::PxRigidStatic* pared, physx::PxRigidStatic* suelo, RenderItem* rn, RenderItem* rn_suelo): Obstacle(pared, rn, 1), 
+			suelo(suelo), rn_suelo(rn_suelo) {};
 		SpecialObstacle() {};
 	};
 
@@ -28,11 +31,11 @@ private:
 	physx::PxPhysics* gPhysics;
 	physx::PxScene* gScene;
 	SpecialObstacle sp;
-	const Particle::Medidas ELASTIC_BED_SIZE = { 50, 1, 40 };
+	const Particle::Medidas ELASTIC_BED_SIZE = { 50, 1, 150 };
 	const int IN_JUMP_FORCE;
 
 	physx::PxRigidStatic* floor;
-	int dis_between_obs = 100;
+	int dis_between_obs = 200;
 	void generateObstacle();
 	void reparteObstaculos();
 	void generateFloor();
@@ -40,7 +43,7 @@ private:
 	void checkObstacle();
 	void checkElasticBed();
 	void generateSpecialObstacle(); //un obstaculo alto con una especie de cama elastica
-	void generateObstacleMountain(a); //montanya de objetos dinamicos (puede que con un par valga...) para romper con una granada
+	void generateObstacleMountain(); //montanya de objetos dinamicos (puede que con un par valga...) para romper con una granada
 
 public:
 	ObstacleManager();

@@ -48,7 +48,10 @@ void RigidSystem_Manager::handle_event(unsigned char key)
 		generateDynamicElement({ (float)(rand() % 100), (float)(rand() % 100), (float)(rand() % 100) });
 		break;
 	case 'P':
-		generateStaticElement({ (float)(rand() % 100), (float)(rand() % 100), (float)(rand() % 100) });
+	{
+		RenderItem* rn = nullptr;
+		generateStaticElement(rn, { (float)(rand() % 100), (float)(rand() % 100), (float)(rand() % 100) });
+	}
 		break;
 	default:
 		break;
@@ -76,7 +79,7 @@ physx::PxRigidDynamic* RigidSystem_Manager::generateDynamicElement(Vector3 pos, 
 	return obj;
 }
 
-physx::PxRigidStatic* RigidSystem_Manager::generateStaticElement(Vector3 pos, Particle::Shape shp, Particle::Medidas size, Vector4 c)
+physx::PxRigidStatic* RigidSystem_Manager::generateStaticElement(RenderItem*& rn, Vector3 pos, Particle::Shape shp, Particle::Medidas size, Vector4 c)
 {
 	physx::PxTransform transform(pos);
 
@@ -94,6 +97,8 @@ physx::PxRigidStatic* RigidSystem_Manager::generateStaticElement(Vector3 pos, Pa
 	else {
 		rn_items.back()->color = c;
 	}
+
+	rn = rn_items.back();
 
 	return obj;
 }

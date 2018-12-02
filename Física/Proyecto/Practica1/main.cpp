@@ -115,7 +115,7 @@ void initPhysics(bool interactive)
 	//----------------------------------------------------MANAGERS-------------------------------------------------------
 
 	//MainCharacter
-	CharacterManager* chr_man = new CharacterManager(50, gPhysics, gScene, {6, 20, 0});
+	CharacterManager* chr_man = new CharacterManager(250, gPhysics, gScene, {6, 20, 0});
 	//chr_man->addGenerator(drag_gen);
 	//chr_man->addGenerator(wind);
 	//chr_man->addGenerator(wind2);

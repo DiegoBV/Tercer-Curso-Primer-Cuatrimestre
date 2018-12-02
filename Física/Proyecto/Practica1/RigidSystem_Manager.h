@@ -31,6 +31,6 @@ public:
 
 	physx::PxRigidDynamic* generateDynamicElement(Vector3 pos = { 0, 0, 0 }, Particle::Shape shp = Particle::Box, Particle::Medidas size = {1, 1, 1}, physx::PxReal density = 1);
 
-	physx::PxRigidStatic* generateStaticElement(Vector3 pos = { 0, 0, 0 }, Particle::Shape shp = Particle::Box, Particle::Medidas size = { 10, .1, 10 }, Vector4 c = { -1, -1, -1, -1 });
+	physx::PxRigidStatic* generateStaticElement(RenderItem*& rn, Vector3 pos = { 0, 0, 0 }, Particle::Shape shp = Particle::Box, Particle::Medidas size = { 10, .1, 10 }, Vector4 c = { -1, -1, -1, -1 });
 };
 
