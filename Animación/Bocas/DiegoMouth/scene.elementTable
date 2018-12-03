@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<elements source="Harmony Premium (HarmonyPremium.exe) version 16.0.0 build 14155 2018-11-01 15:36:56" version="1600" build="14155">
+ <element id="1" elementName="Drawing" elementFolder="Drawing" pixmapFormat="2" scanType="2" fieldChart="12" vectorType="2" rootFolder="elements"/>
+ <element id="3" elementName="DIEGO_BARATTO_VALDIVIA_COLOR_1" elementFolder="DIEGO_BARATTO_VALDIVIA_COLOR_1" pixmapFormat="9" scanType="0" fieldChart="12" vectorType="0" rootFolder="elements"/>
+ <element id="5" elementName="DIEGO_BARATTO_VALDIVIA_COLOR_2" elementFolder="DIEGO_BARATTO_VALDIVIA_COLOR_2" pixmapFormat="9" scanType="0" fieldChart="12" vectorType="0" rootFolder="elements"/>
+ <element id="6" elementName="DIEGO_BARATTO_VALDIVIA_COLOR" elementFolder="DIEGO_BARATTO_VALDIVIA_COLOR" pixmapFormat="9" scanType="2" fieldChart="12" vectorType="0" rootFolder="elements"/>
+ <element id="7" elementName="DIEGO_BARATTO_VALDIVIA_COLOR_3" elementFolder="DIEGO_BARATTO_VALDIVIA_COLOR_3" pixmapFormat="9" scanType="0" fieldChart="12" vectorType="0" rootFolder="elements"/>
+</elements>
