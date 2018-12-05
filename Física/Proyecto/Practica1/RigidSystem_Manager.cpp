@@ -45,7 +45,10 @@ void RigidSystem_Manager::handle_event(unsigned char key)
 	switch (toupper(key))
 	{
 	case 'O':
-		generateDynamicElement({ (float)(rand() % 100), (float)(rand() % 100), (float)(rand() % 100) });
+	{
+		RenderItem* rn = nullptr;
+		generateDynamicElement(rn, { (float)(rand() % 100), (float)(rand() % 100), (float)(rand() % 100) });
+	}
 		break;
 	case 'P':
 	{
@@ -58,7 +61,7 @@ void RigidSystem_Manager::handle_event(unsigned char key)
 	}
 }
 
-physx::PxRigidDynamic* RigidSystem_Manager::generateDynamicElement(Vector3 pos, Particle::Shape shp, Particle::Medidas size, physx::PxReal density)
+physx::PxRigidDynamic* RigidSystem_Manager::generateDynamicElement(RenderItem*& rn, Vector3 pos, Particle::Shape shp, Particle::Medidas size, physx::PxReal density)
 {
 	physx::PxTransform transform(pos);
 
@@ -75,6 +78,8 @@ physx::PxRigidDynamic* RigidSystem_Manager::generateDynamicElement(Vector3 pos, 
 	rn_items.push_back(new RenderItem(s, obj, generateRandomColor()));           //creo el renderItem y lo pusheo para poder borrarlo facilmente
 
 	register_rigid_body_in_generators(obj);                                   //register en todos los generadores asociados
+
+	rn = rn_items.back();
 
 	return obj;
 }

@@ -24,7 +24,7 @@ void GrenadeManager::force_explosion()                     //just debug
 	}
 }
 
-GrenadeManager::GrenadeManager(MainCharacter* ch): Manager(ch), blast(new Blast(2000, 30))   //constructora
+GrenadeManager::GrenadeManager(MainCharacter* ch): Manager(ch), blast(new Blast(20000, 100))   //constructora
 {
 	for (int i = 0; i <= 5; i++) {
 		grenades_.push_back(new Grenade(2, 1.5, blast));

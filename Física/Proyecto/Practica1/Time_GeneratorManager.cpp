@@ -48,6 +48,6 @@ void Time_GeneratorManager::update(float t)
 	}
 
 	if (checkDistanceBtwChar(pos.z - 100)) {
-		pos = generateRandomPos(pos, 500, FLOOR_SIZE.x_/2, -FLOOR_SIZE.x_ / 2);
+		pos = generateRandomPos(pos, 2500, FLOOR_SIZE.x_/2, -FLOOR_SIZE.x_ / 2);
 	}
 }

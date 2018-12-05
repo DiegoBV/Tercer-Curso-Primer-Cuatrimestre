@@ -117,10 +117,10 @@ void initPhysics(bool interactive)
 	//MainCharacter
 	CharacterManager* chr_man = new CharacterManager(250, gPhysics, gScene, {6, 20, 0});
 	//chr_man->addGenerator(drag_gen);
-	//chr_man->addGenerator(wind);
-	//chr_man->addGenerator(wind2);
-	chr_man->initCharacter();
+	chr_man->addGenerator(wind);
+	chr_man->addGenerator(wind2);
 	managers.push_back(chr_man);
+	chr_man->initCharacter();
 	pj = chr_man->getCharacter();
 
 	GrenadeManager* gren_man = new GrenadeManager(pj);
@@ -139,6 +139,13 @@ void initPhysics(bool interactive)
 	t_gen->addGenerator(wind);
 	t_gen->addGenerator(wind2);
 	managers.push_back(t_gen);
+
+	Time_GeneratorManager* t_gen2 = new Time_GeneratorManager(Particle::Sphere, 0.01, &pool, pj, { 0, 20, -3800 });
+	t_gen2->addGenerator(grav_gen_);
+	t_gen2->addGenerator(gren_man->getBlast());
+	t_gen2->addGenerator(wind);
+	t_gen2->addGenerator(wind2);
+	managers.push_back(t_gen2);
 
 	SpringManager* sp_man = new SpringManager(pj);
 	sp_man->addGenerator(grav_gen_2_);
@@ -183,8 +190,14 @@ void initPhysics(bool interactive)
 	
 
 	//Manager de obstaculos
-	ObstacleManager* obs_man = new ObstacleManager(chr_man->getCharacter(), Particle::Box, gPhysics, gScene);
+	ObstacleManager* obs_man = new ObstacleManager(chr_man->getCharacter(), Particle::Box, gPhysics, gScene, t_gen2);
+	obs_man->addGenerator(gren_man->getBlast());
+	obs_man->initObstacles();
+	chr_man->addGenerator(obs_man->getWind());
+	t_gen2->addGenerator(obs_man->getWind());
 	managers.push_back(obs_man);
+
+	chr_man->register_rigid_body_in_generators(pj->getPj());
 	// ...
 }
 
@@ -205,8 +218,8 @@ void stepPhysics(bool interactive, double t)
 		man->update(t);
 	}
 	for (Wind* w : vientos) {
-		if (pj->getPj()->getGlobalPose().p.z < w->getCenter().z- 200)
-			w->setCenter({ w->getCenter().x, w->getCenter().y, w->getCenter().z - 500});
+		if (pj->getPj()->getGlobalPose().p.z < w->getCenter().z- 100)
+			w->setCenter({ w->getCenter().x, w->getCenter().y, w->getCenter().z - 2500});
 	}
 	GetCamera()->update(t);
 	// ...

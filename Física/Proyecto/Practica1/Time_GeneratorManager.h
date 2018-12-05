@@ -22,5 +22,9 @@ public:
 	Time_GeneratorManager(): System_Manager() {};
 
 	virtual void update(float t);
+
+	inline Vector3 getPos() const { return this->pos; };
+
+	inline void setPos(Vector3 v) { this->pos = v; };
 };
 

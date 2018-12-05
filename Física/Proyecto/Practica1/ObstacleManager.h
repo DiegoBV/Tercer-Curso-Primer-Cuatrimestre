@@ -2,6 +2,8 @@
 #include "RigidSystem_Manager.h"
 #include <queue>
 #include "MainCharacter.h"
+#include "Time_GeneratorManager.h"
+#include "Wind.h"
 
 class ObstacleManager :
 	public RigidSystem_Manager
@@ -12,7 +14,7 @@ private:
 		physx::PxRigidStatic* obstacle;
 		RenderItem* rn;
 		int type;
-		Obstacle(physx::PxRigidStatic* obstacle, RenderItem* rn, int type = 0) : obstacle(obstacle), rn(rn), type(type) {};
+		Obstacle(physx::PxRigidStatic* obstacle, RenderItem* rn = nullptr, int type = 0) : obstacle(obstacle), rn(rn), type(type) {};
 		Obstacle() {};
 	};
 
@@ -26,12 +28,31 @@ private:
 		SpecialObstacle() {};
 	};
 
+	struct DynamicObstacle : public Obstacle
+	{
+		physx::PxRigidDynamic* capsula;
+		RenderItem* rn_;
+		DynamicObstacle(physx::PxRigidDynamic* c, RenderItem* rn, physx::PxRigidStatic* obstacle, RenderItem* rn_ = nullptr) : 
+			Obstacle(obstacle, rn_, 2), capsula(c), rn_(rn) {};
+		DynamicObstacle() {};
+	};
+
+	struct WindWall : public Obstacle
+	{
+		Wind* w = nullptr;
+		WindWall(Wind* w, physx::PxRigidStatic* o, RenderItem* rn = nullptr) : Obstacle(o, rn, 3), w(w) {};
+		WindWall() {};
+	};
+
 	std::queue<Obstacle> obstaculos;
-	const unsigned int MAX_OBS = 15;
+	const unsigned int MAX_OBS = 30;
 	physx::PxPhysics* gPhysics;
 	physx::PxScene* gScene;
 	SpecialObstacle sp;
+	DynamicObstacle do_;
+	WindWall ww;
 	const Particle::Medidas ELASTIC_BED_SIZE = { 50, 1, 150 };
+	Time_GeneratorManager* feedback;
 	const int IN_JUMP_FORCE;
 
 	physx::PxRigidStatic* floor;
@@ -42,18 +63,25 @@ private:
 	void checkFloor();
 	void checkObstacle();
 	void checkElasticBed();
+	void checkFeedback();
 	void generateSpecialObstacle(); //un obstaculo alto con una especie de cama elastica
-	void generateObstacleMountain(); //montanya de objetos dinamicos (puede que con un par valga...) para romper con una granada
+	void generateDynamicObstacle(); //un objeto dinamico para romper con una granada
+	void generateWindWall(); //pared alta con viento hacia arriba (ultimo obstaculo) -->DESPUES DE ESTO, VER COMO EL JUGADOR PIERDE Y VUELVE AL PRINCIPIO...
 
 public:
 	ObstacleManager();
 
 	ObstacleManager(MainCharacter* ch, Particle::Shape shp, physx::PxPhysics* gPhysics, 
-		physx::PxScene* gScene) : RigidSystem_Manager(shp, 0, gPhysics, gScene, ch), IN_JUMP_FORCE(ch->getJumpForce()) { for (size_t i = 0; i < MAX_OBS; i++) { generateObstacle(); } 
-			generateSpecialObstacle(); reparteObstaculos(); this->setOn(false); generateFloor(); };
+		physx::PxScene* gScene, Time_GeneratorManager* feedback) : RigidSystem_Manager(shp, 0, gPhysics, gScene, ch), 
+			IN_JUMP_FORCE(ch->getJumpForce()), feedback(feedback) { this->setOn(false); generateFloor(); };
 
 	virtual ~ObstacleManager();
 
 	virtual void update(float t);
+
+	void initObstacles() { for (size_t i = 0; i < MAX_OBS; i++) { generateObstacle(); } generateSpecialObstacle(); generateDynamicObstacle(); 
+		generateWindWall(); reparteObstaculos(); };
+
+	inline Wind* getWind() const { return ww.w; };
 };
 
