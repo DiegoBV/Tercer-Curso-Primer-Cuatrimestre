@@ -18,16 +18,15 @@ struct Varilla
 	Varilla(int l, int c) : longitud(l), coste(c) {};
 };
 
-void varillas(vector<Varilla>& varillas, int L, int& numFormas) 
-{
-	Matriz<int> matriz(varillas.size(), L + 1, 0);
+void varillasBool(vector<Varilla>& varillas, int L, bool& sePuede) {
+	Matriz<bool> matriz(varillas.size(), L + 1, 0);
 
 	int longitud_ = L;
 
 	//rellenar la matriz
 	for (size_t i = 0; i < varillas.size(); i++)
 	{
-		for (size_t j = 0; j <= L; j++) 
+		for (size_t j = 0; j <= L; j++)
 		{
 			if (j == 0) { //caso base
 				matriz[i][j] = 1;
@@ -38,14 +37,37 @@ void varillas(vector<Varilla>& varillas, int L, int& numFormas)
 			else if (varillas[i].longitud > j) {
 				matriz[i][j] = matriz[i - 1][j];
 			}
+			else {
+				matriz[i][j] = (matriz[i - 1][j] || matriz[i - 1][j - varillas[i].longitud]);
+			}
+		}
+	}
+
+	sePuede = matriz[varillas.size() - 1][L];
+};
+
+void varillasNumeroFormas(vector<Varilla>& varillas, int L, int& numFormas) 
+{
+	int n = varillas.size() - 1;
+	Matriz<int> matriz(varillas.size(), L + 1, 0);
+
+	matriz[0][0] = 1;
+	//rellenar la matriz
+	for (size_t i = 1; i <= n; i++)
+	{
+		matriz[i][0] = 1;
+		for (size_t j = 1; j <= L; j++) 
+		{
+			if (varillas[i].longitud > j) {
+				matriz[i][j] = matriz[i - 1][j];
+			}
 			else{
-				//matriz[i][j] = (matriz[i - 1][j] || matriz[i - 1][j - varillas[i].longitud]);
 				matriz[i][j] = matriz[i - 1][j] + matriz[i - 1][j - varillas[i].longitud];
 			}
 		}
 	}
 
-	numFormas = matriz[varillas.size() - 1][L];
+	numFormas = matriz[n][L];
 };
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -68,10 +90,11 @@ bool resuelveCaso()
 	}
 
 	int numFormas = 0;
-
-	varillas(varillas_, L, numFormas);
+	bool sePuede = false;
+	varillasBool(varillas_, L, sePuede);
+	varillasNumeroFormas(varillas_, L, numFormas);
     // escribir sol
-	numFormas ? cout << "SI" << " " << numFormas : cout << "NO";
+	sePuede ? cout << "SI" << " " << numFormas : cout << "NO";
 	cout << endl;
     
     return true;
