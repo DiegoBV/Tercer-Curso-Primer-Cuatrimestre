@@ -4,7 +4,7 @@
 class MainCharacter
 {
 private:
-	int life_;
+	bool dead_;
 
 	physx::PxRigidDynamic* pj;
 
@@ -14,11 +14,10 @@ private:
 
 	physx::PxScene* gScene = nullptr;
 
-	float JUMP_FORCE = 80;
-
+	float JUMP_FORCE = 60;
 public:
-	MainCharacter(int life, physx::PxPhysics* gPhysics, physx::PxScene* gScene, Vector3 pos = {0, 0, 0}) : gPhysics(gPhysics), gScene(gScene), 
-			pj(gPhysics->createRigidDynamic(physx::PxTransform(pos))) { physx::PxShape* s = Particle::createShape(Particle::Sphere, { 5, 5, 5 });
+	MainCharacter(physx::PxPhysics* gPhysics, physx::PxScene* gScene, Vector3 pos = {0, 0, 0}) : gPhysics(gPhysics), gScene(gScene), 
+			pj(gPhysics->createRigidDynamic(physx::PxTransform(pos))), dead_(false) { physx::PxShape* s = Particle::createShape(Particle::Sphere, { 5, 5, 5 });
 				pj->attachShape(*s); physx::PxRigidBodyExt::updateMassAndInertia(*pj, 1); rn = new RenderItem(s, pj, { 0, 1, 0, 1 }); gScene->addActor(*pj); };
 
 	virtual ~MainCharacter() { if (rn != nullptr) delete rn; };
@@ -30,5 +29,9 @@ public:
 	inline void setNewJumpForce(float j) { JUMP_FORCE = j; };
 
 	inline float getJumpForce() { return JUMP_FORCE; };
+
+	inline bool isDead() const { return dead_; };
+
+	inline void setDead(bool d) { dead_ = d; };
 };
 

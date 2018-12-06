@@ -118,7 +118,8 @@ void ObstacleManager::generateFloor()
 {
 	//genera el suelo....
 	RenderItem* rn = nullptr;
-	floor = generateStaticElement(rn, { 0, 15, 0 }, Particle::Box, FLOOR_SIZE, {1, 1, 1, 1});
+	floor = generateStaticElement(rn, FLOOR_POS, Particle::Box, FLOOR_SIZE, {1, 1, 1, 1});
+	floor_inPos = floor->getGlobalPose().p;
 }
 
 ObstacleManager::ObstacleManager(): IN_JUMP_FORCE(0)

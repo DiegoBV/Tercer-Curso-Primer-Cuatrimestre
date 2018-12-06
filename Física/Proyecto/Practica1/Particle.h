@@ -28,6 +28,8 @@ private:
 
 	Vector3 force;                                    // Accumulated force	
 
+	Vector3 initial_pos;                             //initial position -->important for the game
+
 	void integrate(float t);                         //Integracion
 
 	void clearForce();                               // Clears accumulated force
@@ -96,6 +98,9 @@ public:
 	//getId
 	inline std::string const getId() { return id; };
 
+	//getInitialPos
+	inline Vector3 getInitialPosition() const { return initial_pos; };
+
 	//-------------------------------------------------------------------SETS--------------------------------------------------------------
 
 	//setRotation
@@ -145,6 +150,9 @@ public:
 
 	//set the id
 	inline void setId(std::string id_) { id = id_; };
+
+	//set the initialPosition
+	inline void setInitialPosition(Vector3 iPos) { initial_pos = iPos; };
 
 	//------------------------------------------------------------------------------OTHERS-------------------------------------------------
 

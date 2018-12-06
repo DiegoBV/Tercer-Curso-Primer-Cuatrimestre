@@ -18,6 +18,8 @@
 
 #include "ParticleDrag.h"
 
+#include "callbacks.hpp"
+
 #include "Wind.h"
 
 #include "Shot_Manager.h"
@@ -62,6 +64,10 @@ Vector3 centerAnchoredSpring(0, 10, 0);
 
 MainCharacter* pj;
 
+PxRigidStatic* floor_;
+
+ContactReportCallback gContactReportCallback;
+
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -81,7 +87,8 @@ void initPhysics(bool interactive)
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
 	gDispatcher = PxDefaultCpuDispatcherCreate(2);
 	sceneDesc.cpuDispatcher = gDispatcher;
-	sceneDesc.filterShader = PxDefaultSimulationFilterShader;
+	sceneDesc.filterShader = contactReportFilterShader;
+	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	sceneDesc.gravity = { 0, -100, 0 };
 	gScene = gPhysics->createScene(sceneDesc);
 	// ------------------------------------------------------
@@ -161,6 +168,7 @@ void initPhysics(bool interactive)
 	//sp_man->addRigidBody_to_Liquid(pj->getPj(), 30, 40, 20, 100);
 	managers.push_back(sp_man);
 
+	
 	/*Shot_Manager* s_man = new Shot_Manager(&pool);
 	s_man->addGenerator(ingrav_gen_);
 	s_man->addGenerator(wind);
@@ -196,11 +204,17 @@ void initPhysics(bool interactive)
 	chr_man->addGenerator(obs_man->getWind());
 	t_gen2->addGenerator(obs_man->getWind());
 	managers.push_back(obs_man);
+	floor_ = obs_man->getFloor();
 
 	chr_man->register_rigid_body_in_generators(pj->getPj());
 	// ...
 }
 
+void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
+{
+	PX_UNUSED(actor1);
+	PX_UNUSED(actor2);
+}
 
 // Function to configure what happens in each step of physics
 // interactive: true if the game is rendering, false if it offline
@@ -214,16 +228,22 @@ void stepPhysics(bool interactive, double t)
 
 	Particle::registry_.updateForces(t);
 	// Add custom application code
-	for (Manager* man : managers) {
-		man->update(t);
+	if (!pj->isDead()) {
+		for (Manager* man : managers) {
+			man->update(t);
+		}
+		for (Wind* w : vientos) {
+			if (pj->getPj()->getGlobalPose().p.z < w->getCenter().z - 100)
+				w->setCenter({ w->getCenter().x, w->getCenter().y, w->getCenter().z - 2500 });
+		}
+
+		//onCollision(floor_, pj->getPj());
+		GetCamera()->update(t);
 	}
-	for (Wind* w : vientos) {
-		if (pj->getPj()->getGlobalPose().p.z < w->getCenter().z- 100)
-			w->setCenter({ w->getCenter().x, w->getCenter().y, w->getCenter().z - 2500});
-	}
-	GetCamera()->update(t);
+
 	// ...
 }
+
 
 // Function to clean data
 // Add custom code to the begining of the function

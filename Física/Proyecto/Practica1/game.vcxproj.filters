@@ -56,9 +56,6 @@
     <ClCompile Include="CharacterManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
-    <ClCompile Include="MainCharacter.cpp">
-      <Filter>Particulas</Filter>
-    </ClCompile>
     <ClCompile Include="ParticleSpring.cpp">
       <Filter>Forces</Filter>
     </ClCompile>
@@ -71,7 +68,10 @@
     <ClCompile Include="RigidSystem_Manager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
-    <ClCompile Include="ObstacleManager.cpp" />
+    <ClCompile Include="ObstacleManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="callbacks.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render\Camera.h">
@@ -158,7 +158,10 @@
     <ClInclude Include="RigidSystem_Manager.h">
       <Filter>Managers</Filter>
     </ClInclude>
-    <ClInclude Include="ObstacleManager.h" />
+    <ClInclude Include="ObstacleManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="callbacks.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

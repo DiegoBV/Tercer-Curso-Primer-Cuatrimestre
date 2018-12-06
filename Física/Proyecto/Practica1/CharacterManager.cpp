@@ -1,8 +1,30 @@
 #include "CharacterManager.h"
 
+void CharacterManager::checkIfPJisDead()
+{
+	Vector3 pos = chr->getPj()->getGlobalPose().p;
+	physx::PxVec3 eye = GetCamera()->getEye();
+	int f_W = FLOOR_SIZE.x_ + FLOOR_SIZE.x_/4;
+	int f_H = FLOOR_POS.y - FLOOR_POS.y / 6;
+
+	if (fabs(pos.y) > eye.x + f_W && (pos.y) < f_H || eye.z < (pos.z - 200))
+		chr->setDead(true);
+}
+
+void CharacterManager::resCharacter()
+{
+	if (chr->isDead()) { //igual le meto un delay...
+		physx::PxVec3 eye = GetCamera()->getEye();
+		chr->getPj()->setGlobalPose({initial_pos.x, initial_pos.y, eye.z - 70});
+		chr->setDead(false);
+	}
+}
+
 void CharacterManager::update(float t)
 {
 	chr->getPj()->setLinearVelocity({ chr->getPj()->getLinearVelocity().x, chr->getPj()->getLinearVelocity().y, -velocity_ });
+	checkIfPJisDead();
+	resCharacter();
 }
 
 void CharacterManager::handle_event(unsigned char key)

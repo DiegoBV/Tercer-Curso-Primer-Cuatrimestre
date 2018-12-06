@@ -6,6 +6,7 @@ void SpringManager::addParticle_to_AnchoredSpring(Vector3 * anchor, float k, flo
 	particles.back()->setCapsuleShape(1, 2);
 	particles.back()->setActive();
 	particles.back()->setDamping(0.8);
+	particles.back()->setInitialPosition(particles.back()->getPosition());
 
 	ParticleAnchoredSpring* aSpring = new ParticleAnchoredSpring(anchor, k, rest_length);      //creacion del muelle
 	springs.push_back(aSpring);
@@ -36,6 +37,7 @@ void SpringManager::addSpring_of_TwoParticles(float k, float rest_length, Vector
 		particles.back()->setPosition(posONE);
 		particles.back()->setColor({ 1, 0, 0, 1 });
 		particles.back()->setDamping(0.8);
+		particles.back()->setInitialPosition(particles.back()->getPosition());
 	}
 	else {
 		particles.push_back(one); //se va a borrar... si da fallos es esto
@@ -49,6 +51,7 @@ void SpringManager::addSpring_of_TwoParticles(float k, float rest_length, Vector
 		particles.back()->setPosition(posOTHER);
 		particles.back()->setColor({ 0, 1, 0, 1 });
 		particles.back()->setDamping(0.8);
+		particles.back()->setInitialPosition(particles.back()->getPosition());
 	}
 	else {
 		particles.push_back(other); //se va a borrar... si da fallos es esto
@@ -96,6 +99,7 @@ void SpringManager::addParticle_to_Liquid(Vector3 pos, float _maxDepth, float _v
 	particles.back()->setPosition(pos);
 	particles.back()->setDamping(.8);
 	particles.back()->setColor(color);
+	particles.back()->setInitialPosition(particles.back()->getPosition());
 
 	ParticleBuoyancy* b = new ParticleBuoyancy(_maxDepth, _volume, _waterHeight, _liquidDensity);     //creacion del generador de flotacion
 	springs.push_back(b);
@@ -112,6 +116,7 @@ void SpringManager::addParticle_to_Liquid(Vector3 pos, float _maxDepth, float _v
 		particles.back()->setPosition(pos);
 		particles.back()->setColor({ 0, 0, 1, 1 });
 		particles.back()->setId("water");
+		particles.back()->setInitialPosition(particles.back()->getPosition());
 		actual_water++;
 	}
 }

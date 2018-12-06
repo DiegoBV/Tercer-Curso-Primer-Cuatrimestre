@@ -13,19 +13,26 @@ private:
 	{
 		physx::PxRigidStatic* obstacle;
 		RenderItem* rn;
+		Vector3 initialPosition;
 		int type;
-		Obstacle(physx::PxRigidStatic* obstacle, RenderItem* rn = nullptr, int type = 0) : obstacle(obstacle), rn(rn), type(type) {};
+		Obstacle(physx::PxRigidStatic* obstacle, RenderItem* rn = nullptr, int type = 0) : obstacle(obstacle), rn(rn), type(type), 
+			initialPosition(obstacle->getGlobalPose().p) {};
 		Obstacle() {};
+
+		virtual void reset() { obstacle->setGlobalPose(physx::PxTransform(initialPosition)); };
 	};
 
 	struct SpecialObstacle: public Obstacle
 	{
 		physx::PxRigidStatic* pared;
 		physx::PxRigidStatic* suelo;
+		Vector3 suelo_inPos;
 		RenderItem* rn_suelo;
 		SpecialObstacle(physx::PxRigidStatic* pared, physx::PxRigidStatic* suelo, RenderItem* rn, RenderItem* rn_suelo): Obstacle(pared, rn, 1), 
-			suelo(suelo), rn_suelo(rn_suelo) {};
+			suelo(suelo), rn_suelo(rn_suelo), suelo_inPos(suelo->getGlobalPose().p) {};
 		SpecialObstacle() {};
+
+		virtual void reset() { Obstacle::reset(); suelo->setGlobalPose(physx::PxTransform(suelo_inPos)); };
 	};
 
 	struct DynamicObstacle : public Obstacle
@@ -33,15 +40,20 @@ private:
 		physx::PxRigidDynamic* capsula;
 		RenderItem* rn_;
 		DynamicObstacle(physx::PxRigidDynamic* c, RenderItem* rn, physx::PxRigidStatic* obstacle, RenderItem* rn_ = nullptr) : 
-			Obstacle(obstacle, rn_, 2), capsula(c), rn_(rn) {};
+			Obstacle(obstacle, rn_, 2), capsula(c), rn_(rn) { initialPosition = capsula->getGlobalPose().p; };
 		DynamicObstacle() {};
+
+		virtual void reset() { capsula->setGlobalPose(physx::PxTransform(initialPosition)); };
 	};
 
 	struct WindWall : public Obstacle
 	{
 		Wind* w = nullptr;
-		WindWall(Wind* w, physx::PxRigidStatic* o, RenderItem* rn = nullptr) : Obstacle(o, rn, 3), w(w) {};
+		Vector3 wind_inPos;
+		WindWall(Wind* w, physx::PxRigidStatic* o, RenderItem* rn = nullptr) : Obstacle(o, rn, 3), w(w), wind_inPos(w->getCenter()) {};
 		WindWall() {};
+
+		virtual void reset() { Obstacle::reset(); w->setCenter(wind_inPos); };
 	};
 
 	std::queue<Obstacle> obstaculos;
@@ -56,6 +68,7 @@ private:
 	const int IN_JUMP_FORCE;
 
 	physx::PxRigidStatic* floor;
+	Vector3 floor_inPos;
 	int dis_between_obs = 200;
 	void generateObstacle();
 	void reparteObstaculos();
@@ -66,7 +79,7 @@ private:
 	void checkFeedback();
 	void generateSpecialObstacle(); //un obstaculo alto con una especie de cama elastica
 	void generateDynamicObstacle(); //un objeto dinamico para romper con una granada
-	void generateWindWall(); //pared alta con viento hacia arriba (ultimo obstaculo) -->DESPUES DE ESTO, VER COMO EL JUGADOR PIERDE Y VUELVE AL PRINCIPIO...
+	void generateWindWall(); //pared alta con viento hacia arriba (ultimo obstaculo)
 
 public:
 	ObstacleManager();
@@ -83,5 +96,7 @@ public:
 		generateWindWall(); reparteObstaculos(); };
 
 	inline Wind* getWind() const { return ww.w; };
+
+	inline physx::PxRigidStatic* getFloor() const { return floor; };
 };
 

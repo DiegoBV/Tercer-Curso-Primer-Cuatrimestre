@@ -10,6 +10,7 @@ protected:
 	//------------------------------------------------GENERADORES DE FUERZAS------------------------------------------------
 	vector<ParticleForceGenerator*> generators;
 	const Particle::Medidas FLOOR_SIZE = { 50, .1, 3000 };
+	const Vector3 FLOOR_POS = { 0, 15, 0 };
 	MainCharacter* ch = nullptr;
 	bool checkDistanceBtwChar(float dis) { if (ch != nullptr) return ch->getPj()->getGlobalPose().p.z < dis; else return false; };
 	Vector3 generateRandomPos(Vector3 actualPos, int dist, int rightLimit, int leftLimit) {

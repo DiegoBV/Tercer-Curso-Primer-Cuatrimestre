@@ -16,6 +16,10 @@ private:
 
 	Vector3 initial_pos;
 
+	void checkIfPJisDead();
+
+	void resCharacter();
+
 public:
 	CharacterManager(float vel, physx::PxPhysics* gPhysics, physx::PxScene* gScene, Vector3 pos = { 0, 0, 0 }) : Manager(), velocity_(vel), 
 		gPhysics(gPhysics), gScene(gScene), initial_pos(pos) {};
@@ -26,7 +30,7 @@ public:
 
 	virtual void handle_event(unsigned char key);
 
-	void initCharacter() { chr = new MainCharacter(100, gPhysics, gScene, initial_pos); chr->setColor({ 0.5, 0, 0.5, 1 }); chr->getPj()->setLinearVelocity({ 0, 0, -velocity_ }); } //llamar despues de anyadir todos los generadores
+	void initCharacter() { chr = new MainCharacter(gPhysics, gScene, initial_pos); chr->setColor({ 0.5, 0, 0.5, 1 }); chr->getPj()->setLinearVelocity({ 0, 0, -velocity_ }); } //llamar despues de anyadir todos los generadores
 
 	inline MainCharacter* getCharacter() const { return chr; };
 };
