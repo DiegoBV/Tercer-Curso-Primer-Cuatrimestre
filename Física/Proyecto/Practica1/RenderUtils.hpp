@@ -60,6 +60,8 @@ public:
 };
 
 double GetLastTime();
+bool isDebugging();
+void switchDebug();
 Camera* GetCamera();
 
 physx::PxShape* CreateShape(const physx::PxGeometry& geo);

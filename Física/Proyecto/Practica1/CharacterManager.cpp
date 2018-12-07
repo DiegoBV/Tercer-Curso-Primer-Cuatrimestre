@@ -11,12 +11,19 @@ void CharacterManager::checkIfPJisDead()
 		chr->setDead(true);
 }
 
-void CharacterManager::resCharacter()
+void CharacterManager::resCharacter(float t)
 {
-	if (chr->isDead()) { //igual le meto un delay...
-		physx::PxVec3 eye = GetCamera()->getEye();
-		chr->getPj()->setGlobalPose({initial_pos.x, initial_pos.y, eye.z - 70});
-		chr->setDead(false);
+	if (chr->isDead()) {
+		time_passed_ += t;
+		if (time_passed_ >= DELAY_) {
+			physx::PxVec3 eye = GetCamera()->getEye();
+			chr->getPj()->setGlobalPose({ initial_pos.x, initial_pos.y, eye.z - 70 });
+			chr->getPj()->clearForce();
+			chr->getPj()->clearTorque();
+			chr->getPj()->setLinearVelocity({ 0, 0, 0 });
+			chr->setDead(false);
+			time_passed_ = 0;
+		}
 	}
 }
 
@@ -24,7 +31,6 @@ void CharacterManager::update(float t)
 {
 	chr->getPj()->setLinearVelocity({ chr->getPj()->getLinearVelocity().x, chr->getPj()->getLinearVelocity().y, -velocity_ });
 	checkIfPJisDead();
-	resCharacter();
 }
 
 void CharacterManager::handle_event(unsigned char key)

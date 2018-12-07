@@ -46,7 +46,7 @@ double GetCounter()
 namespace
 {
 	Camera*	sCamera;
-	physx::PxTransform* pos = nullptr;
+	bool debug_ = false;
 
 void motionCallback(int x, int y)
 {
@@ -171,6 +171,16 @@ double GetLastTime()
 {
 	double t = double(CounterLast - CounterStart) / PCFreq;
 	return t;
+}
+
+bool isDebugging()
+{
+	return debug_;
+}
+
+void switchDebug()
+{
+	debug_ = !debug_;
 }
 
 Camera* GetCamera()

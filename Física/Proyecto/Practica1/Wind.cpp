@@ -9,14 +9,6 @@ bool Wind::is_inside(Vector3 pos)
 void Wind::setActive(const bool a)
 {
 	ParticleForceGenerator::setActive(a);
-	if (!this->isActive()) {
-		debug_ = true;
-		debug();
-	}
-	else {
-		debug_ = false;
-		debug();
-	}
 }
 
 void Wind::updateForce(Particle * particle, float t)
@@ -47,9 +39,6 @@ void Wind::handle_event(unsigned char key)
 	{
 	case 'P':
 		changeDirection();
-		break;
-	case 'B':
-		debug();
 		break;
 	case 'M':
 		active_ = !active_;

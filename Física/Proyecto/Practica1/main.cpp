@@ -64,6 +64,8 @@ Vector3 centerAnchoredSpring(0, 10, 0);
 
 MainCharacter* pj;
 
+CharacterManager* chr_man;
+
 PxRigidStatic* floor_;
 
 ContactReportCallback gContactReportCallback;
@@ -122,7 +124,7 @@ void initPhysics(bool interactive)
 	//----------------------------------------------------MANAGERS-------------------------------------------------------
 
 	//MainCharacter
-	CharacterManager* chr_man = new CharacterManager(250, gPhysics, gScene, {6, 20, 0});
+	chr_man = new CharacterManager(250, gPhysics, gScene, {6, 20, 0});
 	//chr_man->addGenerator(drag_gen);
 	chr_man->addGenerator(wind);
 	chr_man->addGenerator(wind2);
@@ -216,16 +218,19 @@ void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 	PX_UNUSED(actor2);
 }
 
+
+
 // Function to configure what happens in each step of physics
 // interactive: true if the game is rendering, false if it offline
 // t: time passed since last call in milliseconds
 void stepPhysics(bool interactive, double t)
 {
+	mciSendString("play explosion.wav", NULL, 0, NULL);
+
 	PX_UNUSED(interactive);
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
-
 	Particle::registry_.updateForces(t);
 	// Add custom application code
 	if (!pj->isDead()) {
@@ -239,6 +244,11 @@ void stepPhysics(bool interactive, double t)
 
 		//onCollision(floor_, pj->getPj());
 		GetCamera()->update(t);
+	}
+	else {
+		chr_man->resCharacter(t);
+		setPosZ(GetCamera()->getEye().z - 100);
+		setText("KEEP TRYING, LOSER");
 	}
 
 	// ...

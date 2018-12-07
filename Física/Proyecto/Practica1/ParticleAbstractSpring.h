@@ -24,6 +24,8 @@ protected:
 
 	virtual Vector3 calculateForce(Vector3 pos) = 0;
 
+	virtual void debug() { isDebugging() ? RegisterRenderItem(w->getRN()) : DeregisterRenderItem(w->getRN()); };
+
 public:
 	ParticleAbstractSpring(float _k, float _rest_length) : k(_k), rest_length(_rest_length), w(new Wind(100, { 0, -1, 0 }, { 0, 10, 0 })) { w->setActive(false); };
 

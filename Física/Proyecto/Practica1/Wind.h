@@ -19,9 +19,7 @@ private:
 
 	bool is_inside(Vector3 pos);       //comprueba si la particula esta dentro de la esfera
 
-	bool debug_ = true;
-
-	void debug() { debug_ ? DeregisterRenderItem(rn) : RegisterRenderItem(rn); debug_ = !debug_; };          //debug
+	virtual void debug() { isDebugging() ? RegisterRenderItem(rn) : DeregisterRenderItem(rn); };          //debug
 
 public:
 	Wind() : wind_force_(0), wind_direction_(0) {};
@@ -30,7 +28,7 @@ public:
 
 	Wind(float wind_force, Vector3 wind_direction, Vector3 center = { 0, 0, 0 }, float rad = 50) : 
 		wind_force_(wind_force), wind_direction_(wind_direction), center(center), rad(rad), transform(center), rn(new RenderItem()){ 
-			rn->shape = CreateShape(physx::PxSphereGeometry(rad)); rn->transform = &transform; rn->color = { 0, 0, 1, 0 }; RegisterRenderItem(rn); wind_direction_.normalize(); };
+			rn->shape = CreateShape(physx::PxSphereGeometry(rad)); rn->transform = &transform; rn->color = { 0, 0, 1, 0 }; wind_direction_.normalize(); };
 
 	//-------------------------------------------GETS----------------------------------
 
@@ -39,6 +37,8 @@ public:
 	inline Vector3 getWindDirection() const { return wind_direction_; };
 
 	inline Vector3 getCenter() const { return center; };
+
+	inline RenderItem* getRN() const { return rn; };
 
 	//-------------------------------------------SETS----------------------------------
 

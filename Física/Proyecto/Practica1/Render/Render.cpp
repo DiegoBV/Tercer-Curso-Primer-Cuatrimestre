@@ -48,6 +48,10 @@ static float gCylinderData[]={
 	1.0f,0.0f,1.0f,1.0f,0.0f,1.0f,1.0f,0.0f,0.0f,1.0f,0.0f,0.0f
 };
 
+static float posZ_ = 0;
+
+static char * string = " ";
+
 #define MAX_NUM_MESH_VEC3S  1024
 static PxVec3 gVertexBuffer[MAX_NUM_MESH_VEC3S];
 
@@ -249,7 +253,7 @@ void setupDefaultWindow(const char *name)
 
 	glutInit(&argc, argv);
 	
-	glutInitWindowSize(512, 512);
+	glutInitWindowSize(800, 600);
 	glutInitDisplayMode(GLUT_RGB|GLUT_DOUBLE|GLUT_DEPTH);
 	int mainHandle = glutCreateWindow(name);
 	glutSetWindow(mainHandle);
@@ -261,7 +265,7 @@ void setupDefaultWindow(const char *name)
 void setupDefaultRenderState()
 {
 	// Setup default render states
-	glClearColor(0.3f, 0.4f, 0.5f, 1.0);
+	glClearColor(0.8f, 0.7f, 0.6f, 0.0);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_COLOR_MATERIAL);
 	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -296,6 +300,8 @@ void startRender(const PxVec3& cameraEye, const PxVec3& cameraDir, PxReal clipNe
 	gluLookAt(GLdouble(cameraEye.x), GLdouble(cameraEye.y), GLdouble(cameraEye.z), GLdouble(cameraEye.x + cameraDir.x), GLdouble(cameraEye.y + cameraDir.y), GLdouble(cameraEye.z + cameraDir.z), 0.0, 1.0, 0.0);
 
 	glColor4f(0.4f, 0.4f, 0.4f, 1.0f);
+
+	drawBitmapText(string, -13, 90, posZ_);
 
 	assert(glGetError() == GL_NO_ERROR);
 }
@@ -376,6 +382,27 @@ void renderActors(PxRigidActor** actors, const PxU32 numActors, bool shadows, co
 void finishRender()
 {
 	glutSwapBuffers();
+}
+
+void drawBitmapText(char * string, float x, float y, float z)
+{
+		glColor3f(0, 0, 0);
+		char *c;
+		glRasterPos3f(x, y, z);
+		for (c = string; *c != '\0'; c++)
+		{
+			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *c);
+		}
+}
+
+void setPosZ(float z)
+{
+	posZ_ = z;
+}
+
+void setText(char * string_)
+{
+	string = string_;
 }
 
 

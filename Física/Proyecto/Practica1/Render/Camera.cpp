@@ -48,10 +48,11 @@ Camera::Camera(const PxVec3& eye, const PxVec3& dir)
 
 void Camera::handleMouse(int button, int state, int x, int y)
 {
-	PX_UNUSED(state);
+/*	PX_UNUSED(state);
 	PX_UNUSED(button);
 	mMouseX = x;
 	mMouseY = y;
+*/
 }
 
 bool Camera::handleKey(unsigned char key, int x, int y, float speed)

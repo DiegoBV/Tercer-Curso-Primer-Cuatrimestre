@@ -82,12 +82,4 @@ void Blast::updateForce(physx::PxRigidBody * rb, float t)
 
 void Blast::handle_event(unsigned char key)
 {
-	switch (toupper(key))
-	{
-	case 'B':
-		debug();
-		break;
-	default:
-		break;
-	}
 }

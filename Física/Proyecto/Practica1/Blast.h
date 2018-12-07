@@ -26,9 +26,7 @@ private:
 
 	int auxRef = 0;                              //auxiliar para comprobar si ya ha comprobado todas las particulas
 
-	bool debug_ = true;
-
-	void debug() { debug_ ? DeregisterRenderItem(rn) : RegisterRenderItem(rn); debug_ = !debug_; };    //debug
+	virtual void debug() { isDebugging() ? RegisterRenderItem(rn) : DeregisterRenderItem(rn); };    //debug
 
 public:
 	Blast();
@@ -36,7 +34,7 @@ public:
 	virtual ~Blast();
 
 	Blast(float _force, float rad = 50, Vector3 center = { -10000, 30, 0 }) : force(_force), center(center), rad(rad), transform(center), rn(new RenderItem()) {
-		rn->shape = CreateShape(physx::PxSphereGeometry(rad)); rn->transform = &transform; rn->color = { 1, 0, 0, 0 }; active_ = false; RegisterRenderItem(rn); }
+		rn->shape = CreateShape(physx::PxSphereGeometry(rad)); rn->transform = &transform; rn->color = { 1, 0, 0, 0 }; active_ = false; }
 	
 	virtual void updateForce(Particle* particle, float t);
 

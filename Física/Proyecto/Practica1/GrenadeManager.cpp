@@ -7,6 +7,7 @@ void GrenadeManager::check_time_to_explode(Grenade*& g)
 	if (g->is_time_to_explode()) {
 		g->explode();
 		remove_particle_from_generators(g);
+		mciSendString("play explosion.wav", NULL, 0, NULL);
 	}
 }
 
@@ -24,10 +25,10 @@ void GrenadeManager::force_explosion()                     //just debug
 	}
 }
 
-GrenadeManager::GrenadeManager(MainCharacter* ch): Manager(ch), blast(new Blast(20000, 100))   //constructora
+GrenadeManager::GrenadeManager(MainCharacter* ch): Manager(ch), blast(new Blast(20000, 150))   //constructora
 {
-	for (int i = 0; i <= 5; i++) {
-		grenades_.push_back(new Grenade(2, 1.5, blast));
+	for (int i = 0; i <= 0; i++) {
+		grenades_.push_back(new Grenade(2, 0.7, blast));
 		grenades_.back()->setColor({ 1, 0, 0, 1 });
 	}
 }
@@ -52,7 +53,7 @@ void GrenadeManager::handle_event(unsigned char key)
 {
 	switch (toupper(key))
 	{
-	case 'G':
+	case '\r':
 		shoot();
 		break;
 	case 'E':
@@ -74,7 +75,7 @@ void GrenadeManager::shoot()                     //busca la primera inactiva y l
 
 			grenades_[i]->setPosition(ch->getPj()->getGlobalPose().p);
 
-			grenades_[i]->setVelocity({ 0, 70, ch->getPj()->getLinearVelocity().z*5 });        //sets de velocidad y aceleracion
+			grenades_[i]->setVelocity({ 0, 70, ch->getPj()->getLinearVelocity().z*3 });        //sets de velocidad y aceleracion
 
 			grenades_[i]->setAcceleration(GetCamera()->getDir());
 
