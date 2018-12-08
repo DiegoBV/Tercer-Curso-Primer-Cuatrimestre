@@ -5,6 +5,8 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
+#include <algorithm>
+#include <limits>
 #include <vector>
 #include"Matriz.h"
 
@@ -70,6 +72,57 @@ void varillasNumeroFormas(vector<Varilla>& varillas, int L, int& numFormas)
 	numFormas = matriz[n][L];
 };
 
+void varillasMinimoNumero(vector<Varilla>& varillas, int L, int& minNum)
+{
+	int n = varillas.size() - 1;
+	Matriz<int> matriz(varillas.size(), L + 1, numeric_limits<int>::max());
+
+	matriz[0][0] = 1;
+	//rellenar la matriz
+	for (size_t i = 1; i <= n; i++)
+	{
+		matriz[i][0] = 1;
+		for (size_t j = 1; j <= L; j++)
+		{
+			if (varillas[i].longitud > j) {
+				matriz[i][j] = matriz[i - 1][j];
+			}
+			else {
+				matriz[i][j] = min(matriz[i - 1][j], matriz[i - 1][j - varillas[i].longitud]);
+				if (matriz[i][j] == matriz[i - 1][j - varillas[i].longitud] && matriz[i][j] != numeric_limits<int>::max()) {
+					matriz[i][j]++;
+				}
+			}
+		}
+	}
+
+	minNum = matriz[n][L] - 1; //??
+};
+
+void varillasMinimoCoste(vector<Varilla>& varillas, int L, int& minCoste)
+{
+	int n = varillas.size() - 1;
+	Matriz<int> matriz(varillas.size(), L + 1, 1000000);
+
+	matriz[0][0] = 1;
+	//rellenar la matriz
+	for (size_t i = 1; i <= n; i++)
+	{
+		matriz[i][0] = 1;
+		for (size_t j = 1; j <= L; j++)
+		{
+			if (varillas[i].longitud > j) {
+				matriz[i][j] = matriz[i - 1][j];
+			}
+			else {
+				matriz[i][j] = min(matriz[i - 1][j], matriz[i - 1][j - varillas[i].longitud] + varillas[i].coste);
+			}
+		}
+	}
+
+	minCoste = matriz[n][L] - 1; //??
+};
+
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 bool resuelveCaso() 
@@ -80,21 +133,25 @@ bool resuelveCaso()
     if (! std::cin)
         return false;
     
-	vector<Varilla> varillas_;
-	for (size_t i = 0; i < N; i++)
+	vector<Varilla> varillas_(N + 1); //importante empezar en el 1...
+	for (size_t i = 1; i <= N; i++)
 	{
 		int l, c;
 		cin >> l >> c;
 
-		varillas_.push_back({l, c});
+		varillas_[i] = {l, c};
 	}
 
 	int numFormas = 0;
+	int minNum = 0;
+	int minCoste = 0;
 	bool sePuede = false;
 	varillasBool(varillas_, L, sePuede);
 	varillasNumeroFormas(varillas_, L, numFormas);
+	varillasMinimoNumero(varillas_, L, minNum);
+	varillasMinimoCoste(varillas_, L, minCoste);
     // escribir sol
-	sePuede ? cout << "SI" << " " << numFormas : cout << "NO";
+	sePuede ? cout << "SI" << " " << numFormas << " " << minNum << " " << minCoste : cout << "NO";
 	cout << endl;
     
     return true;
