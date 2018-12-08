@@ -290,12 +290,17 @@ void keyPress(unsigned char key, const PxTransform& camera)
 {
 	PX_UNUSED(camera);
 
+	if (toupper(key) == 'P') {
+		switchDebug();
+	}
+
 	for (Manager* man : managers) {
 		man->handle_event(key);
 	}
 	for (ParticleForceGenerator* gen : generators) {
 		gen->handle_event(key);
 	}
+
 }
 
 int main(int, const char*const*)

@@ -11,7 +11,11 @@ class FireworkManager: public Manager
 private:
 	const unsigned int MAX_FIREWORKS = 5;                 //numero maximo de cohetes que se pueden disparar a la vez
 
-	const double TIME = 5;                               //cada "time" segundos se crea un firework si esa opcion esta activada
+	const double TIME = 7;                               //cada "time" segundos se crea un firework si esa opcion esta activada
+
+	const int DIST_BTW_CHAR = 5000;
+
+	const int DIST_TO_CHECK_ = 3000;
 
 	bool autoWork_;
 

@@ -1,6 +1,3 @@
 //Hacer que lo de las colisiones funcione (mientras esté en colision que pueda saltar)
-//adaptar las rules de los fireworks para que se vean bien
-//aumentar dificultad cuando pase tiempo (?)
-//meter sonidos al salto e igual cambiar el de la explosion
 //comentar y ordenar código
 //(OPCIONAL) hacer que el heap llegue a funcionar ---> como está ahora funciona bien pero es un codigo un pelin guarro

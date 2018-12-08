@@ -18,6 +18,8 @@ private:
 
 	float time_passed_ = 0;
 
+	int death_count = 0;
+
 	const float DELAY_ = 3;                   //delay entre muerte y respawn
 
 	void checkIfPJisDead();
@@ -38,5 +40,7 @@ public:
 	void initCharacter() { chr = new MainCharacter(gPhysics, gScene, initial_pos); chr->setColor({ 0.5, 0, 0.5, 1 }); chr->getPj()->setLinearVelocity({ 0, 0, -velocity_ }); } //llamar despues de anyadir todos los generadores
 
 	inline MainCharacter* getCharacter() const { return chr; };
+
+	inline int getDeathCount() const { return death_count; };
 };
 

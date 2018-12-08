@@ -1,0 +1,46 @@
+{
+	"Rules": [
+		{
+			"type": 0,
+			"MinAge": 2,
+			"MaxAge": 4,
+			"MinVel": [-100, 550, -100],
+			"MaxVel": [100, 280, 100],
+			"Dumping": 0.1,
+			"MinTam": 4,
+			"MaxTam": 9,
+			"Payloads":
+			[
+				{"NextType": 1, "Count": 15},
+				{"NextType": 1, "Count": 8}
+			]
+		},
+
+		{
+			"type": 1,
+			"MinAge": 3,
+			"MaxAge": 7,
+			"MinVel": [-90, 450, -40],
+			"MaxVel": [90, 180, 90],
+			"Dumping": 0.1,
+			"MinTam": 4,
+			"MaxTam": 7,
+			"Payloads":
+			[
+				{"NextType": 2, "Count": 20},
+				{"NextType": 2, "Count": 8}
+			]
+		},
+
+		{
+			"type": 2,
+			"MinAge": 2,
+			"MaxAge": 5,
+			"MinVel": [-70, 300, -70],
+			"MaxVel": [70, 280, 70],
+			"Dumping": 0.1,
+			"MinTam": 3,
+			"MaxTam": 6
+		}
+	]
+}

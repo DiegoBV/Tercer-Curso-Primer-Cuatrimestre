@@ -118,8 +118,8 @@ void FireworkManager::autoCreateFireworks(double t)
 
 void FireworkManager::update(float t)
 {
-	if (checkDistanceBtwChar(pos.z)) {
-		pos.z -= 5000;
+	if (checkDistanceBtwChar(pos.z + DIST_TO_CHECK_)) {
+		pos.z -= DIST_BTW_CHAR;
 	}
 
 	autoCreateFireworks(t);
@@ -156,7 +156,7 @@ void FireworkManager::handle_event(unsigned char key)
 		Input_FireworkCreate();
 		break;
 	case ' ':
-		switch_activate();
+		//switch_activate();
 		break;
 	default:
 		break;

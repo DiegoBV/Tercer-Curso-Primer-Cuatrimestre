@@ -66,13 +66,15 @@ private:
 	const Particle::Medidas ELASTIC_BED_SIZE = { 50, 1, 150 };
 	Time_GeneratorManager* feedback;
 	const int IN_JUMP_FORCE;
-
+	const float TIME_TO_RAISE_DIFFICULTY = 60;
+	float actual_time_ = 0;
 	physx::PxRigidStatic* floor;
 	Vector3 floor_inPos;
-	int dis_between_obs = 200;
+	int dis_between_obs = 150;  //150 es la mejor, 300 para probarlo/ensenyarlo y que vaya subiendo la dificultad
 	void generateObstacle();
 	void reparteObstaculos();
 	void generateFloor();
+	void raiseDifficulty(float t);
 	void checkFloor();
 	void checkObstacle();
 	void checkElasticBed();

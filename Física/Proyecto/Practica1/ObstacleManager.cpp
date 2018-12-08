@@ -122,6 +122,17 @@ void ObstacleManager::generateFloor()
 	floor_inPos = floor->getGlobalPose().p;
 }
 
+void ObstacleManager::raiseDifficulty(float t)
+{
+	actual_time_ += t;
+	if (actual_time_ >= TIME_TO_RAISE_DIFFICULTY) {
+		if (dis_between_obs > 200) { //max difficulty
+			dis_between_obs -= 50;
+		}
+			actual_time_ = 0;
+	}
+}
+
 ObstacleManager::ObstacleManager(): IN_JUMP_FORCE(0)
 {
 }
@@ -141,4 +152,5 @@ void ObstacleManager::update(float t)
 	checkObstacle();
 	checkElasticBed();
 	checkFeedback();
+	raiseDifficulty(t);
 }
