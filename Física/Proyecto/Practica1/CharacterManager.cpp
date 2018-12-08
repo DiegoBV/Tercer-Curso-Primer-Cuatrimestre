@@ -7,7 +7,7 @@ void CharacterManager::checkIfPJisDead()
 	int f_W = FLOOR_SIZE.x_ + FLOOR_SIZE.x_/4;
 	int f_H = FLOOR_POS.y - FLOOR_POS.y / 6;
 
-	if (fabs(pos.y) > eye.x + f_W && (pos.y) < f_H || eye.z < (pos.z - 200)) {
+	if (fabs(pos.y) > eye.x + f_W && (pos.y) < f_H || eye.z < (pos.z + DIST_TO_CHECK_)) {
 		chr->setDead(true);
 		death_count++;
 		mciSendString("play fail.wav", NULL, 0, NULL);
@@ -20,7 +20,7 @@ void CharacterManager::resCharacter(float t)
 		time_passed_ += t;
 		if (time_passed_ >= DELAY_) {
 			physx::PxVec3 eye = GetCamera()->getEye();
-			chr->getPj()->setGlobalPose({ initial_pos.x, initial_pos.y, eye.z - 70 });
+			chr->getPj()->setGlobalPose({ initial_pos.x, initial_pos.y, eye.z + DIST_TO_CAMERA_ });
 			chr->getPj()->clearForce();
 			chr->getPj()->clearTorque();
 			chr->getPj()->setLinearVelocity({ 0, 0, 0 });
@@ -53,11 +53,9 @@ void CharacterManager::handle_event(unsigned char key)
 		chr->getPj()->setLinearVelocity({ 0, chr->getPj()->getLinearVelocity().y, -velocity_ });
 		break;
 	case 'A':
-		//chr->getPj()->setGlobalPose({ chr->getPj()->getGlobalPose().p.x - 20 , chr->getPj()->getGlobalPose().p.y,  chr->getPj()->getGlobalPose().p.z});
 		chr->getPj()->setLinearVelocity({-velocity_/4, chr->getPj()->getLinearVelocity().y, -velocity_}); //improve del gameplay maybe
 		break;
 	case 'D':
-		//chr->getPj()->setGlobalPose({ chr->getPj()->getGlobalPose().p.x + 20 , chr->getPj()->getGlobalPose().p.y,  chr->getPj()->getGlobalPose().p.z });
 		chr->getPj()->setLinearVelocity({ velocity_/4, chr->getPj()->getLinearVelocity().y, -velocity_ });
 		break;
 	default:

@@ -9,16 +9,24 @@ private:
 protected:
 	//------------------------------------------------PARAMETERS------------------------------------------------
 	Particle::Shape shape_;
+
 	float time_inter = 0;
+
 	float next_period = 0;
+
 	float tiempo_transcurrido = 0;
+
 	Vector3 pos;
+
 	const int VEL_MAX_;
+
 	const int VEL_MIN_;
+
 	const float MAX_LIFE_TIME_;
 
 	//------------------------------------------------AUX METHODS------------------------------------------------
 	Vector3 generateRandomVel();
+
 	virtual void generateNewElement(double t) = 0;
 
 public:

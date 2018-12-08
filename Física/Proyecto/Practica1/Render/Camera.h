@@ -49,11 +49,13 @@ public:
 	physx::PxVec3		getDir()	const;
 	physx::PxTransform	getTransform() const;
 	void update(float t, float speed = 1.0f);
+	void setDebug(bool d);
 private:
 	physx::PxVec3	mEye;
 	physx::PxVec3	mDir;
 	int				mMouseX;
 	int				mMouseY;
+	bool debug_ = false;
 };
 
 

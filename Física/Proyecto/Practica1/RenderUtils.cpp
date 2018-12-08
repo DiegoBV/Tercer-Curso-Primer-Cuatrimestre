@@ -181,6 +181,7 @@ bool isDebugging()
 void switchDebug()
 {
 	debug_ = !debug_;
+	sCamera->setDebug(debug_);
 }
 
 Camera* GetCamera()

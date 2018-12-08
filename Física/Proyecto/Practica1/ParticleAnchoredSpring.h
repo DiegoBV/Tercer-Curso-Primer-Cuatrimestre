@@ -5,13 +5,14 @@ class ParticleAnchoredSpring :
 {
 private:
 
-	Vector3* anchor;
+	Vector3* anchor;                  //posicion a la cual el objeto esta anclado
 
 	RenderItem* rn = nullptr;
 
 	physx::PxTransform transform;
 
 	virtual Vector3 calculateForce(Vector3 pos);
+
 public:
 	virtual ~ParticleAnchoredSpring() { delete rn; };
 

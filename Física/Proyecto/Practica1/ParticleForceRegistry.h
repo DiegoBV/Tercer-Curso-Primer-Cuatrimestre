@@ -13,13 +13,18 @@ protected:
 		ParticleForceGenerator* fg;
 
 		ParticleForceRegistration() : particle(nullptr), fg(nullptr) {};
+
 		ParticleForceRegistration(Particle* particle, ParticleForceGenerator* fg) : particle(particle), fg(fg), rigid_body(nullptr) {};
+
 		ParticleForceRegistration(physx::PxRigidDynamic* rb, ParticleForceGenerator* fg) : particle(nullptr), fg(fg), rigid_body(rb) {};
+
 		inline bool operator==(const ParticleForceRegistration& e1) { return (e1.particle == this->particle) && (e1.fg == this->fg); };
 	};
 
 	typedef std::vector<ParticleForceRegistration> Registry;
+
 	Registry registrations;
+
 public:
 	ParticleForceRegistry() {};
 

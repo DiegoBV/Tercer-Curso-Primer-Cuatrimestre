@@ -7,14 +7,21 @@ class RigidSystem_Manager :
 	public System_Manager
 {
 private:
+
 	const unsigned int MAX_ELEM_;
+
 	physx::PxPhysics* gPhysics = nullptr;
+
 	physx::PxScene* gScene;
+
 	int total_ = 0;
+
 	vector<physx::PxRigidDynamic*> rigidos;
+
 	vector<RenderItem*> rn_items;
 
 protected:
+
 	virtual void generateNewElement(double t);
 
 public:

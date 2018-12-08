@@ -1,18 +1,18 @@
 #include "Blast.h"
 
-bool Blast::is_inside(Vector3 pos)
+bool Blast::is_inside(Vector3 pos)              //comprueba si el objeto esta dentro de la esfera de la explosion
 {
 	return (((center.x + rad) >= (pos.x) && (center.y + rad) >= (pos.y) && (center.z + rad) >= (pos.z)))
 		&& ((center.x - rad) <= (pos.x) && (center.y - rad) <= (pos.y) && (center.z - rad) <= (pos.z));
 }
 
-bool Blast::is_near(Vector3 pos)
+bool Blast::is_near(Vector3 pos)              //comprueba si esta cerca del centro
 {
 	return (((center.x + rad/2) >= (pos.x) && (center.y + rad/2) >= (pos.y) && (center.z + rad/2) >= (pos.z)))
 		&& ((center.x - rad/2) <= (pos.x) && (center.y - rad/2) <= (pos.y) && (center.z - rad/2) <= (pos.z));
 }
 
-bool Blast::is_medium_distance(Vector3 pos)
+bool Blast::is_medium_distance(Vector3 pos)             //comprueba si esta a media distancia
 {
 	return (((center.x + rad / 4) >= (pos.x) && (center.y + rad / 4) >= (pos.y) && (center.z + rad / 4) >= (pos.z)))
 		&& ((center.x - rad / 4) <= (pos.x) && (center.y - rad / 4) <= (pos.y) && (center.z - rad / 4) <= (pos.z));

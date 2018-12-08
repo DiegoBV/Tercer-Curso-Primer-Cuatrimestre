@@ -4,6 +4,7 @@
 class MainCharacter
 {
 private:
+
 	bool dead_;
 
 	physx::PxRigidDynamic* pj;
@@ -15,7 +16,9 @@ private:
 	physx::PxScene* gScene = nullptr;
 
 	float JUMP_FORCE = 60;
+
 public:
+
 	MainCharacter(physx::PxPhysics* gPhysics, physx::PxScene* gScene, Vector3 pos = {0, 0, 0}) : gPhysics(gPhysics), gScene(gScene), 
 			pj(gPhysics->createRigidDynamic(physx::PxTransform(pos))), dead_(false) { physx::PxShape* s = Particle::createShape(Particle::Sphere, { 5, 5, 5 });
 				pj->attachShape(*s); physx::PxRigidBodyExt::updateMassAndInertia(*pj, 1); rn = new RenderItem(s, pj, { 0, 1, 0, 1 }); gScene->addActor(*pj); };

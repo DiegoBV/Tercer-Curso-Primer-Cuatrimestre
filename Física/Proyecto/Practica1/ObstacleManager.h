@@ -9,6 +9,7 @@ class ObstacleManager :
 	public RigidSystem_Manager
 {
 private:
+	//-------------------------------------------TIPOS DE OBSTACULOS----------------------------------
 	struct Obstacle 
 	{
 		physx::PxRigidStatic* obstacle;
@@ -56,31 +57,58 @@ private:
 		virtual void reset() { Obstacle::reset(); w->setCenter(wind_inPos); };
 	};
 
-	std::queue<Obstacle> obstaculos;
-	const unsigned int MAX_OBS = 30;
+	std::queue<Obstacle> obstaculos;            //cola de obstaculos (ordenados segun distancia, hubiera sido mejor un heap ---> no se puede implementar el operador <)
+
+	const unsigned int MAX_OBS = 30;            //numero de obstaculos que va a haber
+
 	physx::PxPhysics* gPhysics;
+
 	physx::PxScene* gScene;
+
 	SpecialObstacle sp;
+
 	DynamicObstacle do_;
+
 	WindWall ww;
+
 	const Particle::Medidas ELASTIC_BED_SIZE = { 50, 1, 150 };
-	Time_GeneratorManager* feedback;
+
+	Time_GeneratorManager* feedback;                //para la wind wall
+
 	const int IN_JUMP_FORCE;
+
 	const float TIME_TO_RAISE_DIFFICULTY = 60;
+
 	float actual_time_ = 0;
+
 	physx::PxRigidStatic* floor;
+
 	Vector3 floor_inPos;
+
 	int dis_between_obs = 150;  //150 es la mejor, 300 para probarlo/ensenyarlo y que vaya subiendo la dificultad
+
+	//-------------------------------------------METODOS AUXILIARES----------------------------------
+
 	void generateObstacle();
+
 	void reparteObstaculos();
+
 	void generateFloor();
+
 	void raiseDifficulty(float t);
+
 	void checkFloor();
+
 	void checkObstacle();
+
 	void checkElasticBed();
+
 	void checkFeedback();
+
 	void generateSpecialObstacle(); //un obstaculo alto con una especie de cama elastica
+
 	void generateDynamicObstacle(); //un objeto dinamico para romper con una granada
+
 	void generateWindWall(); //pared alta con viento hacia arriba (ultimo obstaculo)
 
 public:
@@ -96,6 +124,8 @@ public:
 
 	void initObstacles() { for (size_t i = 0; i < MAX_OBS; i++) { generateObstacle(); } generateSpecialObstacle(); generateDynamicObstacle(); 
 		generateWindWall(); reparteObstaculos(); };
+
+	//-------------------------------------------GETS----------------------------------
 
 	inline Wind* getWind() const { return ww.w; };
 
