@@ -10,7 +10,7 @@ void ObstacleManager::generateObstacle()
 
 void ObstacleManager::reparteObstaculos()
 {
-	float z = -dis_between_obs*10;
+	float z = -dis_between_obs*14;
 	for (size_t i = 0; i < MAX_OBS; i++){
 		Obstacle obj = obstaculos.front();
 		obstaculos.pop();
@@ -87,8 +87,8 @@ void ObstacleManager::generateSpecialObstacle()
 {
 	RenderItem* rn = nullptr;
 	RenderItem* rn_suelo = nullptr;
-	sp = SpecialObstacle(generateStaticElement(rn, { 0, 0, -1300 }, shape_, { 50, 70, 1 }), 
-		generateStaticElement(rn_suelo, { 0, 14.13, -1300 + ELASTIC_BED_SIZE.z_ }, shape_, ELASTIC_BED_SIZE), rn, rn_suelo);
+	sp = SpecialObstacle(generateStaticElement(rn, { 0, 0, -1980 }, shape_, { 50, 70, 1 }), 
+		generateStaticElement(rn_suelo, { 0, 14.13, -1980 + ELASTIC_BED_SIZE.z_ }, shape_, ELASTIC_BED_SIZE), rn, rn_suelo);
 	obstaculos.push(sp);
 }
 
@@ -96,8 +96,8 @@ void ObstacleManager::generateDynamicObstacle()
 {
 	RenderItem* rn = nullptr;
 	RenderItem* rn_other = nullptr;
-	physx::PxRigidStatic* other = generateStaticElement(rn_other, { 0, 11, -2600 }, shape_, { 50, .1, 50 });
-	physx::PxRigidDynamic* one = generateDynamicElement(rn, { 0, 55, -2600 }, Particle::Capsule, { 20, 20 });
+	physx::PxRigidStatic* other = generateStaticElement(rn_other, { 0, 11, -3000 }, shape_, { 50, .1, 50 });
+	physx::PxRigidDynamic* one = generateDynamicElement(rn, { 0, 55, -3000 }, Particle::Capsule, { 20, 20 });
 	do_ = DynamicObstacle(one, rn, other, rn_other);
 	obstaculos.push(do_);
 	register_rigid_body_in_generators(do_.capsula);

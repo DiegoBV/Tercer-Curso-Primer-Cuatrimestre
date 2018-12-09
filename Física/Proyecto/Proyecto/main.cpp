@@ -167,6 +167,10 @@ void initPhysics(bool interactive)
 	sp_man->addParticle_to_Liquid({ 81, 15, -450 }, 4, 4, 17, { 0.15, 0.1, 0.92, 1 }, 10);
 	sp_man->addParticle_to_Liquid({ -81, 15, -300 }, 7, 4, 18, { 0.25, 0.81, 0.2, 1 }, 10);
 	sp_man->addParticle_to_Liquid({ 81, 15, -200 }, 3, 4, 15, { 0.15, 0.1, 0.2, 1 }, 10);
+	sp_man->addParticle_to_Liquid({ 151, 15, -200 }, 3, 4, 15, { 0.15, 0.1, 0.2, 1 }, 10);
+	sp_man->addParticle_to_Liquid({ -91, 15, -200 }, 3, 4, 15, { 0.15, 0.1, 0.2, 1 }, 10);
+	sp_man->addParticle_to_Liquid({ 91, 15, -200 }, 1, 3, 22, { 0.15, 0.1, 0.2, 1 }, 10);
+	sp_man->addParticle_to_Liquid({ -151, 15, -200 }, 2, 3, 18, { 0.15, 0.1, 0.2, 1 }, 10);
 	//sp_man->addRigidBody_to_Liquid(pj->getPj(), 30, 40, 20, 100);
 	managers.push_back(sp_man);
 

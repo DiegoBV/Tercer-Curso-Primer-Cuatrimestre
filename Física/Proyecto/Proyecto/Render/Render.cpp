@@ -301,7 +301,7 @@ void startRender(const PxVec3& cameraEye, const PxVec3& cameraDir, PxReal clipNe
 
 	glColor4f(0.4f, 0.4f, 0.4f, 1.0f);
 
-	drawBitmapText(string, -13, 90, posZ_);
+	drawBitmapText(string, -15, 90, posZ_);
 
 	assert(glGetError() == GL_NO_ERROR);
 }

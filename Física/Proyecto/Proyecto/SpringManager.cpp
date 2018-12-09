@@ -110,8 +110,9 @@ void SpringManager::addParticle_to_Liquid(Vector3 pos, float _maxDepth, float _v
 	register_particle_in_generators(particles.back());
 
 	if (actual_water < MAX_WATER) {
+		pos.y--;
 		particles.push_back(new Particle(new RenderItem(), 0));       //"agua"
-		particles.back()->setBoxShape(30, .1, 10000);
+		particles.back()->setBoxShape(100, .1, 10000);
 		particles.back()->setActive();
 		particles.back()->setPosition(pos);
 		particles.back()->setColor({ 0, 0, 1, 1 });
