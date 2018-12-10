@@ -1,0 +1,30 @@
+1- Pestaña create --> armature (esqueleto) --> single bone
+
+2- roto 45º (dejarlo tumbado)
+
+3- modo edicion --> extruir --> se crea otro nuevo hueso
+
+4- modo pose --> cinematica directa por defecto
+
+5- si extruyes desde la base (inicio del hueso). Tienen el mismo nivel.
+
+6- edit mode, 3 tipos de operaciones --> crear los huesos, renombrar los huesos, emparentar los huesos.
+
+7- Vas al icono del huesito del panel de la derecha. Cambiamos nombres (target es el ultimo).
+
+8- Emparentar. O de la forma habitual o seleccionando todos, en ultimo lugar el padre y ctrl + p. (alt + p destruye jerarquia).
+
+9- POSE MODE --> seleccionamos todos y ctr + a v (aplicamos esa pose como pose de reposo).
+
+10- crear un hueso mas para controlar la apertura y orientacion (como la rodilla del señor) --> desemparentamos (alt + p(clear parent)) --> 
+    alejamos y renombramos a "polo" --> hacerle hijo del primer hueso (ctrl+p(keep offset))
+
+11- si queremos hacer cinematica inversa, el target lo hacemos hijo del primer hueso de todos. De los que van a obedecer al target, 
+    el de menor jerarquia. Icono hueso + cadenas --> add bone constraint --> inverse kinematics (se pone en amarillo) --> target es el target,
+    polo es el hueso "polo", chain length en este caso es 2 (todos los que sigan al target), pole angle -90 para restaurar todo.
+
+12- desactivaar manejadores innecesarios en el panel de escalas y tal, ponerle candaditos a todo.
+
+corto de 10 segundos...
+
+
