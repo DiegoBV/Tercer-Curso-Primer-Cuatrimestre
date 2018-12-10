@@ -152,5 +152,5 @@ void ObstacleManager::update(float t)
 	checkObstacle();
 	checkElasticBed();
 	checkFeedback();
-	raiseDifficulty(t);
+	//raiseDifficulty(t);
 }

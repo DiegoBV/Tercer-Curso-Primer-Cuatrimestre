@@ -118,6 +118,8 @@ public:
 		physx::PxScene* gScene, Time_GeneratorManager* feedback) : RigidSystem_Manager(shp, 0, gPhysics, gScene, ch), 
 			IN_JUMP_FORCE(ch->getJumpForce()), feedback(feedback) { this->setOn(false); generateFloor(); };
 
+	enum Dificulty {Easy, Medium, Hard};
+
 	virtual ~ObstacleManager();
 
 	virtual void update(float t);
@@ -130,5 +132,26 @@ public:
 	inline Wind* getWind() const { return ww.w; };
 
 	inline physx::PxRigidStatic* getFloor() const { return floor; };
+
+	inline int getDistBtwObj() const { return dis_between_obs; };
+
+	//-------------------------------------------SETS----------------------------------
+
+	inline void setDifficulty(Dificulty dif) {
+		switch (dif)
+		{
+		case ObstacleManager::Easy:
+			dis_between_obs = 300;
+			break;
+		case ObstacleManager::Medium:
+			dis_between_obs = 250;
+			break;
+		case ObstacleManager::Hard:
+			dis_between_obs = 150;
+			break;
+		default:
+			break;
+		}
+	};
 };
 

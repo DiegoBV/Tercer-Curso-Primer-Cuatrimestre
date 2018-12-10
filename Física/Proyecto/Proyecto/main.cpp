@@ -70,6 +70,8 @@ PxRigidStatic* floor_;
 
 ContactReportCallback gContactReportCallback;
 
+void menu(ObstacleManager* man);
+
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -206,6 +208,7 @@ void initPhysics(bool interactive)
 	//Manager de obstaculos
 	ObstacleManager* obs_man = new ObstacleManager(chr_man->getCharacter(), Particle::Box, gPhysics, gScene, t_gen2);
 	obs_man->addGenerator(gren_man->getBlast());
+	obs_man->setDifficulty(ObstacleManager::Hard);
 	obs_man->initObstacles();
 	chr_man->addGenerator(obs_man->getWind());
 	t_gen2->addGenerator(obs_man->getWind());
@@ -220,6 +223,10 @@ void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 {
 	PX_UNUSED(actor1);
 	PX_UNUSED(actor2);
+
+	if (actor1->getName() == pj->getPjName() || actor2->getName() == pj->getPjName()) {
+		pj->setCanJump(true);
+	}
 }
 
 
@@ -322,3 +329,4 @@ int main(int, const char*const*)
 
 	return 0;
 }
+

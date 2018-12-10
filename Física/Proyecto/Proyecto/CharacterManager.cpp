@@ -44,8 +44,9 @@ void CharacterManager::handle_event(unsigned char key)
 	switch (toupper(key))
 	{
 	case ' ':
-		if ((int)chr->getPj()->getGlobalPose().p.y == (int)initial_pos.y) { //mmmm alguna forma de saber si esta en contacto con el suelo...??
+		if(chr->canThisJump()){																												//if ((int)chr->getPj()->getGlobalPose().p.y == (int)initial_pos.y) { //mmmm alguna forma de saber si esta en contacto con el suelo...??
 			chr->getPj()->setLinearVelocity({ chr->getPj()->getLinearVelocity().x, chr->getJumpForce(), chr->getPj()->getLinearVelocity().z });
+			chr->setCanJump(false);
 			mciSendString("play jumpEffect.wav", NULL, 0, NULL);
 		}
 		break;
