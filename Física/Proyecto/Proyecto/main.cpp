@@ -249,8 +249,10 @@ void stepPhysics(bool interactive, double t)
 			man->update(t);
 		}
 		for (Wind* w : vientos) {
-			if (pj->getPj()->getGlobalPose().p.z < w->getCenter().z - 100)
+			if (pj->getPj()->getGlobalPose().p.z < w->getCenter().z - 100) {
 				w->setCenter({ w->getCenter().x, w->getCenter().y, w->getCenter().z - 2500 });
+				w->changeDirection();
+			}
 		}
 
 		//onCollision(floor_, pj->getPj());
