@@ -75,40 +75,37 @@ void varillasNumeroFormas(vector<Varilla>& varillas, int L, int& numFormas)
 void varillasMinimoNumero(vector<Varilla>& varillas, int L, int& minNum)
 {
 	int n = varillas.size() - 1;
-	Matriz<int> matriz(varillas.size(), L + 1, numeric_limits<int>::max());
+	Matriz<int> matriz(varillas.size(), L + 1, 1001);
 
-	matriz[0][0] = 1;
+	matriz[0][0] = 1001;
 	//rellenar la matriz
 	for (size_t i = 1; i <= n; i++)
 	{
-		matriz[i][0] = 1;
+		matriz[i][0] = 0;
 		for (size_t j = 1; j <= L; j++)
 		{
 			if (varillas[i].longitud > j) {
 				matriz[i][j] = matriz[i - 1][j];
 			}
 			else {
-				matriz[i][j] = min(matriz[i - 1][j], matriz[i - 1][j - varillas[i].longitud]);
-				if (matriz[i][j] == matriz[i - 1][j - varillas[i].longitud] && matriz[i][j] != numeric_limits<int>::max()) {
-					matriz[i][j]++;
-				}
+				matriz[i][j] = min(matriz[i - 1][j], matriz[i - 1][j - varillas[i].longitud] + 1);
 			}
 		}
 	}
 
-	minNum = matriz[n][L] - 1; //??
+	minNum = matriz[n][L]; //??
 };
 
 void varillasMinimoCoste(vector<Varilla>& varillas, int L, int& minCoste)
 {
 	int n = varillas.size() - 1;
-	Matriz<int> matriz(varillas.size(), L + 1, 1000000);
+	Matriz<int> matriz(varillas.size(), L + 1, 1001);
 
-	matriz[0][0] = 1;
+	matriz[0][0] = 1001;
 	//rellenar la matriz
 	for (size_t i = 1; i <= n; i++)
 	{
-		matriz[i][0] = 1;
+		matriz[i][0] = 0;
 		for (size_t j = 1; j <= L; j++)
 		{
 			if (varillas[i].longitud > j) {
@@ -120,7 +117,7 @@ void varillasMinimoCoste(vector<Varilla>& varillas, int L, int& minCoste)
 		}
 	}
 
-	minCoste = matriz[n][L] - 1; //??
+	minCoste = matriz[n][L]; //??
 };
 
 // Resuelve un caso de prueba, leyendo de la entrada la

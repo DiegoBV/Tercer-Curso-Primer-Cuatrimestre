@@ -77,7 +77,7 @@ bool resuelveCaso() {
 	}
 
 	int max_gold = 0, cuantos = 0;
-	vector<bool> cuales(T + 1, false);
+	vector<bool> cuales(N + 1, false);
 	resuelve(tesoros, T, max_gold, cuales, cuantos);
 
     // escribir sol
