@@ -12,7 +12,7 @@ FireworkManager::~FireworkManager()
 
 void FireworkManager::initFireworkRules()
 {
-	string name = ".\\JSONs\\Firework_Rules.json";
+	string name = "../JSONs/Firework_Rules.json";
 	std::ifstream i(name);
 	
 	if (i.is_open()) {                                    // Para que no intente abrir archivos que no existen

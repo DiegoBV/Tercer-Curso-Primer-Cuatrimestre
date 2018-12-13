@@ -7,7 +7,7 @@ void GrenadeManager::check_time_to_explode(Grenade*& g)
 	if (g->is_time_to_explode()) {
 		g->explode();
 		remove_particle_from_generators(g);
-		mciSendString("play explosion.wav", NULL, 0, NULL);
+		mciSendString("play ../Sonidos/explosion.wav", NULL, 0, NULL);
 	}
 }
 

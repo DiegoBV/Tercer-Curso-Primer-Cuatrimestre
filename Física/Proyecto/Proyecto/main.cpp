@@ -236,7 +236,7 @@ void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 // t: time passed since last call in milliseconds
 void stepPhysics(bool interactive, double t)
 {
-	mciSendString("play Fondo.wav", NULL, 0, NULL);
+	mciSendString("play ../Sonidos/Fondo.wav", NULL, 0, NULL);
 
 	PX_UNUSED(interactive);
 

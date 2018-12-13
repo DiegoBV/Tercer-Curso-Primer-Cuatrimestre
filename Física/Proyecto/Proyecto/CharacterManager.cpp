@@ -10,7 +10,7 @@ void CharacterManager::checkIfPJisDead()
 	if (fabs(pos.y) > eye.x + f_W && (pos.y) < f_H || eye.z < (pos.z + DIST_TO_CHECK_)) {
 		chr->setDead(true);
 		death_count++;
-		mciSendString("play fail.wav", NULL, 0, NULL);
+		mciSendString("play ../Sonidos/fail.wav", NULL, 0, NULL);
 	}
 }
 
@@ -47,7 +47,7 @@ void CharacterManager::handle_event(unsigned char key)
 		if(chr->canThisJump()){																												//if ((int)chr->getPj()->getGlobalPose().p.y == (int)initial_pos.y) { //mmmm alguna forma de saber si esta en contacto con el suelo...??
 			chr->getPj()->setLinearVelocity({ chr->getPj()->getLinearVelocity().x, chr->getJumpForce(), chr->getPj()->getLinearVelocity().z });
 			chr->setCanJump(false);
-			mciSendString("play jumpEffect.wav", NULL, 0, NULL);
+			mciSendString("play ../Sonidos/jumpEffect.wav", NULL, 0, NULL);
 		}
 		break;
 	case 'W':
