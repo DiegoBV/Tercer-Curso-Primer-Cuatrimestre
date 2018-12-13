@@ -6,40 +6,35 @@
 #include <iomanip>
 #include <fstream>
 #include <string>
+#include <sstream>
 #include <algorithm>
 #include "Matriz.h"
 
 using namespace std;
 
-void patindromo(const string& palabra, string& palindromo) {
+void pintaMatriz(Matriz<int>& matriz) {
+	for (size_t i = 0; i < matriz.numfils(); i++){
+		for (size_t j = 0; j < matriz.numcols(); j++){
+			cout << matriz[i][j] << " ";
+		}
+		cout << endl;
+	}
+};
+
+void patindromo(const string& palabra, string& palindromo, vector<bool> & cuales) {
 	int n = palabra.length();
 	Matriz<int> matriz(n, n, 0);
 
-
-	/*int i = 0; int j = n;
-
-	while (i != j || j < i) {
-		if (j == i) { //palabra de un solo caracter
-			matriz[i][j] = 1;
-		}
-		else if (j < i) { //palabra vacia
-			matriz[i][j] = 0;
-		}
-		else if (palabra[i] == palabra[j]) {
-			matriz[i][j] = matriz[i + 1][j - 1] + 2; //dos caracteres
-		}
-		else {
-			matriz[i][j] = max(matriz[i + 1][j], matriz[i][j - 1]);
-		}
-	}*/
 	//rellenamos matriz
 	matriz[n - 1][n - 1] = 1;
 	for (int i = n - 2; i >= 0; i--) {
 		matriz[i][i] = 1;
 		for (int j = i + 1; j < n; j++) {
-
+			if (i == 0 && j == n - 1) {
+				int kk = 0;
+			}
 			if (palabra[i] == palabra[j]) {
-				matriz[i][j] = matriz[i - 1][j + 1] + 2; //dos caracteres
+				matriz[i][j] = matriz[i + 1][j - 1] + 2; //dos caracteres
 			}
 			else {
 				matriz[i][j] = max(matriz[i][j - 1], matriz[i + 1][j]);
@@ -48,6 +43,20 @@ void patindromo(const string& palabra, string& palindromo) {
 	}
 
 	int longitud = matriz[0][n - 1];
+	pintaMatriz(matriz);
+	int resto = n - 1;
+	cuales.resize(n);
+	for (int i = 0; i <= n - 1; i++) {
+		if (i != n - 1 && matriz[i][resto] == matriz[i + 1][resto] && matriz[i][resto] != 0) {
+			//significa que no hemos venido por este camino
+			cuales[i] = false;
+		}
+		else {
+			//significa que hemos venido por aqui
+			cuales[i] = true;
+			resto--;
+		}
+	}
 };
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -60,10 +69,14 @@ bool resuelveCaso() {
     if (! std::cin)
         return false;
     
-	string palindromo = palabra;
+	string palindromo;
+	vector<bool> cuales;
 
-	patindromo(palabra, palindromo);
+	patindromo(palabra, palindromo, cuales);
     // escribir sol
+	for (int i = 0; i < cuales.size(); i++) {
+		if (cuales[i]) palindromo.push_back(palabra[i]);
+	}
 	cout << palindromo << endl;
     
     return true;
