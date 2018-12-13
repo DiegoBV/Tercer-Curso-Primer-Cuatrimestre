@@ -41,26 +41,21 @@ void subsecuencia2(const string& first, const string& second, int& length) {
 
 	vector<int> matriz(m + 1);
 
-	int aux = 0;
 
 	//rellenar matriz
 	for (size_t i = 1; i <= n; i++){
+		int aux = 0;
 		for (size_t j = 1; j <= m; j++){
 
-			if (first[i] == second[j]) {
+			int temp_ = matriz[j]; //??
 
-				int temp_ = matriz[j]; //??
+			if (first[i] == second[j]) {	
 				matriz[j] = max(aux + 1, max(matriz[j], matriz[j - 1]));
-				aux = temp_;
-
 			}
 			else {
-
-				int temp_ = matriz[j]; //??
 				matriz[j] = max(matriz[j], matriz[j - 1]);
-				aux = temp_;
-
 			}
+			aux = temp_;
 		}
 	}
 
@@ -83,7 +78,7 @@ bool resuelveCaso() {
 	palabra1.insert(palabra1.begin(), '?');
 	palabra2.insert(palabra2.begin(), '?');
 
-	subsecuencia(palabra1, palabra2, length);
+	subsecuencia2(palabra1, palabra2, length);
     // escribir sol
     
 	cout << length << endl;

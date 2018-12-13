@@ -48,6 +48,27 @@ void varillasBool(vector<Varilla>& varillas, int L, bool& sePuede) {
 	sePuede = matriz[varillas.size() - 1][L];
 };
 
+void varillasBool2(vector<Varilla>& varillas, int L, bool& sePuede) {
+	int n = varillas.size() - 1;
+
+	vector<bool> matriz(L + 1, false);
+
+	//rellenar la matriz
+	matriz[0] = true;
+	for (size_t i = 1; i <= n; i++){
+		for (size_t j = L; j > 0; j--) {
+			if (varillas[i].longitud > j) {
+				matriz[j] = matriz[j];
+			}
+			else {
+				matriz[j] = (matriz[j] || matriz[j - varillas[i].longitud]);
+			}
+		}
+	}
+
+	sePuede = matriz[L];
+};
+
 void varillasNumeroFormas(vector<Varilla>& varillas, int L, int& numFormas) 
 {
 	int n = varillas.size() - 1;
@@ -72,12 +93,34 @@ void varillasNumeroFormas(vector<Varilla>& varillas, int L, int& numFormas)
 	numFormas = matriz[n][L];
 };
 
+void varillasNumeroFormas2(vector<Varilla>& varillas, int L, int& numFormas) {
+	int n = varillas.size() - 1;
+
+	vector<int> matriz(L + 1, 0);
+
+	matriz[0] = 1;
+	//rellenar la matriz
+	for (size_t i = 1; i <= n; i++)
+	{
+		for (size_t j = L; j > 0; j--) {
+			if (varillas[i].longitud > j) {
+				matriz[j] = matriz[j];
+			}
+			else {
+				matriz[j] = matriz[j] + matriz[j - varillas[i].longitud];
+			}
+		}
+	}
+
+	numFormas = matriz[L];
+}
+
 void varillasMinimoNumero(vector<Varilla>& varillas, int L, int& minNum)
 {
 	int n = varillas.size() - 1;
 	Matriz<int> matriz(varillas.size(), L + 1, 1001);
 
-	matriz[0][0] = 1001;
+	matriz[0][0] = 0;
 	//rellenar la matriz
 	for (size_t i = 1; i <= n; i++)
 	{
@@ -96,12 +139,34 @@ void varillasMinimoNumero(vector<Varilla>& varillas, int L, int& minNum)
 	minNum = matriz[n][L]; //??
 };
 
+void varillasMinimoNumero2(vector<Varilla>& varillas, int L, int& minNum) {
+	int n = varillas.size() - 1;
+
+	vector<int> matriz(L + 1, 1001);
+
+	matriz[0] = 0;
+	//rellenar la matriz
+	for (size_t i = 1; i <= n; i++)
+	{
+		for (size_t j = L; j > 0; j--) {
+			if (varillas[i].longitud > j) {
+				matriz[j] = matriz[j];
+			}
+			else {
+				matriz[j] = min(matriz[j], matriz[j - varillas[i].longitud] + 1);
+			}
+		}
+	}
+
+	minNum = matriz[L];
+};
+
 void varillasMinimoCoste(vector<Varilla>& varillas, int L, int& minCoste)
 {
 	int n = varillas.size() - 1;
-	Matriz<int> matriz(varillas.size(), L + 1, 1001);
+	Matriz<int> matriz(varillas.size(), L + 1, 1E9); //1E9
 
-	matriz[0][0] = 1001;
+	matriz[0][0] = 0;
 	//rellenar la matriz
 	for (size_t i = 1; i <= n; i++)
 	{
@@ -118,6 +183,28 @@ void varillasMinimoCoste(vector<Varilla>& varillas, int L, int& minCoste)
 	}
 
 	minCoste = matriz[n][L]; //??
+};
+
+void varillasMinimoCoste2(vector<Varilla>& varillas, int L, int& minCoste) {
+	int n = varillas.size() - 1;
+
+	vector<int> matriz(L + 1, 1E9);
+
+	matriz[0] = 0;
+	//rellenar la matriz
+	for (size_t i = 1; i <= n; i++)
+	{
+		for (size_t j = L; j > 0; j--) {
+			if (varillas[i].longitud > j) {
+				matriz[j] = matriz[j];
+			}
+			else {
+				matriz[j] = min(matriz[j], matriz[j - varillas[i].longitud] + varillas[i].coste);
+			}
+		}
+	}
+
+	minCoste = matriz[L];
 };
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -143,10 +230,10 @@ bool resuelveCaso()
 	int minNum = 0;
 	int minCoste = 0;
 	bool sePuede = false;
-	varillasBool(varillas_, L, sePuede);
-	varillasNumeroFormas(varillas_, L, numFormas);
-	varillasMinimoNumero(varillas_, L, minNum);
-	varillasMinimoCoste(varillas_, L, minCoste);
+	varillasBool2(varillas_, L, sePuede);
+	varillasNumeroFormas2(varillas_, L, numFormas);
+	varillasMinimoNumero2(varillas_, L, minNum);
+	varillasMinimoCoste2(varillas_, L, minCoste);
     // escribir sol
 	sePuede ? cout << "SI" << " " << numFormas << " " << minNum << " " << minCoste : cout << "NO";
 	cout << endl;
