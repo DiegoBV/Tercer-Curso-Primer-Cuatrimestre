@@ -20,7 +20,7 @@ void CharacterManager::resCharacter(float t)
 		time_passed_ += t;
 		if (time_passed_ >= DELAY_) {
 			physx::PxVec3 eye = GetCamera()->getEye();
-			chr->getPj()->setGlobalPose({ initial_pos.x, initial_pos.y, eye.z + DIST_TO_CAMERA_ });
+			chr->getPj()->setGlobalPose({ initial_pos.x, initial_pos.y + 50, eye.z + DIST_TO_CAMERA_ });
 			chr->getPj()->clearForce();
 			chr->getPj()->clearTorque();
 			chr->getPj()->setLinearVelocity({ 0, 0, 0 });
