@@ -79,8 +79,7 @@ bool resuelveCaso() {
 	}
 	cout << palindromo << endl;
     
-    return true;
-    
+    return true;  
 }
 
 int main() {
