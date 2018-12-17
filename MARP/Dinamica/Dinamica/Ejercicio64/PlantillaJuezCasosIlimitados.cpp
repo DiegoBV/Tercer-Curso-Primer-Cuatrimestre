@@ -30,9 +30,6 @@ void patindromo(const string& palabra, string& palindromo, vector<bool> & cuales
 	for (int i = n - 2; i >= 0; i--) {
 		matriz[i][i] = 1;
 		for (int j = i + 1; j < n; j++) {
-			if (i == 0 && j == n - 1) {
-				int kk = 0;
-			}
 			if (palabra[i] == palabra[j]) {
 				matriz[i][j] = matriz[i + 1][j - 1] + 2; //dos caracteres
 			}
@@ -43,11 +40,29 @@ void patindromo(const string& palabra, string& palindromo, vector<bool> & cuales
 	}
 
 	int longitud = matriz[0][n - 1];
-	pintaMatriz(matriz);
+	//pintaMatriz(matriz);
+	vector<char> palin(longitud);
+	int ppo = 0;
+	int fin = palin.size() - 1;
 	int resto = n - 1;
-	cuales.resize(n);
-	for (int i = 0; i <= n - 1; i++) {
-		if (i != n - 1 && matriz[i][resto] == matriz[i + 1][resto] && matriz[i][resto] != 0) {
+	for (int i = 1; i <= n - 1; i++) {
+
+		if (palabra[i] == palabra[resto]) {
+			palin[ppo] = palabra[i];
+			palin[fin] = palabra[resto];
+			fin--;
+			ppo++;
+		}
+		else if (matriz[i][resto] == matriz[i - 1][resto]) {
+			palin[fin] = palabra[i];
+			fin--;
+		}
+		else {
+			palin[ppo] = palabra[resto];
+			ppo++;
+		}
+		resto--;
+		/*if (i != n - 1 && matriz[i][resto] == matriz[i + 1][resto] && matriz[i][resto] != 0) {
 			//significa que no hemos venido por este camino
 			cuales[i] = false;
 		}
@@ -55,7 +70,7 @@ void patindromo(const string& palabra, string& palindromo, vector<bool> & cuales
 			//significa que hemos venido por aqui
 			cuales[i] = true;
 			resto--;
-		}
+		}*/
 	}
 };
 
