@@ -21,7 +21,7 @@ void pintaMatriz(Matriz<int>& matriz) {
 	}
 };
 
-void patindromo(const string& palabra, string& palindromo, vector<bool> & cuales) {
+void patindromo(const string& palabra, string& palindromo) {
 	int n = palabra.length();
 	Matriz<int> matriz(n, n, 0);
 
@@ -41,37 +41,34 @@ void patindromo(const string& palabra, string& palindromo, vector<bool> & cuales
 
 	int longitud = matriz[0][n - 1];
 	//pintaMatriz(matriz);
-	vector<char> palin(longitud);
-	int ppo = 0;
-	int fin = palin.size() - 1;
-	int resto = n - 1;
-	for (int i = 1; i <= n - 1; i++) {
 
-		if (palabra[i] == palabra[resto]) {
-			palin[ppo] = palabra[i];
-			palin[fin] = palabra[resto];
-			fin--;
-			ppo++;
+	vector<char> palin(longitud);
+	int k0 = 0, k1 = palin.size() - 1;
+	int j = n - 1;
+	int i = 0;
+
+	while (i <= j) {
+		if (palabra[i] == palabra[j]) {
+			palin[k0] = palin[k1] = palabra[i];
+			k0++;
+			k1--;
+			j--;
+			i++;
 		}
-		else if (matriz[i][resto] == matriz[i - 1][resto]) {
-			palin[fin] = palabra[i];
-			fin--;
-		}
-		else {
-			palin[ppo] = palabra[resto];
-			ppo++;
-		}
-		resto--;
-		/*if (i != n - 1 && matriz[i][resto] == matriz[i + 1][resto] && matriz[i][resto] != 0) {
-			//significa que no hemos venido por este camino
-			cuales[i] = false;
+		else if (matriz[i][j] == matriz[i + 1][j]) {
+			i++;
 		}
 		else {
-			//significa que hemos venido por aqui
-			cuales[i] = true;
-			resto--;
-		}*/
+			j--;
+		}
 	}
+
+	for (size_t i = 0; i < palin.size(); i++)
+	{
+		cout << palin[i];
+	}
+
+	cout << endl;
 };
 
 // Resuelve un caso de prueba, leyendo de la entrada la
@@ -85,14 +82,8 @@ bool resuelveCaso() {
         return false;
     
 	string palindromo;
-	vector<bool> cuales;
 
-	patindromo(palabra, palindromo, cuales);
-    // escribir sol
-	for (int i = 0; i < cuales.size(); i++) {
-		if (cuales[i]) palindromo.push_back(palabra[i]);
-	}
-	cout << palindromo << endl;
+	patindromo(palabra, palindromo);
     
     return true;  
 }
