@@ -1,1 +1,0 @@
-//(OPCIONAL) hacer que el heap llegue a funcionar ---> como está ahora funciona bien pero es un codigo un pelin guarro
