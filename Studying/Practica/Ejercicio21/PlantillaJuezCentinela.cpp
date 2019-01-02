@@ -5,35 +5,44 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <algorithm>
 #include "PriorityQueue.h"
 
 using namespace std;
 
-int resuelve(PriorityQueue<long long int>& pQueue) {
-	int esfuerzo = 0;
+struct User {
+	int id, periodo_Actual, periodo;
 
-	int sumando = pQueue.top();
-	pQueue.pop();
+	User(): id(-1), periodo(-1), periodo_Actual(-1) {};
+	User(int id, int p) : id(id), periodo(p), periodo_Actual(p) {};
+};
 
-	while (!pQueue.empty()) {
-		int suma = 0;
-		suma = sumando + pQueue.top();
-		esfuerzo += suma;
-		pQueue.pop();
-		pQueue.push(suma);
+/*struct comp
+{
+	bool operator()(const User& u1, const User& u2) const {
+		return u1.periodo < u2.periodo || (u1.periodo == u2.periodo && u1.id < u2.id);
+	}
+};*/
 
-		if (pQueue.size() == 1) {
+void resuelve(PriorityQueue<User>& pQueue, const int& K) {
+	for (size_t i = 0; i < K; i++){
+		if (!pQueue.empty()) {
+			User user = pQueue.top();
 			pQueue.pop();
-		}
-		else {
-			sumando = pQueue.top();
-			pQueue.pop();
+
+			cout << user.id << endl;
+
+			user.periodo_Actual += user.periodo;
+			pQueue.push(user);
 		}
 	}
 
-	return esfuerzo;
+	cout << "----" << endl;
 };
+
+bool operator<(const User& u1, const User& u2) {
+	return u1.periodo_Actual < u2.periodo_Actual || (u1.periodo_Actual == u2.periodo_Actual && u1.id < u2.id);
+};
+
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
@@ -44,17 +53,22 @@ bool resuelveCaso() {
 
     if (N == 0)
         return false;
-	PriorityQueue<long long int> pQueue;
+    
+	PriorityQueue<User> pQueue;
 
 	for (size_t i = 0; i < N; i++){
-		long long int sumando;
-		cin >> sumando;
-		pQueue.push(sumando);
+		int id, p;
+		cin >> id >> p;
+
+		pQueue.push({ id, p });
 	}
+
+	int K;
+	cin >> K;
     
     // escribir sol
-	cout << resuelve(pQueue) << endl;
-    
+	resuelve(pQueue, K);
+
     return true;
     
 }
