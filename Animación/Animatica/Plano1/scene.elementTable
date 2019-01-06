@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<elements source="Harmony Advanced (HarmonyAdvanced.exe) version 16.0.0 build 14155 2018-11-01 15:36:56" version="1600" build="14155">
+ <element id="1" elementName="Drawing" elementFolder="Drawing" pixmapFormat="2" scanType="2" fieldChart="12" vectorType="2" rootFolder="elements"/>
+ <element id="4" elementName="Plano1" elementFolder="Plano1" pixmapFormat="9" scanType="2" fieldChart="12" vectorType="0" rootFolder="elements"/>
+ <element id="5" elementName="Plano1" elementFolder="Plano1.5" pixmapFormat="9" scanType="2" fieldChart="12" vectorType="0" rootFolder="elements"/>
+ <element id="6" elementName="Plano1" elementFolder="Plano1.6" pixmapFormat="9" scanType="2" fieldChart="12" vectorType="0" rootFolder="elements"/>
+</elements>
