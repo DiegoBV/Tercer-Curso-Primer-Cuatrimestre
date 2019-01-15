@@ -1,5 +1,5 @@
 //
-//  ConjuntosDisjuntos.h
+//  ConjuntosDisjuntos.h2w
 //
 //  Implementación de estructuras de partición o conjuntos disjuntos
 //  con unión por tamaño y compresión de caminos
