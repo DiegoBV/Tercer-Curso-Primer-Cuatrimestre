@@ -12,7 +12,7 @@ using namespace std;
 
 struct MyStruct
 {
-	bool operator()(const pair<int, int> p1, const pair<int, int> p2) { return p1.second > p2.second; };
+	bool operator()(const pair<int, int> p1, const pair<int, int> p2) { return p1.second < p2.second; };
 };
 
 
@@ -22,7 +22,7 @@ int resuelve(const vector<pair<int, int>>& edificios) {
 	pair<int, int> offset = edificios[0];
 
 	for (size_t i = 1; i < edificios.size(); i++){
-		if (offset.second >= edificios[i].second) {
+		if (offset.second <= edificios[i].first) {
 			numPuentes++;
 			offset = edificios[i];
 		}
