@@ -6,63 +6,50 @@
 #include <iomanip>
 #include <fstream>
 #include <vector>
-#include <string>
 #include <algorithm>
 
 using namespace std;
 
-const int TIEMPO_PALOMITAS = 10;
-
 struct MyStruct
 {
-	bool operator()(const pair<int, int>& p1, const pair<int, int>& p2) { return p1.first < p2.first; };
+	bool operator()(const pair<int, int>& p1, const pair<int, int>& p2) { 
+		return abs(p1.first - p1.second) < abs(p2.first - p2.second); };
 };
 
-int resuelve(const vector<pair<int, int>>& peliculas) {
-	int numPelis = 1;
-	pair<int, int> offset = peliculas[0];
+int resuelve(const vector<pair<int, int>>& aviones, int L) {
+	int numAviones = 0;
 
-	for (size_t i = 1; i < peliculas.size(); i++) {
-		if (offset.second + TIEMPO_PALOMITAS <= peliculas[i].first) {
-			//puedo verla
-			numPelis++;
-			offset = peliculas[i];
-		}
-		else {
-			if (offset.second > peliculas[i].second) {
-				offset = peliculas[i];
-			}
+	for (size_t i = 0; i < aviones.size(); i++){
+		if (abs(aviones[i].first - aviones[i].second) <= L) {
+			numAviones++;
+			L -= abs(aviones[i].first - aviones[i].second);
 		}
 	}
 
-	return numPelis;
+	return numAviones;
 };
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 bool resuelveCaso() {
     // leer los datos de la entrada
-	int N;
-	cin >> N;
-    if (N == 0)
+	int N, L;
+	cin >> N >> L;
+
+    if (!std::cin)
         return false;
-
-	vector<pair<int, int>> peliculas;
+	vector<pair<int, int>> aviones;
 	for (size_t i = 0; i < N; i++){
-		string hora;
-		int duracion;
-		cin >> hora >> duracion;
+		int capacidad, litros_Actuales;
+		cin >> capacidad >> litros_Actuales;
 
-		int h = (hora[0] - '0') * 10 + hora[1] - '0';
-		int minutos = (hora[3] - '0') * 10 + hora[4] - '0';
-
-		peliculas.push_back({ h * 60 + minutos, h * 60 + minutos + duracion });
+		aviones.push_back({ capacidad, litros_Actuales });
 	}
-
-	sort(peliculas.begin(), peliculas.end());
+    
+	sort(aviones.begin(), aviones.end(), MyStruct());
 
     // escribir sol
-	cout << resuelve(peliculas) << endl;
+	cout << resuelve(aviones, L) << endl;
 
     return true;
     
