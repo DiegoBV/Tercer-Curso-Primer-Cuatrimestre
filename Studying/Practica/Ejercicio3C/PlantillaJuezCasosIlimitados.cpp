@@ -77,9 +77,9 @@ public:
 			edgeTo = vector<int>(g.V());
 			pq = IndexPQ<int>(g.V());
 
-			dijkstra(g_inverso, distTo, edgeTo, INICIO); //da la distancia desde todos los puntos hasta el inicio
+			dijkstra(g, distTo, edgeTo, OLIMPO); //da la distancia desde todos los puntos hasta el inicio
 
-			int o_distance = distTo[OLIMPO] + tiempo_isla[INICIO];
+			int o_distance = distTo[INICIO] + tiempo_isla[INICIO];
 
 			if (o_distance == numeric_limits<int>::max()) {
 				se_puede = false;

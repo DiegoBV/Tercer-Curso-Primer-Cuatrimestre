@@ -5,50 +5,63 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <vector>
 #include <algorithm>
+#include <vector>
 
 using namespace std;
 
-int resuelve(const vector<int>& pesos, const int& PESO_MAXIMO) {
-	int numeroViajes = 0;
-	int i = 0, j = pesos.size() - 1;
+int resuelve(const vector<int>& enemigos, const vector<int>& aliados) {
+	int numeroVictorias = 0;
 
-	while (i <= j) {
-		int persona1 = pesos[i];
-		int persona2 = pesos[j];
+	int i = 0, j = 0;
+	while (i < enemigos.size() && j < aliados.size()) {
+		int allies = aliados[j];
+		int enemies = enemigos[i];
 
-		if (persona1 + persona2 > PESO_MAXIMO) {
-			j--;
+		if (allies >= enemies) {
+			numeroVictorias++;
+			i++;
+			j++;
 		}
 		else {
-			i++;
-			j--;
+			j++;
 		}
-		numeroViajes++;
 	}
-	return numeroViajes;
+
+	return numeroVictorias;
 };
 
 // Resuelve un caso de prueba, leyendo de la entrada la
 // configuración, y escribiendo la respuesta
 bool resuelveCaso() {
     // leer los datos de la entrada
-	int P, N;
-	cin >> P >> N;
+	int N;
+	cin >> N;
     if (!std::cin)
         return false;
-	vector<int> pesos;
-	for (size_t i = 0; i < N; i++){
-		int peso;
-		cin >> peso;
 
-		pesos.push_back(peso);
+	vector<int> enemigos;
+	for (size_t i = 0; i < N; i++){
+		int cant;
+		cin >> cant;
+
+		enemigos.push_back(cant);
 	}
 
-	sort(pesos.begin(), pesos.end(), less<int>());
+	sort(enemigos.begin(), enemigos.end());
+
+	vector<int> aliados;
+	for (size_t i = 0; i < N; i++){
+		int cant;
+		cin >> cant;
+
+		aliados.push_back(cant);
+	}
+
+	sort(aliados.begin(), aliados.end());
+
+	cout << resuelve(enemigos, aliados) << endl;;
     
-	cout << resuelve(pesos, P) << endl;
     // escribir sol
     
     
